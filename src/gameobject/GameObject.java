@@ -15,7 +15,7 @@ import java.awt.Graphics;
 public abstract class GameObject {
     // 長寬
     protected int width;
-    protected int hight;
+    protected int height;
     
     // 座標 
     protected int x;
@@ -58,8 +58,8 @@ public abstract class GameObject {
         return width;
     }
 
-    public int getHight() {
-        return hight;
+    public int getHeight() {
+        return height;
     }
     
     public void setPosition(int x, int y){
@@ -100,7 +100,7 @@ public abstract class GameObject {
     }
     
     public boolean checkInMap() {
-        return x + width > 0 || x - width < GamePanel.WIDTH || y + hight > 0 || y - hight < GamePanel.HIGHT ;
+        return x + width > 0 || x - width < GamePanel.WIDTH || y + height > 0 || y - height < GamePanel.HIGHT ;
     }
     
     

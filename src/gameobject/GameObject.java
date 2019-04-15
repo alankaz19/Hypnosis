@@ -5,7 +5,7 @@
  */
 package gameobject;
 
-import game.GamePanel;
+
 import java.awt.Graphics;
 
 /**
@@ -87,21 +87,6 @@ public abstract class GameObject {
         this.down = down;
     }
 
-    public void setHit(boolean hit) {
-        this.hit = hit;
-    }
 
-    public void setHeal(boolean heal) {
-        this.heal = heal;
-    }
-
-    public void setAtk(boolean atk) {
-        this.atk = atk;
-    }
-    
-    public boolean checkInMap() {
-        return x + width > 0 || x - width < GamePanel.WIDTH || y + height > 0 || y - height < GamePanel.HIGHT ;
-    }
-    
     
 }

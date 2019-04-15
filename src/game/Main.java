@@ -22,7 +22,7 @@ public class Main extends javax.swing.JFrame{
     Main jFrame = new Main();
     jFrame.setSize(1024, 768);
     jFrame.setTitle("Hypnosis");
-    
+        System.out.println("123");
     GamePanel jp = new GamePanel();
     jFrame.add(jp);
     jFrame.setVisible(true);

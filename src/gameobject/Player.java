@@ -5,7 +5,7 @@
  */
 package gameobject;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 /**
  *
@@ -13,8 +13,22 @@ import java.awt.Graphics;
  */
 public class Player extends GameObject {
 
-    @Override
-    public void paint(Graphics g) {
+
+
+    public Player(int x, int y) {
+        super(x, y);
     }
-    
+
+
+    @Override //move method
+    public void tick() {
+
+    }
+
+    @Override   //testing
+    public void render(Graphics g) {
+        g.setColor(Color.black);
+        g.fillRect(x, y, 70,200);
+
+    }
 }

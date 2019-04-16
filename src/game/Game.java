@@ -1,20 +1,50 @@
 package game;
 
+import gameobject.Handler;
+import gameobject.Player;
+import scene.BackGround;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
 
-    private static final int WIDTH = 960, HEIGHT = 540;
+    private static final int WIDTH = 1280, HEIGHT = 720 ;
+
     private Thread thread;
     private boolean running = false;
 
+    //game object handler
+    private Handler handler;
+    //end
+
+    //background pic
+    private BackGround backGround1;
+    //end
+
 
     public Game(){
-
+        backGround1 = new BackGround();
+        handler = new Handler();
         new Window(WIDTH, HEIGHT, "GameTest", this);
-
+        handler.addObject(new Player(0,240));
     }
+
+    public  synchronized void start(){
+        thread = new Thread(this);
+        running = true;
+        thread.start();
+    }
+    public  synchronized void stop(){
+        try{
+            thread.join();
+            running = false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void run() {
         long lastTime = System.nanoTime();
@@ -23,12 +53,11 @@ public class Game extends Canvas implements Runnable {
         double delta = 0;
         long timer = System.currentTimeMillis();
         int frames = 0;
-
-        while(running){
+        while(running) {
             long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
+            delta += (now - lastTime) /ns;
             lastTime = now;
-            while(delta >= 1){
+            while(delta >= 1) {
                 tick();
                 delta--;
             }
@@ -36,7 +65,7 @@ public class Game extends Canvas implements Runnable {
                 render();
             frames++;
 
-            if(System.currentTimeMillis() - timer > 1000){
+            if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 System.out.println("FPS: " + frames);
                 frames = 0;
@@ -44,7 +73,12 @@ public class Game extends Canvas implements Runnable {
         }
         stop();
     }
+
+
+    //tick == move??
     private void tick(){
+        handler.tick();
+        backGround1.tick();
 
     }
     private void render(){
@@ -54,27 +88,21 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.black);
-        g.fillRect(0,0, WIDTH, HEIGHT);
+//        g.setColor(Color.black);
+//        g.fillRect(0,0, WIDTH, HEIGHT);
+
+        //render gameObject
+        handler.render(g);
+
+        //render background
+        backGround1.render(g);
 
         g.dispose();
         bs.show();
 
     }
-    public synchronized void start(){
-        thread = new Thread();
-        thread.start();
-        running = true;
-    }
 
-    public synchronized void stop(){
-        try{
-            thread.join();
-            running = false;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+
 
     public static void main(String args[]){
         new Game();

@@ -16,14 +16,11 @@ public abstract class GameObject {
     // 長寬
     protected int width;
     protected int height;
-    
     // 座標 
     protected int x;
     protected int y;
-    
     // 方向
-    protected int dir;    
-    
+    protected int dir;
     // 判定屬性
     protected int currentX;
     protected int currentY;
@@ -31,20 +28,22 @@ public abstract class GameObject {
     protected int yDest;
     protected int xTemp;
     protected int yTemp;
-    
     // 判定相交
     protected boolean left;
     protected boolean right;
     protected boolean up;
     protected boolean down;
-    
-    //判定戰鬥
-    protected boolean hit;
-    protected boolean heal;
-    protected boolean atk;
-    
-    
-    public abstract void paint(Graphics g);
+
+
+    //需要給object 生成的位置
+    public GameObject(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public abstract void tick();
+
+    public abstract void render(Graphics g);
 
     public int getX() {
         return x;

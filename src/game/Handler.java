@@ -1,5 +1,6 @@
-package gameobject;
+package game;
 
+import gameobject.GameObject;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class Handler {
             GameObject tempObject = object.get(i);
 
             tempObject.tick();
+            
         }
     }
     public void render(Graphics g){

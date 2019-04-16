@@ -1,7 +1,7 @@
 package game;
 
-import gameobject.Handler;
 import gameobject.Player;
+import scene.Texture;
 import gamestate.GameStateManager;
 import scene.BackGround;
 
@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
-
+    
     private static final int WIDTH = 1280, HEIGHT = 720 ;
 
     private Thread thread;
@@ -21,7 +21,10 @@ public class Game extends Canvas implements Runnable {
     //game object handler
     private Handler handler;
     //end
-
+    
+    //texture loader
+    private static Texture tex;
+    
     //background pic
     private BackGround backGround1;
     //end
@@ -62,13 +65,15 @@ public class Game extends Canvas implements Runnable {
 
     //main
     public Game(){
+        
+        
         gsm = new GameStateManager();
+        tex = new Texture();
         backGround1 = new BackGround();
         handler = new Handler();
         handler.addObject(new Player(0,HEIGHT/2));
         this.addKeyListener(new KeyInput());
         this.setFocusable(true);
-        new Window(WIDTH, HEIGHT, "GameTest", this);
 
     }
     //end
@@ -121,7 +126,6 @@ public class Game extends Canvas implements Runnable {
 
 
 
-    //tick == move??
     private void tick(){
         Event();
         backGround1.tick();
@@ -130,6 +134,7 @@ public class Game extends Canvas implements Runnable {
         gsm.tick();
 
     }
+    
     private void render(){
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
@@ -142,9 +147,6 @@ public class Game extends Canvas implements Runnable {
 
         //render gameObject
         handler.render(g);
-
-        //render background
-        backGround1.render(g);
         
         //render state
         gsm.render(g);
@@ -156,8 +158,12 @@ public class Game extends Canvas implements Runnable {
     }
 
 
-
+    public static Texture getInstance(){
+        return tex;
+    }
+    
     public static void main(String args[]){
-        new Game();
+        new Window(WIDTH, HEIGHT, "GameTest", new Game());
+
     }
 }

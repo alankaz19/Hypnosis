@@ -22,6 +22,8 @@ public class Game extends Canvas implements Runnable {
     private BackGround backGround1;
     //end
 
+    private BackGround test;
+
 
     public Game(){
         backGround1 = new BackGround();

@@ -7,6 +7,7 @@ package scene;
 
 
 
+import game.Game;
 import resourcemanage.ImageResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,9 +17,14 @@ import java.awt.image.BufferedImage;
  * @author Kai
  */
 public class BackGround {
+    
     private BufferedImage img;
     private int x, y, scrollX;
+    Texture tex = Game.getInstance();
 
+
+    
+    
     public BackGround(){
         //start position
         this.x = 0;

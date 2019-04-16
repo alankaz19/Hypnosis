@@ -21,6 +21,8 @@ public abstract class GameObject {
     protected int y;
     // 方向
     protected int dir;
+    //加速度
+    protected int xVel;
     // 判定屬性
     protected int currentX;
     protected int currentY;
@@ -44,6 +46,10 @@ public abstract class GameObject {
     public abstract void tick();
 
     public abstract void render(Graphics g);
+
+    public void setxVel(int xVel) {
+        this.xVel = xVel;
+    }
 
     public int getX() {
         return x;

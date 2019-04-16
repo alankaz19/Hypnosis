@@ -23,21 +23,25 @@ public class BackGround {
         //start position
         this.x = 0;
         this.y = 0;
-        this.scrollX = 3;
         this.img = ImageResource.getInstance().getImage("/Art/BackGround/backGround1.png");
     }
 
 
     public void tick(){
         x += scrollX;
+        if(x == 5358){
+            scrollX = 0;
+        }
     }
 
     //paint method
     public void render(Graphics g){
         g.drawImage(img,0,0,1280, 720, x , y , 2142 + x, 1205, null);
 
-
         //2141
     }
 
+    public void setScrollX(int scrollX) {
+        this.scrollX = scrollX;
+    }
 }

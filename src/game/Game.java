@@ -5,6 +5,8 @@ import gameobject.Player;
 import scene.BackGround;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
@@ -13,6 +15,7 @@ public class Game extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean running = false;
+    private int keyPressed;
 
     //game object handler
     private Handler handler;
@@ -22,14 +25,49 @@ public class Game extends Canvas implements Runnable {
     private BackGround backGround1;
     //end
 
+    //keyInput class
+    class KeyInput extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent e) {
+            keyPressed = e.getKeyCode();
+        }
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if(e.getKeyCode() == keyPressed ){ // only assign -1 to pressedKey if no other key is pressed to chane the pressedKey value
+                keyPressed = -1;
+            }
+        }
+    }
+    //end
+
+    public void Event(){
+        if(keyPressed == KeyEvent.VK_D){
+            handler.getObject().get(0).setxVel(1);
+            backGround1.setScrollX(5);
+        }
+        else if(keyPressed == KeyEvent.VK_A){
+            handler.getObject().get(0).setxVel(-1);
+            backGround1.setScrollX(-5);
+        }
+        else{
+            handler.getObject().get(0).setxVel(0);
+            backGround1.setScrollX(0);
+        }
+    }
 
 
+    //main
     public Game(){
         backGround1 = new BackGround();
         handler = new Handler();
+        handler.addObject(new Player(0,HEIGHT/2));
+        this.addKeyListener(new KeyInput());
+        this.setFocusable(true);
         new Window(WIDTH, HEIGHT, "GameTest", this);
-        handler.addObject(new Player(0,240));
+
     }
+    //end
+
 
     public  synchronized void start(){
         thread = new Thread(this);
@@ -44,6 +82,7 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }
     }
+
 
 
     @Override
@@ -68,7 +107,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                //System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }
@@ -76,11 +115,12 @@ public class Game extends Canvas implements Runnable {
     }
 
 
+
     //tick == move??
     private void tick(){
-        handler.tick();
+        Event();
         backGround1.tick();
-
+        handler.tick();
     }
     private void render(){
         BufferStrategy bs = this.getBufferStrategy();
@@ -89,14 +129,12 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-//        g.setColor(Color.black);
-//        g.fillRect(0,0, WIDTH, HEIGHT);
+        //render background
+        backGround1.render(g);
 
         //render gameObject
         handler.render(g);
 
-        //render background
-        backGround1.render(g);
 
         g.dispose();
         bs.show();

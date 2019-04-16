@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Handler {
 
     ArrayList<GameObject> object = new ArrayList<>();
+
     public void tick(){
         for(int i = 0; i < object.size(); i++){
             GameObject tempObject = object.get(i);
@@ -19,6 +20,10 @@ public class Handler {
 
             tempObject.render(g);
         }
+    }
+
+    public ArrayList<GameObject> getObject() {
+        return object;
     }
 
     public void addObject(GameObject object){

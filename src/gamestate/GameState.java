@@ -5,10 +5,28 @@
  */
 package gamestate;
 
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
 /**
  *
  * @author Kai
  */
-public class GameState {
+public abstract class GameState {
     
+    protected GameStateManager gsm;
+    
+    protected GameState(GameStateManager gsm){
+        this.gsm = gsm;
+        init();
+    }
+    
+    public abstract void init();
+    public abstract void tick();
+    public abstract void render(Graphics g);
+    public abstract void keyPressed(KeyEvent e);
+    public abstract void keyReleased(KeyEvent e);
+    public abstract void MouseClicked(MouseEvent e);
+    public abstract void MouseDragged(MouseEvent e);
 }

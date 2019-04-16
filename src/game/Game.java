@@ -2,6 +2,7 @@ package game;
 
 import gameobject.Handler;
 import gameobject.Player;
+import gamestate.GameStateManager;
 import scene.BackGround;
 
 import java.awt.*;
@@ -24,6 +25,9 @@ public class Game extends Canvas implements Runnable {
     //background pic
     private BackGround backGround1;
     //end
+    
+    //gameStateManager
+    private GameStateManager gsm;
 
     //keyInput class
     class KeyInput extends KeyAdapter{
@@ -58,6 +62,7 @@ public class Game extends Canvas implements Runnable {
 
     //main
     public Game(){
+        gsm = new GameStateManager();
         backGround1 = new BackGround();
         handler = new Handler();
         handler.addObject(new Player(0,HEIGHT/2));
@@ -121,6 +126,9 @@ public class Game extends Canvas implements Runnable {
         Event();
         backGround1.tick();
         handler.tick();
+        backGround1.tick();
+        gsm.tick();
+
     }
     private void render(){
         BufferStrategy bs = this.getBufferStrategy();
@@ -135,6 +143,12 @@ public class Game extends Canvas implements Runnable {
         //render gameObject
         handler.render(g);
 
+        //render background
+        backGround1.render(g);
+        
+        //render state
+        gsm.render(g);
+
 
         g.dispose();
         bs.show();
@@ -145,6 +159,5 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String args[]){
         new Game();
-
     }
 }

@@ -8,6 +8,8 @@ import scene.BackGround;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
@@ -16,7 +18,7 @@ public class Game extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean running = false;
-    private int keyPressed;
+    private int keyPressed, mouseClick, count;
 
     //game object handler
     private Handler handler;
@@ -37,11 +39,27 @@ public class Game extends Canvas implements Runnable {
         @Override
         public void keyPressed(KeyEvent e) {
             keyPressed = e.getKeyCode();
+            if(keyPressed == KeyEvent.VK_T){
+                gsm.setState(1);
+            }
         }
         @Override
         public void keyReleased(KeyEvent e) {
             if(e.getKeyCode() == keyPressed ){ // only assign -1 to pressedKey if no other key is pressed to chane the pressedKey value
                 keyPressed = -1;
+            }
+        }
+    }
+
+    class MouseInput extends MouseAdapter{
+
+        public void mouseClicked(MouseEvent e){
+            mouseClick = e.getButton();
+        }
+
+        public void mouseReleased(MouseEvent e){
+            if(e.getButton() == mouseClick){
+                mouseClick = -1;
             }
         }
     }
@@ -60,6 +78,14 @@ public class Game extends Canvas implements Runnable {
             handler.getObject().get(0).setxVel(0);
             backGround1.setScrollX(0);
         }
+    }
+
+    // initialize everything
+    public void init(){
+        gsm = new GameStateManager();
+        //tex = new Texture();
+        backGround1 = new BackGround(1);
+        handler = new Handler();
     }
 
 
@@ -141,6 +167,8 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g = bs.getDrawGraphics();
+
+
         //render background
         backGround1.render(g);
 
@@ -148,7 +176,10 @@ public class Game extends Canvas implements Runnable {
         handler.render(g);
         
         //render state
+
         gsm.render(g);
+
+
 
 
         g.dispose();

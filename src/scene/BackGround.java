@@ -24,13 +24,13 @@ public class BackGround {
 
 
     
-    
-    public BackGround(){
+    public BackGround(int index){
         //start position
         this.x = 0;
         this.y = 0;
-        this.img = ImageResource.getInstance().getImage("/Art/BackGround/backGround1.png");
+        this.img = Texture.getInstance().background[index];
     }
+
 
 
     public void tick(){

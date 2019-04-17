@@ -16,15 +16,22 @@ public class Texture {
     
     SpriteSheet playerSheet;
     private BufferedImage player_sheet = null;
-    
-    public BufferedImage[] backgorund = new BufferedImage[1];
+
+    public BufferedImage[] background = new BufferedImage[5];
     public BufferedImage[] player = new BufferedImage[20];
-    
+
+    //texture loader
+    private static Texture tex;
+
+    public static Texture getInstance(){
+        if(tex == null){
+            tex = new Texture();
+        }
+        return tex;
+    }
 
     public Texture() {
-    
         player_sheet = ImageResource.getInstance().getImage("/Art/Character/testing2.png");
-        
         playerSheet = new SpriteSheet(player_sheet);
         getTextures();
     }
@@ -51,6 +58,8 @@ public class Texture {
         player[17] = playerSheet.grabImage(8, 2, 64, 128);
         player[18] = playerSheet.grabImage(9, 2, 64, 128);
         player[19] = playerSheet.grabImage(10, 2, 64, 128);
+        background[0] = ImageResource.getInstance().getImage("/Art/Background/MenuEx1.png");
+        background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");
     }
     
 }

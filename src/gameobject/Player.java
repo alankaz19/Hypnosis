@@ -18,7 +18,7 @@ import scene.Animation;
  * @author Kai
  */
 public class Player extends GameObject {
-    Texture tex = Game.getInstance();
+    Texture tex = Texture.getInstance();
     private Animation playerWalk;
 
     public Player(int x, int y) {

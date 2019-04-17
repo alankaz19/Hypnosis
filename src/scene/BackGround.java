@@ -20,7 +20,6 @@ public class BackGround {
     
     private BufferedImage img;
     private int x, y, scrollX;
-    Texture tex = Game.getInstance();
 
 
     

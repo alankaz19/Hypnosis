@@ -7,7 +7,7 @@ package gameobject;
 
 
 import java.awt.Graphics;
-
+import game.Game;
 /**
  *
  * @author Kai
@@ -92,6 +92,9 @@ public abstract class GameObject {
         this.down = down;
     }
 
+    public boolean checkBorder() {
+        return xDest < 0 || xDest + width > Game.WIDTH || yDest  < 0 || yDest + height > Game.HEIGHT ;
+    }
 
     
 }

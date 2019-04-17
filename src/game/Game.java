@@ -12,7 +12,7 @@ import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
     
-    private static final int WIDTH = 1280, HEIGHT = 720 ;
+    public static final int WIDTH = 1280, HEIGHT = 720 ;
 
     private Thread thread;
     private boolean running = false;
@@ -130,7 +130,6 @@ public class Game extends Canvas implements Runnable {
         Event();
         backGround1.tick();
         handler.tick();
-        backGround1.tick();
         gsm.tick();
 
     }

@@ -50,7 +50,7 @@ public class Animation {
     }
     
     public void renderAnimation(Graphics g,int x,int y,int scaleX, int scaleY){
-        g.drawImage(currentImg, x, y, scaleX, scaleY, null);
+    g.drawImage(currentImg, x, y, scaleX, scaleY, null);
     }
     
 }

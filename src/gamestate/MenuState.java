@@ -8,19 +8,27 @@ package gamestate;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
+
+import game.Game;
+import resourcemanage.ImageResource;
 import scene.BackGround;
+import scene.Texture;
+
 /**
  *
  * @author Kai
  */
 
-
-
 public class MenuState extends GameState {
-    private BackGround bg;
-    
+    private BufferedImage img;
+
+
     public MenuState(GameStateManager gsm) {
         super(gsm);
+        img = Texture.getInstance().background[0];
+
     }
 
     @Override
@@ -29,26 +37,37 @@ public class MenuState extends GameState {
 
     @Override
     public void tick() {
+
+    }
+
+    @Override
+    public void event() {
+
     }
 
     @Override
     public void render(Graphics g) {
+        g.drawImage(img,0,0, Game.WIDTH, Game.HEIGHT,null);
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(int k) {
+
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(int k) {
     }
 
     @Override
-    public void MouseClicked(MouseEvent e) {
+    public void mousePressed(int x, int y) {
+        if(x >= 295 && x <= 434 && y >= 456 && y <= 500){
+            gsm.setState(GameStateManager.LEVEL1_STATE);
+        }
     }
 
     @Override
-    public void MouseDragged(MouseEvent e) {
+    public void mouseDragged(MouseEvent e) {
     }
     
 }

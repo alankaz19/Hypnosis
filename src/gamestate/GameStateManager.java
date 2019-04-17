@@ -22,19 +22,20 @@ public class GameStateManager {
     private int currentState;
     
     //各個狀態常數
-    private static final int MENU_STATE = 0;
-    private static final int LEVEL1_STATE = 1;
-    private static final int LEVEL2_STATE = 2;
-    private static final int LEVEL3_STATE = 3;
-    private static final int LEVEL4_STATE = 4;
-    private static final int OPTION_STATE = 5;
+    protected static final int MENU_STATE = 0;
+    protected static final int LEVEL1_STATE = 1;
+    protected static final int LEVEL2_STATE = 2;
+    protected static final int LEVEL3_STATE = 3;
+    protected static final int LEVEL4_STATE = 4;
+    protected static final int OPTION_STATE = 5;
     
     public GameStateManager() {
         gameStates = new ArrayList<>();
-        
-        currentState = MENU_STATE;
         gameStates.add(new MenuState(this));
-        
+        gameStates.add(new LevelOne(this));
+
+        currentState = MENU_STATE;
+
     }
     
     public void setState(int state) {
@@ -50,16 +51,16 @@ public class GameStateManager {
         gameStates.get(currentState).render(g);
     }
     
-    public  void keyPressed(KeyEvent e){
-        gameStates.get(currentState).keyPressed(e);
+    public  void keyPressed(int k){
+        gameStates.get(currentState).keyPressed(k);
     }
-    public  void keyReleased(KeyEvent e){
-        gameStates.get(currentState).keyReleased(e);
+    public  void keyReleased(int k){
+        gameStates.get(currentState).keyReleased(k);
     }
-    public  void MouseClicked(MouseEvent e){
-        gameStates.get(currentState).MouseClicked(e);
+    public  void mousePressed(int x, int y){
+        gameStates.get(currentState).mousePressed(x,y);
     }
-    public  void MouseDragged(MouseEvent e){
-        gameStates.get(currentState).MouseDragged(e);
+    public  void mouseDragged(MouseEvent e){
+        gameStates.get(currentState).mouseDragged(e);
     }
 }

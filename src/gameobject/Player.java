@@ -18,14 +18,12 @@ import scene.Animation;
  * @author Kai
  */
 public class Player extends GameObject {
-    BufferedImage img;
-    Texture tex = Game.getInstance();
+    Texture tex = Texture.getInstance();
     private Animation playerWalkRight;
     private Animation playerWalkLeft;
 
     public Player(int x, int y) {
         super(x, y);
-        this.img = ImageResource.getInstance().getImage("/Art/Character/testing2.png");
         this.width = 64;
         this.height = 128;
         this.playerWalkRight = new Animation(10, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
@@ -40,8 +38,6 @@ public class Player extends GameObject {
         x += xVel;
         playerWalkRight.runAnimation();
         playerWalkLeft.runAnimation();
-
-
     }
 
     @Override   //testing

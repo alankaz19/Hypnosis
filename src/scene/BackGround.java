@@ -20,17 +20,16 @@ public class BackGround {
     
     private BufferedImage img;
     private int x, y, scrollX;
-    Texture tex = Game.getInstance();
 
 
     
-    
-    public BackGround(){
+    public BackGround(int index){
         //start position
         this.x = 0;
         this.y = 0;
-        this.img = ImageResource.getInstance().getImage("/Art/BackGround/backGround1.png");
+        this.img = Texture.getInstance().background[index];
     }
+
 
 
     public void tick(){

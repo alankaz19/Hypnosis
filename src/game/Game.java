@@ -95,7 +95,7 @@ public class Game extends Canvas implements Runnable {
         
         gsm = new GameStateManager();
         tex = new Texture();
-        backGround1 = new BackGround();
+        backGround1 = new BackGround(1);
         handler = new Handler();
         handler.addObject(new Player(0,HEIGHT/2));
         this.addKeyListener(new KeyInput());

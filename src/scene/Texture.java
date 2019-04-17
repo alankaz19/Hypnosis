@@ -49,17 +49,6 @@ public class Texture {
         player[8] = playerSheet.grabImage(9, 1, 64, 128);
         player[9] = playerSheet.grabImage(10, 1, 64, 128);
         player[10] = playerSheet.grabImage(1, 2, 64, 128);//face left
-        player[11] = playerSheet.grabImage(2, 2, 64, 128);
-        player[12] = playerSheet.grabImage(3, 2, 64, 128);
-        player[13] = playerSheet.grabImage(4, 2, 64, 128);
-        player[14] = playerSheet.grabImage(5, 2, 64, 128);
-        player[15] = playerSheet.grabImage(6, 2, 64, 128);
-        player[16] = playerSheet.grabImage(7, 2, 64, 128);
-        player[17] = playerSheet.grabImage(8, 2, 64, 128);
-        player[18] = playerSheet.grabImage(9, 2, 64, 128);
-        player[19] = playerSheet.grabImage(10, 2, 64, 128);
-        background[0] = ImageResource.getInstance().getImage("/Art/Background/MenuEx1.png");
-        background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");
     }
     
 }

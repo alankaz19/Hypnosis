@@ -5,16 +5,9 @@
         <group>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/BackGround.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Game.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/GameObject.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/ObjectID.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/LevelOne.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/GameState.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Animation.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Texture.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/Player.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/GameStateManager.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Window.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Camera.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Handler.java</file>
         </group>
     </open-files>
 </project-private>

@@ -28,9 +28,9 @@ public class BackGround {
 
     public void tick(){
         x += scrollX;
-        if(x == 4480){
-            scrollX = 0;
-        }
+//        if(x == 5000){
+//            scrollX = 0;
+//        }
     }
 
     //paint method

@@ -15,7 +15,7 @@ public class LevelOne extends GameState {
     private Handler handler;
     private BackGround backGround;
     private int keyPressed;
-    private Camera cam;
+//    private Camera cam;
 
     public static LevelOne LevelOne;
 
@@ -36,7 +36,7 @@ public class LevelOne extends GameState {
         handler = new Handler();
         backGround = new BackGround(1);
         handler.addObject(new Player(0, Game.HEIGHT/2,ObjectID.PLAYER));
-        cam = new Camera(0,0);
+//        cam = new Camera(0,0);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class LevelOne extends GameState {
         
         for (int i = 0; i < handler.getObject().size(); i++) {
             if(handler.getObject().get(i).getID() == ObjectID.PLAYER){
-            cam.tick(handler.getObject().get(i));
+//            cam.tick(handler.getObject().get(i));
             System.out.println("Player x: " +handler.getObject().get(i).getX());
 //            System.out.println("Player y: " +handler.getObject().get(i).getY());
 //            System.out.println("backg x: " +backGround.getX());
@@ -59,29 +59,23 @@ public class LevelOne extends GameState {
 
     @Override
     public void render(Graphics g) {
-        Graphics g2d = (Graphics2D)g;
+        
         backGround.render(g);
-        for (int i = 0; i < handler.getObject().size(); i++) {
-            if(handler.getObject().get(i).getX() > 980 && handler.getObject().get(i).getID() == ObjectID.PLAYER){
-//                g2d.translate(cam.getX()+200, cam.getY()); //begin of cam
-            }else
-            if(handler.getObject().get(i).getX() > 400 && handler.getObject().get(i).getID() == ObjectID.PLAYER){
-                g2d.translate(cam.getX(), cam.getY()); //begin of cam
-            }
-        }
-   
+//        for (int i = 0; i < handler.getObject().size(); i++) {
+//            if(handler.getObject().get(i).getX() > 400 && handler.getObject().get(i).getID() == ObjectID.PLAYER){
+//                g.translate(cam.getX(), cam.getY()); //begin of cam
+//            }
+//        }
+//   
         
         handler.render(g);
         
-        for (int i = 0; i < handler.getObject().size(); i++) {
-//            if(handler.getObject().get(i).getX() > 980 && handler.getObject().get(i).getID() == ObjectID.PLAYER){
-////                g2d.translate(-cam.getX()+200, -cam.getY()); //begin of cam
-//            }else
-            if(handler.getObject().get(i).getX() > 400 && handler.getObject().get(i).getID() == ObjectID.PLAYER){
-                g2d.translate(-cam.getX(), -cam.getY());//end of cam
-            }
-        }
-       
+//        for (int i = 0; i < handler.getObject().size(); i++) {
+//            if(handler.getObject().get(i).getX() > 400 && handler.getObject().get(i).getID() == ObjectID.PLAYER){
+//                g.translate(-cam.getX(), -cam.getY());//end of cam
+//            }
+//        }
+//       
 
 
     }
@@ -89,17 +83,17 @@ public class LevelOne extends GameState {
     public void event(){
         if(keyPressed == KeyEvent.VK_D){
                 handler.getObject().get(0).setxVel(1);
-                backGround.setScrollX(6);
-                if(handler.getObject().get(0).getX() >= 1040){
+                backGround.setScrollX(5);
+                if(handler.getObject().get(0).getX() >= 1000){
                     handler.getObject().get(0).setxVel(0);
-                }
-                if(backGround.getX()>5120)
                     backGround.setScrollX(0);
+                }
+//                if(backGround.getX()>5020)
 
         }
         else if(keyPressed == KeyEvent.VK_A){
                 handler.getObject().get(0).setxVel(-1);
-                backGround.setScrollX(-6);
+                backGround.setScrollX(-5);
             if(handler.getObject().get(0).getX() <= 0){
                 handler.getObject().get(0).setxVel(0);
                 backGround.setScrollX(0);

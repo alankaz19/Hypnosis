@@ -14,6 +14,15 @@ public class LevelOne extends GameState {
     private BackGround backGround;
     private int keyPressed;
 
+    public static LevelOne LevelOne;
+
+    public  LevelOne getInstance(){
+        if(LevelOne == null){
+            LevelOne = new LevelOne(GameStateManager.getInstance());
+        }
+        return LevelOne;
+    }
+
     public LevelOne(GameStateManager gsm){
         super(gsm);
         init();
@@ -70,6 +79,9 @@ public class LevelOne extends GameState {
     public void keyPressed(int k) {
         keyPressed = k;
         if(k == KeyEvent.VK_ESCAPE){
+            gsm.setState(GameStateManager.OPTION_STATE);
+        }
+        if(k == KeyEvent.VK_ENTER){
             gsm.setState(GameStateManager.MENU_STATE);
         }
     }

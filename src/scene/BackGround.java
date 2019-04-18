@@ -21,7 +21,6 @@ public class BackGround {
     private BufferedImage img;
     private int x, y, scrollX;
 
-
     
     public BackGround(int index){
         //start position
@@ -29,7 +28,6 @@ public class BackGround {
         this.y = 0;
         this.img = Texture.getInstance().background[index];
     }
-
 
 
     public void tick(){

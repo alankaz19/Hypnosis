@@ -24,6 +24,13 @@ import scene.Texture;
 public class MenuState extends GameState {
     private BufferedImage img;
 
+    public static MenuState menuState;
+    public  MenuState getInstance(){
+        if(menuState == null){
+            menuState = new MenuState(GameStateManager.getInstance());
+        }
+        return menuState;
+    }
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
@@ -61,9 +68,11 @@ public class MenuState extends GameState {
 
     @Override
     public void mousePressed(int x, int y) {
+        //開始遊戲
         if(x >= 295 && x <= 434 && y >= 456 && y <= 500){
-            gsm.setState(GameStateManager.LEVEL1_STATE);
+            gsm.newGame(GameStateManager.LEVEL1_STATE);
         }
+
     }
 
     @Override

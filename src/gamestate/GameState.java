@@ -16,12 +16,14 @@ import java.awt.event.MouseEvent;
 public abstract class GameState {
     
     protected GameStateManager gsm;
+
     
     protected GameState(GameStateManager gsm){
         this.gsm = gsm;
         init();
     }
-    
+
+    public abstract GameState getInstance();
     public abstract void init();
     public abstract void tick();
     public abstract void event();

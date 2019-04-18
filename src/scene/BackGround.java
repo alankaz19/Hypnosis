@@ -19,13 +19,11 @@ public class BackGround {
     private BufferedImage img;
     private int x, y, scrollX;
 
-
     
     public BackGround(int index){
         //start position
         this.img = Texture.getInstance().background[index];
     }
-
 
 
     public void tick(){

@@ -20,29 +20,49 @@ public class GameStateManager {
     
     //現在狀態 
     private int currentState;
+    private int prevState;
     
     //各個狀態常數
     protected static final int MENU_STATE = 0;
-    protected static final int LEVEL1_STATE = 1;
-    protected static final int LEVEL2_STATE = 2;
-    protected static final int LEVEL3_STATE = 3;
-    protected static final int LEVEL4_STATE = 4;
-    protected static final int OPTION_STATE = 5;
-    
+    protected static final int OPTION_STATE = 1;
+    protected static final int LEVEL1_STATE = 2;
+    protected static final int LEVEL2_STATE = 3;
+    protected static final int LEVEL3_STATE = 4;
+    protected static final int LEVEL4_STATE = 5;
+    public static GameStateManager gsm;
+
+    public static GameStateManager getInstance(){
+        if(gsm == null){
+            gsm = new GameStateManager();
+        }
+        return gsm;
+    }
+
     public GameStateManager() {
         gameStates = new ArrayList<>();
         gameStates.add(new MenuState(this));
+        gameStates.add(new Option(this));
         gameStates.add(new LevelOne(this));
 
         currentState = MENU_STATE;
-
     }
-    
+
+
     public void setState(int state) {
+        prevState = currentState;  //紀錄前一個state
+        currentState = state;
+        gameStates.get(currentState).getInstance();
+    }
+
+    public void newGame(int state){
+        prevState = currentState;  //紀錄前一個state
         currentState = state;
         gameStates.get(currentState).init();
     }
-    
+
+    public int getPrevState(){
+        return prevState;
+    }
     public void tick() {
         gameStates.get(currentState).tick();
     }

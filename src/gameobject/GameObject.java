@@ -111,6 +111,30 @@ public abstract class GameObject {
         return xDest < 0 || xDest + width > Game.WIDTH || yDest  < 0 || yDest + height > Game.HEIGHT ;
     }
     
-
+     public boolean checkCollision(GameObject o){
+        int leftSide, oLeft;
+        int rightSide, oRight;
+        int top, oTop;
+        int bottom, oBottom;
+        
+        leftSide = this.x;  oLeft = o.x;
+        rightSide = this.x + width; oRight = o.x + o.width;
+        top = this.y ; oTop = o.y;
+        bottom = this.y + height; oBottom = o.y + o.height;
+        
+        if(leftSide > oRight){
+            return false;
+        }
+        if(rightSide < oLeft){
+            return false;
+        }
+        if(top > oBottom){
+            return false;
+        }
+        if(bottom < oTop){
+            return false;
+        }
+        return true;
+    }
     
 }

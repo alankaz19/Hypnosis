@@ -22,7 +22,7 @@ public class Player extends GameObject {
         super(x, y,id);
         this.width = 128;
         this.height = 256;
-        this.playerWalk = new Animation(10, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
+        this.playerWalk = new Animation(8, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
                                                  tex.player[6], tex.player[7], tex.player[8], tex.player[9]);
     }
 

@@ -39,6 +39,6 @@ public class Camera {
     }
     
     public void tick(GameObject o){
-        x = - o.getX() + 500;
+        x = - o.getX() + 400;
     }
 }

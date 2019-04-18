@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameobject;
+package gameobject.items;
 
 /**
  *
  * @author Kai
  */
-public enum ObjectID {
-    PLAYER(),
-    PAINT1(),
-    PAINT2(),
-    PAINT3(),
-    PAINT4(),
-    CLOSET(),
-    DOOR(),
+public class Closet {
     
 }

@@ -1,9 +1,6 @@
 package game;
 
-import gameobject.Player;
-import scene.Texture;
 import gamestate.GameStateManager;
-import scene.BackGround;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -55,7 +52,6 @@ public class Game extends Canvas implements Runnable {
     //main
     public Game(){
         init();
-//        handler.addObject(new Player(0,HEIGHT/2));
         this.addKeyListener(new KeyInput());
         this.addMouseListener(new MouseInput());
         this.setFocusable(true);
@@ -101,7 +97,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                //System.out.println("FPS: " + frames);
+                System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }

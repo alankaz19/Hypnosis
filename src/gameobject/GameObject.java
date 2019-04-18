@@ -35,21 +35,32 @@ public abstract class GameObject {
     protected boolean right;
     protected boolean up;
     protected boolean down;
+    
+    // enum ID
+    protected ObjectID id;
+    
 
 
     //需要給object 生成的位置
-    public GameObject(int x, int y){
+    public GameObject(int x, int y,ObjectID id){
         this.x = x;
         this.y = y;
+        this.id = id;
     }
 
     public abstract void tick();
 
     public abstract void render(Graphics g);
+    
+    public abstract ObjectID getID();
 
     public void setxVel(int xVel) {
         this.xVel = xVel;
     }
+    
+    public int getxVel(){
+        return this.xVel;
+    }   
 
     public int getX() {
         return x;
@@ -65,6 +76,10 @@ public abstract class GameObject {
 
     public int getHeight() {
         return height;
+    }
+    
+    public void setID(ObjectID id){
+        this.id = id;
     }
     
     public void setPosition(int x, int y){
@@ -95,6 +110,7 @@ public abstract class GameObject {
     public boolean checkBorder() {
         return xDest < 0 || xDest + width > Game.WIDTH || yDest  < 0 || yDest + height > Game.HEIGHT ;
     }
+    
 
     
 }

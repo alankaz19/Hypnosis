@@ -7,10 +7,7 @@ package gameobject;
 
 import scene.Texture;
 import game.Game;
-import resourcemanage.ImageResource;
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import scene.Animation;
 
 /**
@@ -21,8 +18,8 @@ public class Player extends GameObject {
     Texture tex = Texture.getInstance();
     private Animation playerWalk;
 
-    public Player(int x, int y) {
-        super(x, y);
+    public Player(int x, int y,ObjectID id) {
+        super(x, y,id);
         this.width = 128;
         this.height = 256;
         this.playerWalk = new Animation(10, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
@@ -58,7 +55,6 @@ public class Player extends GameObject {
         //BufferedImage test1 = img.getSubimage(0,0,this.width,this.height);
         if(this.xVel > 0){
             playerWalk.renderAnimation(g, x, y, width, height);
-
         }else if(this.xVel < 0){
             playerWalk.renderAnimation(g, x + width, y, -width, height);
         }
@@ -66,4 +62,12 @@ public class Player extends GameObject {
             g.drawImage(tex.player[0],x,y,width,height,null);
         }
     }
+
+    @Override
+    public ObjectID getID() {
+        return this.id;
+    }
+    
+    
+    
 }

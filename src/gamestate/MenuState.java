@@ -6,14 +6,10 @@
 package gamestate;
 
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 
 import game.Game;
-import resourcemanage.ImageResource;
-import scene.BackGround;
 import scene.Texture;
 
 /**
@@ -23,7 +19,6 @@ import scene.Texture;
 
 public class MenuState extends GameState {
     private BufferedImage img;
-
 
     public MenuState(GameStateManager gsm) {
         super(gsm);

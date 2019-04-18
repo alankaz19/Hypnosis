@@ -48,7 +48,7 @@ public class Texture {
         player[7] = playerSheet.grabImage(8, 1, 64, 128);
         player[8] = playerSheet.grabImage(9, 1, 64, 128);
         player[9] = playerSheet.grabImage(10, 1, 64, 128);
-        player[10] = playerSheet.grabImage(1, 2, 64, 128);//face left
+        player[10] = playerSheet.grabImage(1, 2, 64, 128);
         background[0] = ImageResource.getInstance().getImage("/Art/Background/MenuEx1.png");
         background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");
     }

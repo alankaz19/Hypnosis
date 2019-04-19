@@ -5,65 +5,36 @@
  */
 package gameobject;
 
-import scene.Texture;
-import game.Game;
 import resourcemanage.ImageResource;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import scene.Animation;
 
 /**
  *
  * @author Kai
  */
 public class Player extends GameObject {
-    Texture tex = Texture.getInstance();
-    private Animation playerWalk;
+    BufferedImage  img;
+    BufferedImage animation [];
 
     public Player(int x, int y) {
         super(x, y);
-        this.width = 128;
-        this.height = 256;
-        this.playerWalk = new Animation(10, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
-                                                 tex.player[6], tex.player[7], tex.player[8], tex.player[9]);
+        this.img = ImageResource.getInstance().getImage("/Art/Character/testing2.png");
+        this.width = 64;
+        this.height = 128;
     }
 
-    @Override
-    public boolean checkBorder() {
-        this.xDest = x + xVel;
-            if(super.checkBorder()){
-                if(xDest + width > Game.WIDTH){
-                    this.xVel = 0;
-                }else if(xDest < 0){
-                    this.xVel = 0;
-                }
-            }
-        
-        return true;
-    }
-    
-    
 
     @Override //move method
     public void tick() {
         x += xVel;
-        playerWalk.runAnimation();
-        this.checkBorder();
 
     }
 
     @Override   //testing
     public void render(Graphics g) {
         //BufferedImage test1 = img.getSubimage(0,0,this.width,this.height);
-        if(this.xVel > 0){
-            playerWalk.renderAnimation(g, x, y, width, height);
-
-        }else if(this.xVel < 0){
-            playerWalk.renderAnimation(g, x + width, y, -width, height);
-        }
-        else{
-            g.drawImage(tex.player[0],x,y,width,height,null);
-        }
+        g.drawImage(img,x,y,x + this.width+50,y + this.height+140,0,0,this.width,this.height,null);
     }
 }

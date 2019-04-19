@@ -5,7 +5,6 @@
  */
 package scene;
 
-import game.Game;
 import gameobject.GameObject;
 
 

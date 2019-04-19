@@ -5,7 +5,6 @@
  */
 package gameobject.items;
 
-import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
 import java.awt.Graphics;
@@ -21,13 +20,15 @@ public class Picture extends GameObject {
     private boolean clickable;
     private Animation Shining;
 
-    public Picture(int x, int y,ObjectID id) {
-        super(x, y,id);
-        this.width = 225;
-        this.height = 300;
+    public Picture(int x,ObjectID id) {
+        super(x, 242,id);
+        this.width = 128;
+        this.height = 178;
+        this.clickable =false;
+        this.dir = 0;
     }
     
-    public void setClickable(boolean clickable) {
+    public void setOnClickable(boolean clickable) {
         this.clickable = clickable;
     }
     
@@ -35,13 +36,16 @@ public class Picture extends GameObject {
 
     @Override //clickMethod
     public void tick() {
+        x += xVel;
     }
 
     @Override   //畫框發光
     public void render(Graphics g) {
-         if(clickable){
+        if(clickable){
             this.Shining.renderAnimation(g, x, y);
        }
+        g.drawRect(x, y, width, height);
+
     }
 
     @Override

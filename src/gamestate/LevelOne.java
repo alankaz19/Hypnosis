@@ -4,18 +4,26 @@ import game.Game;
 import game.Handler;
 import gameobject.ObjectID;
 import gameobject.Player;
+import gameobject.items.Picture;
+import java.awt.Color;
+import java.awt.Graphics;
 import scene.BackGround;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import scene.Camera;
 
 public class LevelOne extends GameState {
+    private final int PLAYER = 0;
+    private final int PAINT1 = 1;
+    private final int PAINT2 = 2;
+    private final int PAINT3 = 3;
+    private final int PAINT4 = 4;
+    
     private Handler handler;
     private BackGround backGround;
     private int keyPressed;
-//    private Camera cam;
+    private Camera cam;
 
     public static LevelOne LevelOne;
 
@@ -35,8 +43,12 @@ public class LevelOne extends GameState {
     public void init() {
         handler = new Handler();
         backGround = new BackGround(1);
-        handler.addObject(new Player(0, Game.HEIGHT/2,ObjectID.PLAYER));
-//        cam = new Camera(0,0);
+        cam = new Camera(0, 0);
+        handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER));
+        handler.addObject(new Picture(818, ObjectID.PAINT1));
+        handler.addObject(new Picture(820+640, ObjectID.PAINT2));
+        handler.addObject(new Picture(820+1280, ObjectID.PAINT3));
+        handler.addObject(new Picture(824+1920, ObjectID.PAINT4));
     }
 
     @Override
@@ -44,65 +56,76 @@ public class LevelOne extends GameState {
         event();
         backGround.tick();
         handler.tick();
-        
-        for (int i = 0; i < handler.getObject().size(); i++) {
-            if(handler.getObject().get(i).getID() == ObjectID.PLAYER){
-//            cam.tick(handler.getObject().get(i));
-            System.out.println("Player x: " +handler.getObject().get(i).getX());
-//            System.out.println("Player y: " +handler.getObject().get(i).getY());
-//            System.out.println("backg x: " +backGround.getX());
-//            System.out.println("backg y: " +backGround.getY());
-            }
-        }
-
+        cam.tick(handler.getObject().get(PLAYER));
     }
+
+    
 
     @Override
     public void render(Graphics g) {
-        
         backGround.render(g);
-//        for (int i = 0; i < handler.getObject().size(); i++) {
-//            if(handler.getObject().get(i).getX() > 400 && handler.getObject().get(i).getID() == ObjectID.PLAYER){
-//                g.translate(cam.getX(), cam.getY()); //begin of cam
-//            }
-//        }
-//   
+        
+        g.translate(cam.getX(), cam.getY()); //begin of cam
         
         handler.render(g);
+
+        g.translate(-cam.getX(), -cam.getY());//end of cam
         
-//        for (int i = 0; i < handler.getObject().size(); i++) {
-//            if(handler.getObject().get(i).getX() > 400 && handler.getObject().get(i).getID() == ObjectID.PLAYER){
-//                g.translate(-cam.getX(), -cam.getY());//end of cam
+//        for (int i = 1; i < handler.getObject().size(); i++) {
+//            if(handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))){
+               handler.getObject().get(PLAYER).renderMsg(g, 50);
 //            }
-//        }
-//       
-
-
+//        }    
+        
     }
+
     @Override
     public void event(){
-        if(keyPressed == KeyEvent.VK_D){
-                handler.getObject().get(0).setxVel(1);
-                backGround.setScrollX(5);
-                if(handler.getObject().get(0).getX() >= 1000){
-                    handler.getObject().get(0).setxVel(0);
-                    backGround.setScrollX(0);
-                }
-//                if(backGround.getX()>5020)
+//        System.out.println("Player x: " +handler.getObject().get(PLAYER).getX());//pirnt 角色x
 
+        for (int i = 1; i < handler.getObject().size(); i++) {
+            if(handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))){
+                handler.getObject().get(i).setIsCollision(true);
+                handler.getObject().get(PLAYER).showMsg("collision測試", 150, Color.BLACK);
+            }else{
+                handler.getObject().get(i).setIsCollision(false);
+            }
+        }
+        
+        if(keyPressed == KeyEvent.VK_D){
+            handler.getObject().get(PLAYER).setxVel(1);
+            backGround.setScrollX(5);
+            for(int i = 1;i < 5;i++){
+                handler.getObject().get(i).setxVel(-2);
+            }
+            if(handler.getObject().get(PLAYER).getX() >= 1100){
+                handler.getObject().get(PLAYER).setxVel(0);
+                backGround.setScrollX(0);
+                for(int i = 1;i < 5;i++){
+                   handler.getObject().get(i).setxVel(0);
+                }
+            }
         }
         else if(keyPressed == KeyEvent.VK_A){
-                handler.getObject().get(0).setxVel(-1);
+                handler.getObject().get(PLAYER).setxVel(-1);
                 backGround.setScrollX(-5);
-            if(handler.getObject().get(0).getX() <= 0){
-                handler.getObject().get(0).setxVel(0);
+                for(int i = 1;i < 5;i++){
+                    handler.getObject().get(i).setxVel(2);
+                }
+            if(handler.getObject().get(PLAYER).getX() <= 0){
+                handler.getObject().get(PLAYER).setxVel(0);
                 backGround.setScrollX(0);
+                for(int i = 1;i < 5;i++){
+                    handler.getObject().get(i).setxVel(0);
+                }
             }
-
         }
         else{
-            handler.getObject().get(0).setxVel(0);
+            handler.getObject().get(PLAYER).setxVel(0);
             backGround.setScrollX(0);
+            for(int i = 1;i < 5;i++){
+                    handler.getObject().get(i).setxVel(0);
+            }
         }
     }
 
@@ -122,12 +145,19 @@ public class LevelOne extends GameState {
         if(k == keyPressed ){ // only assign -1 to pressedKey if no other key is pressed to chane the pressedKey value
             keyPressed = -1;
         }
-
     }
-
+    
+   
+    
     @Override
     public void mousePressed(int x, int y) {
-
+        for (int i = 1; i < handler.getObject().size(); i++) {
+            if(handler.getObject().get(i).getIsCollision()){
+                handler.getObject().get(PLAYER).showMsg("滑鼠點擊測試", 200, Color.BLACK);
+                //偵測到碰撞滑鼠點擊事件寫這邊
+            }
+        }
+        
     }
 
     @Override

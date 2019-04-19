@@ -3,18 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/BackGround.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/SpriteSheet.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Game.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/GameObject.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/GameState.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Texture.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Animation.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/LevelOne.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/Player.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Window.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/DialogBox.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Handler.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/Art/Character/testing2.png</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/items/Picture.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Camera.java</file>
         </group>
     </open-files>
 </project-private>

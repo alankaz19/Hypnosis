@@ -5,36 +5,74 @@
  */
 package gameobject;
 
-import resourcemanage.ImageResource;
-
+import scene.Texture;
+import game.Game;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import scene.Animation;
 
 /**
  *
  * @author Kai
  */
 public class Player extends GameObject {
-    BufferedImage  img;
-    BufferedImage animation [];
+    Texture tex = Texture.getInstance();
+    private Animation playerWalk;
 
-    public Player(int x, int y) {
-        super(x, y);
-        this.img = ImageResource.getInstance().getImage("/Art/Character/testing2.png");
-        this.width = 64;
-        this.height = 128;
+    public Player(int x, int y,ObjectID id) {
+        super(x, y,id);
+        this.width = 128;
+        this.height = 256;
+        this.dir = 1;
+        this.playerWalk = new Animation(8, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
+                                           tex.player[6], tex.player[7], tex.player[8], tex.player[9]);
     }
-
+    
+    @Override
+    public boolean checkBorder() {
+        this.xDest = x + xVel;
+            if(super.checkBorder()){
+                if(xDest + width > Game.WIDTH * xVel){
+                    this.xVel = 0;
+                }else if(xDest < 0){
+                    this.xVel = 0;
+                }
+            }
+        return true;
+    }
+    
+    
 
     @Override //move method
     public void tick() {
         x += xVel;
-
+        playerWalk.runAnimation();
+        this.checkBorder();
     }
 
-    @Override   //testing
+    @Override   
     public void render(Graphics g) {
-        //BufferedImage test1 = img.getSubimage(0,0,this.width,this.height);
-        g.drawImage(img,x,y,x + this.width+50,y + this.height+140,0,0,this.width,this.height,null);
+        if(this.xVel > 0){
+            this.dir = 1;
+            playerWalk.renderAnimation(g, x, y, width, height);
+        }else if(this.xVel < 0){
+            this.dir = 0;
+            playerWalk.renderAnimation(g, x + width, y, -width, height);
+
+        }
+        else{
+            if(this.dir == 1){
+                g.drawImage(tex.player[0],x,y,width,height,null);
+                g.drawRect(x, y, width, height);
+            }
+            if(this.dir == 0){
+                g.drawImage(tex.player[0],x + width,y,-width,height,null);
+                g.drawRect(x, y, width, height);
+            }
+        }
     }
-}
+
+    @Override
+    public ObjectID getID() {
+        return this.id;
+    }
+}   

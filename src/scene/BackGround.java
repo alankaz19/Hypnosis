@@ -7,8 +7,6 @@ package scene;
 
 
 
-import game.Game;
-import resourcemanage.ImageResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -24,15 +22,13 @@ public class BackGround {
     
     public BackGround(int index){
         //start position
-        this.x = 0;
-        this.y = 0;
         this.img = Texture.getInstance().background[index];
     }
 
 
     public void tick(){
         x += scrollX;
-//        if(x == 5358){
+//        if(x == 5000){
 //            scrollX = 0;
 //        }
     }
@@ -47,4 +43,14 @@ public class BackGround {
     public void setScrollX(int scrollX) {
         this.scrollX = scrollX;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+    
+    
 }

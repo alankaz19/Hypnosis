@@ -18,7 +18,7 @@ public class Texture {
     private BufferedImage player_sheet = null;
 
     public BufferedImage[] background = new BufferedImage[5];
-    public BufferedImage[] player = new BufferedImage[20];
+    public BufferedImage[] player = new BufferedImage[10];
 
     //texture loader
     private static Texture tex;
@@ -48,7 +48,6 @@ public class Texture {
         player[7] = playerSheet.grabImage(8, 1, 64, 128);
         player[8] = playerSheet.grabImage(9, 1, 64, 128);
         player[9] = playerSheet.grabImage(10, 1, 64, 128);
-        player[10] = playerSheet.grabImage(1, 2, 64, 128);//face left
         background[0] = ImageResource.getInstance().getImage("/Art/Background/MenuEx1.png");
         background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");
         background[2] = ImageResource.getInstance().getImage("/Art/Background/TestOption.png");

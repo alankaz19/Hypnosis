@@ -6,6 +6,7 @@
 package gamestate;
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -21,6 +22,8 @@ public class MenuState extends GameState {
     private BufferedImage img;
 
     public static MenuState menuState;
+
+
     public  MenuState getInstance(){
         if(menuState == null){
             menuState = new MenuState(GameStateManager.getInstance());
@@ -66,13 +69,13 @@ public class MenuState extends GameState {
     public void mousePressed(int x, int y) {
         //開始遊戲
         if(x >= 295 && x <= 434 && y >= 456 && y <= 500){
-            gsm.newGame(GameStateManager.LEVEL1_STATE);
+            gsm.newState(GameStateManager.LEVEL1_STATE);
         }
 
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
+    public void mouseDragged(int x, int y) {
     }
     
 }

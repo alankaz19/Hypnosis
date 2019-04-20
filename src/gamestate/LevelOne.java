@@ -86,7 +86,7 @@ public class LevelOne extends GameState {
         for (int i = 1; i < handler.getObject().size(); i++) {
             if(handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))){
                 handler.getObject().get(i).setIsCollision(true);
-                handler.getObject().get(PLAYER).showMsg("collision測試", 150, Color.BLACK);
+                //handler.getObject().get(PLAYER).showMsg("collision測試", 150, Color.BLACK);
             }else{
                 handler.getObject().get(i).setIsCollision(false);
             }
@@ -133,7 +133,7 @@ public class LevelOne extends GameState {
     public void keyPressed(int k) {
         keyPressed = k;
         if(k == KeyEvent.VK_ESCAPE){
-            gsm.setState(GameStateManager.OPTION_STATE);
+            gsm.newState(GameStateManager.OPTION_STATE);
         }
         if(k == KeyEvent.VK_ENTER){
             gsm.setState(GameStateManager.MENU_STATE);
@@ -153,15 +153,15 @@ public class LevelOne extends GameState {
     public void mousePressed(int x, int y) {
         for (int i = 1; i < handler.getObject().size(); i++) {
             if(handler.getObject().get(i).getIsCollision()){
+                gsm.newState(GameStateManager.PUZZLE);
                 handler.getObject().get(PLAYER).showMsg("滑鼠點擊測試", 200, Color.BLACK);
-                //偵測到碰撞滑鼠點擊事件寫這邊
             }
         }
         
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
+    public void mouseDragged(int x, int y) {
 
     }
 }

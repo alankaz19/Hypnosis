@@ -65,7 +65,7 @@ public class Option extends GameState {
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
+    public void mouseDragged(int x, int y) {
 
     }
 }

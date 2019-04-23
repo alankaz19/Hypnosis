@@ -15,10 +15,12 @@ import gameobject.GameObject;
 public class Camera {
     private int x;
     private int y;
+    private int position;
     
-    public  Camera(int x, int y){
+    public  Camera(int x, int y, int posititon){
         this.x = x;
         this.y = y;
+        this.position = posititon;
     }
     
     public int getX(){
@@ -38,6 +40,8 @@ public class Camera {
     }
     
     public void tick(GameObject o){
-        x = - o.getX() + 400;
+        x = - o.getX() + this.position;
+        System.out.println("c X:"+this.x);
+        System.out.println("C Y:"+this.y);
     }
 }

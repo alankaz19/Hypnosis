@@ -11,11 +11,28 @@ package gameobject;
  */
 public enum ObjectID {
     PLAYER(),
-    PAINT1(),
-    PAINT2(),
-    PAINT3(),
-    PAINT4(),
+    
+    SOFA(),
+    
+    FRAME(),
+    
+    PICTURE1(),
+    PICTURE2(),
+    PICTURE3(),
+    PICTURE4(),
+    
+    PICTURE_IN_PUZZLE1(),
+    PICTURE_IN_PUZZLE2(),
+    PICTURE_IN_PUZZLE3(),
+    PICTURE_IN_PUZZLE4(),
+    
     CLOSET(),
+    
     DOOR(),
+    
+    PUZZLE1(),
+    PUZZLE2(),
+    PUZZLE3(),
+    PUZZLE4(),
     
 }

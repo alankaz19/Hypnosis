@@ -6,9 +6,6 @@
 package gamestate;
 
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 /**
  *
@@ -60,8 +57,11 @@ public class GameStateManager {
         if(state == LEVEL1_STATE){
             gameStates[state] = new LevelOne(this);
         }
+        if(state == LEVEL2_STATE){
+            gameStates[state] = new LevelTwo(this);
+        }
         if(state == PUZZLE){
-            gameStates[state] = new PuzzleGame(this);
+            gameStates[state] = new MiniPuzzleGame(this);
         }
     }
 
@@ -79,6 +79,7 @@ public class GameStateManager {
 
     public void newState(int state){
         loadState(state);
+        prevState = currentState; 
         currentState = state;
         gameStates[currentState].init();
     }

@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/game/Game.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>21</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/BackGround.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Game.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/PuzzleGame.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/LevelOne.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/Player.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/items/Picture.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/ObjectID.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/GameState.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/items/Door.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/GameStateManager.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/Art/Character/testing2.png</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Handler.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Camera.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Snow.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/LevelTwo.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/MenuState.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/ParallaxBackGround.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Texture.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/Player.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Window.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gameobject/items/Picture.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/Option.java</file>
         </group>
     </open-files>
 </project-private>

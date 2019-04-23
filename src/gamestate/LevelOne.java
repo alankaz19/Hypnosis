@@ -4,7 +4,7 @@ import game.Game;
 import game.Handler;
 import gameobject.ObjectID;
 import gameobject.Player;
-import gameobject.items.Picture;
+import gameobject.items.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import scene.BackGround;
@@ -15,10 +15,10 @@ import scene.Camera;
 
 public class LevelOne extends GameState {
     private final int PLAYER = 0;
-    private final int PAINT1 = 1;
-    private final int PAINT2 = 2;
-    private final int PAINT3 = 3;
-    private final int PAINT4 = 4;
+    private final int PICTURE1 = 1;
+    private final int PICTURE2 = 2;
+    private final int PICTURE3 = 3;
+    private final int PICTURE4 = 4;
     
     private Handler handler;
     private BackGround backGround;
@@ -43,12 +43,13 @@ public class LevelOne extends GameState {
     public void init() {
         handler = new Handler();
         backGround = new BackGround(1);
-        cam = new Camera(0, 0);
-        handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER));
-        handler.addObject(new Picture(818, ObjectID.PAINT1));
-        handler.addObject(new Picture(820+640, ObjectID.PAINT2));
-        handler.addObject(new Picture(820+1280, ObjectID.PAINT3));
-        handler.addObject(new Picture(824+1920, ObjectID.PAINT4));
+        cam = new Camera(0, 0,400);
+        handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER,8));
+        handler.addObject(new Picture(818, ObjectID.PICTURE1));
+        handler.addObject(new Picture(820+640, ObjectID.PICTURE2));
+        handler.addObject(new Picture(820+1280, ObjectID.PICTURE3));
+        handler.addObject(new Picture(824+1920, ObjectID.PICTURE4));
+        handler.addObject(new Door(824+2260, ObjectID.DOOR));
     }
 
     @Override
@@ -86,7 +87,7 @@ public class LevelOne extends GameState {
         for (int i = 1; i < handler.getObject().size(); i++) {
             if(handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))){
                 handler.getObject().get(i).setIsCollision(true);
-                //handler.getObject().get(PLAYER).showMsg("collision測試", 150, Color.BLACK);
+                handler.getObject().get(PLAYER).showMsg("collision測試", 150, Color.BLACK);
             }else{
                 handler.getObject().get(i).setIsCollision(false);
             }
@@ -95,13 +96,13 @@ public class LevelOne extends GameState {
         if(keyPressed == KeyEvent.VK_D){
             handler.getObject().get(PLAYER).setxVel(1);
             backGround.setScrollX(5);
-            for(int i = 1;i < 5;i++){
+            for(int i = 1;i < handler.getObject().size();i++){
                 handler.getObject().get(i).setxVel(-2);
             }
-            if(handler.getObject().get(PLAYER).getX() >= 1100){
+            if(handler.getObject().get(PLAYER).getX() >= 1050){
                 handler.getObject().get(PLAYER).setxVel(0);
                 backGround.setScrollX(0);
-                for(int i = 1;i < 5;i++){
+                for(int i = 1;i < handler.getObject().size();i++){
                    handler.getObject().get(i).setxVel(0);
                 }
             }
@@ -109,13 +110,13 @@ public class LevelOne extends GameState {
         else if(keyPressed == KeyEvent.VK_A){
                 handler.getObject().get(PLAYER).setxVel(-1);
                 backGround.setScrollX(-5);
-                for(int i = 1;i < 5;i++){
+                for(int i = 1;i < handler.getObject().size();i++){
                     handler.getObject().get(i).setxVel(2);
                 }
             if(handler.getObject().get(PLAYER).getX() <= 0){
                 handler.getObject().get(PLAYER).setxVel(0);
                 backGround.setScrollX(0);
-                for(int i = 1;i < 5;i++){
+                for(int i = 1;i < handler.getObject().size();i++){
                     handler.getObject().get(i).setxVel(0);
                 }
             }
@@ -123,7 +124,7 @@ public class LevelOne extends GameState {
         else{
             handler.getObject().get(PLAYER).setxVel(0);
             backGround.setScrollX(0);
-            for(int i = 1;i < 5;i++){
+            for(int i = 1;i < handler.getObject().size();i++){
                     handler.getObject().get(i).setxVel(0);
             }
         }
@@ -151,12 +152,16 @@ public class LevelOne extends GameState {
     
     @Override
     public void mousePressed(int x, int y) {
-        for (int i = 1; i < handler.getObject().size(); i++) {
-            if(handler.getObject().get(i).getIsCollision()){
-                gsm.newState(GameStateManager.PUZZLE);
+//        for (int i = 1; i < handler.getObject().size(); i++) {
+//            if(handler.getObject().get(i).getIsCollision()){
+//                gsm.newState(GameStateManager.PUZZLE);
+//                handler.getObject().get(PLAYER).showMsg("滑鼠點擊測試", 200, Color.BLACK);
+//            }
+//        }
+        if(handler.getObject().get(5).getIsCollision()){
+                gsm.newState(GameStateManager.LEVEL2_STATE);
                 handler.getObject().get(PLAYER).showMsg("滑鼠點擊測試", 200, Color.BLACK);
             }
-        }
         
     }
 

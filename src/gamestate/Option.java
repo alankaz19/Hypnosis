@@ -23,7 +23,7 @@ public class Option extends GameState {
 
     @Override
     public void init() {
-
+        
     }
 
     @Override

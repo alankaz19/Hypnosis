@@ -1,19 +1,16 @@
 package gamestate;
 
-import resourcemanage.ImageResource;
 
+import gamestate.GameState;
+import gamestate.GameStateManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 
-public class PuzzleGame extends GameState{
+public class MiniPuzzleGame extends GameState{
     PuzzleBoard board;
 
-    protected PuzzleGame(GameStateManager gsm) {
+    protected MiniPuzzleGame(GameStateManager gsm) {
         super(gsm);
         init();
     }
@@ -24,7 +21,6 @@ public class PuzzleGame extends GameState{
             test.setPreferredSize(new Dimension(300, 300));
             test.setMaximumSize(new Dimension(300, 300));
             test.setMinimumSize(new Dimension(300, 300));
-            test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             test.setResizable(false);
             test.setLocationRelativeTo(null);
             test.setVisible(true);

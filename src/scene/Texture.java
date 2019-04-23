@@ -17,7 +17,7 @@ public class Texture {
     SpriteSheet playerSheet;
     private BufferedImage player_sheet = null;
 
-    public BufferedImage[] background = new BufferedImage[5];
+    public BufferedImage[] background = new BufferedImage[7];
     public BufferedImage[] player = new BufferedImage[10];
 
     //texture loader
@@ -48,9 +48,14 @@ public class Texture {
         player[7] = playerSheet.grabImage(8, 1, 64, 128);
         player[8] = playerSheet.grabImage(9, 1, 64, 128);
         player[9] = playerSheet.grabImage(10, 1, 64, 128);
+        
         background[0] = ImageResource.getInstance().getImage("/Art/Background/MenuEx1.png");
         background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");
         background[2] = ImageResource.getInstance().getImage("/Art/Background/TestOption.png");
+        background[3] = ImageResource.getInstance().getImage("/Art/Background/backGround2.png");
+        background[4] = ImageResource.getInstance().getImage("/Art/Background/farMountain.png");
+        background[5] = ImageResource.getInstance().getImage("/Art/Background/nearMountains.png");
+        background[6] = ImageResource.getInstance().getImage("/Art/Background/grassGround.png");
     }
     
 }

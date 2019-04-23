@@ -3,8 +3,10 @@ package gamestate;
 import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
+import javafx.scene.shape.Circle;
 import resourcemanage.ImageResource;
 import scene.BackGround;
+import scene.PaintUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,21 +17,25 @@ import java.awt.image.BufferedImage;
 public class PuzzleGame extends GameState {
     private static final BufferedImage ORIGINAL = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
     private BackGround fakeBackground;
-    private Pieces piece1, piece2, piece3, piece4, piece5, piece6, piece7, piece8, piece9;
+    Pieces[] pieces;
+    Board gameBoard;
     private int keyPressed, selection;
 
+    //constructor
     protected PuzzleGame(GameStateManager gsm) {
         super(gsm);
         init();
     }
+    //end
 
-
+    // class
     class Pieces extends GameObject{
-        BufferedImage img;
-
+        private BufferedImage img;
+        protected boolean correctPos;
         public Pieces(int x, int y, ObjectID id, int r, int c) {
             super(x,y,id);
             img = ORIGINAL.getSubimage(100 * r ,100 * c,100,100);
+            correctPos = false;
         }
 
         @Override
@@ -47,9 +53,57 @@ public class PuzzleGame extends GameState {
             return null;
         }
 
-
     }
+    //end
 
+    // Board Class
+    class Board extends GameObject{
+        BufferedImage img;
+        Pieces[] pieces;
+        boolean [] checkMap;
+        public Board(int x, int y, ObjectID id, Pieces[] pieces) {
+            super(x, y, id);
+            img = ImageResource.getInstance().getImage("/Art/Game Material/puzzleBoard.png");
+            this.pieces = pieces;
+            checkMap = new boolean[9];
+
+
+        }
+
+        private boolean checkBoard(){
+            int count = 0;
+            for(int i = 0; i < 9; i++){
+                if(pieces[i].correctPos){
+                    count ++;
+                }
+                //error check
+                System.out.println(i + "  " + pieces[i].correctPos);
+            }
+           if(count == 9){
+               return true;
+           }
+           //error check
+           System.out.println(count);
+           return false;
+        }
+
+        @Override
+        public void tick() {
+
+        }
+
+        @Override
+        public void render(Graphics g) {
+            g.drawImage(img,x,y,300,300,null);
+
+        }
+
+        @Override
+        public ObjectID getID() {
+            return null;
+        }
+    }
+    //end
 
     @Override
     public GameState getInstance() {
@@ -58,16 +112,31 @@ public class PuzzleGame extends GameState {
 
     @Override
     public void init() {
-     piece1 = new Pieces(0,0,ObjectID.PAINT1,0,0);
-     piece2 = new Pieces(0,100,ObjectID.PAINT1,0,1);
-     piece3 = new Pieces(0,200,ObjectID.PAINT1,0,2);
-     piece4 = new Pieces(100,0,ObjectID.PAINT1,1,0);
-     piece5 = new Pieces(100,100,ObjectID.PAINT1,1,1);
-     piece6 = new Pieces(100,200,ObjectID.PAINT1,1,2);
-     piece7 = new Pieces(200,0,ObjectID.PAINT1,2,0);
-     piece8 = new Pieces(200,100,ObjectID.PAINT1,2,1);
-     piece9 = new Pieces(200,200,ObjectID.PAINT1,2,2);
-     fakeBackground = new BackGround(1);
+        selection = 0;
+        fakeBackground = new BackGround(1);
+        pieces = new Pieces[9];
+        //int random = (int)(Math.random()*9);
+        int x = 0,y = 0, r = 0, c = 0, count = 1;
+        for(int i = 0; i < 9; i++){
+            int random = (int)(Math.random()*9);
+            if(count % 3 == 1){
+                c = 0;
+            }
+            if(count % 3 == 2){
+                c = 1;
+            }
+            if(count % 3 == 0){
+                c = 2;
+            }
+            pieces[i] = new Pieces(random * 75,random * 50,ObjectID.PUZZLE,r,c);
+            if(count % 3 == 0){
+                r++;
+            }
+            count++;
+            x +=30;
+            y +=30;
+        }
+        gameBoard = new Board(700,240,ObjectID.BOARD, pieces);
 
     }
 
@@ -79,92 +148,139 @@ public class PuzzleGame extends GameState {
 
     @Override
     public void event() {
-        if(keyPressed == KeyEvent.VK_D){
-            if(selection == KeyEvent.VK_1){
-                piece1.tick();
-            }
-            if(selection == KeyEvent.VK_2){
-                piece2.tick();
-            }
-        }
 
     }
 
     @Override
     public void render(Graphics g) {
         fakeBackground.render(g);
-        piece1.render(g);
-        piece2.render(g);
-        piece3.render(g);
-        piece4.render(g);
-        piece5.render(g);
-        piece6.render(g);
-        piece7.render(g);
-        piece8.render(g);
-        piece9.render(g);
+        gameBoard.render(g);
+        for( int i = 0; i < 9; i ++){
+            pieces[i].render(g);
+        }
+        PaintUtil.paintFocus((Graphics2D) g, new Rectangle(pieces[selection].x,pieces[selection].y,100,100),6);
+        //g.setColor(Color.black);
+        //g.drawRect(pieces[selection].x,pieces[selection].y,100,100);
     }
 
     @Override
     public void keyPressed(int k) {
-        if(k == KeyEvent.VK_1 || k == KeyEvent.VK_2
-                || k == KeyEvent.VK_3 || k == KeyEvent.VK_4
-                || k == KeyEvent.VK_5 || k == KeyEvent.VK_6
-                || k == KeyEvent.VK_7 || k == KeyEvent.VK_8
-                || k == KeyEvent.VK_9){
-            selection = k;
-        }
         keyPressed = k;
-        if(k == KeyEvent.VK_ESCAPE){
+        if( keyPressed == KeyEvent.VK_A){
+            if(selection != 0){
+                selection -= 1;
+            }
+        }
+        if( keyPressed == KeyEvent.VK_D){
+            if(selection != 8){
+                selection += 1;
+            }
+        }
+        if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.setState(GameStateManager.LEVEL1_STATE);
+        }
+        if(keyPressed == KeyEvent.VK_ENTER){
+            System.out.println(gameBoard.checkBoard());
         }
 
     }
 
     @Override
     public void keyReleased(int k) {
+        if(k == keyPressed){
+            keyPressed = -1;
+        }
+
     }
 
     @Override
     public void mousePressed(int x, int y) {
-        if(selection == KeyEvent.VK_1){
-            piece1.x = x;
-            piece1.y = y;
-        }
-        if(selection == KeyEvent.VK_2){
-            piece2.x = x;
-            piece2.y = y;
-        }
-        if(selection == KeyEvent.VK_3){
-            piece3.x = x;
-            piece3.y = y;
-        }
-        if(selection == KeyEvent.VK_4){
-            piece4.x = x;
-            piece4.y = y;
-        }
-        if(selection == KeyEvent.VK_5){
-            piece5.x = x;
-            piece5.y = y;
-        }
-        if(selection == KeyEvent.VK_6){
-            piece6.x = x;
-            piece6.y = y;
-        }
-        if(selection == KeyEvent.VK_7){
-            piece7.x = x;
-            piece7.y = y;
-        }
-        if(selection == KeyEvent.VK_8){
-            piece8.x = x;
-            piece8.y = y;
-        }
-        if(selection == KeyEvent.VK_9){
-            piece9.x = x;
-            piece9.y = y;
-        }
+        int r = 100, c = 100;
+        if(x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y && y <= gameBoard.y + c){
+            if(selection == 0){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x;
+            pieces[selection].y = gameBoard.y;
 
-//        piece1.screenX = piece1.getX();
-//        piece1.screenY = piece1.getY();
+        }else if(x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y && y <= gameBoard.y + c){
+            if(selection == 3){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x + r;
+            pieces[selection].y = gameBoard.y;
+
+        }else if(x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y && y <= gameBoard.y + c){
+            if(selection == 6){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x + (2 * r);
+            pieces[selection].y = gameBoard.y;
+
+        }else if(x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c)){
+            if(selection == 1){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x;
+            pieces[selection].y = gameBoard.y + c;
+
+        }else if(x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c)){
+            if(selection == 4){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x + r;
+            pieces[selection].y = gameBoard.y + c;
+
+        }else if(x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c)){
+            if(selection == 7){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x + (2 * r);
+            pieces[selection].y = gameBoard.y + c;
+
+        }else if(x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c)){
+            if(selection == 2){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x;
+            pieces[selection].y = gameBoard.y + (2 * c);
+
+        }else if(x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c)){
+            if(selection == 5){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x + r;
+            pieces[selection].y = gameBoard.y + (2 * c);
+
+        }else if(x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c)){
+            if(selection == 8){
+                pieces[selection].correctPos = true;
+            }else{
+                pieces[selection].correctPos = false;
+            }
+            pieces[selection].x = gameBoard.x + (2 * r);
+            pieces[selection].y = gameBoard.y + (2 * c);
+
+        }else{
+            pieces[selection].x = x;
+            pieces[selection].y = y;
+        }
 
     }
 

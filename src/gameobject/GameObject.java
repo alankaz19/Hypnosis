@@ -20,8 +20,8 @@ public abstract class GameObject {
     protected int width;
     protected int height;
     // 座標 
-    protected int x;
-    protected int y;
+    public int x;
+    public int y;
     // 方向
     protected int dir;
     //加速度

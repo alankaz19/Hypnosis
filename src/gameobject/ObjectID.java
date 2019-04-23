@@ -17,5 +17,7 @@ public enum ObjectID {
     PAINT4(),
     CLOSET(),
     DOOR(),
+    BOARD(),
+    PUZZLE()
     
 }

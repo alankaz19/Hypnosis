@@ -26,6 +26,7 @@ public abstract class GameObject {
     protected int dir;
     //加速度
     protected int xVel;
+    protected int yVel;
     // 判定屬性
     protected int currentX;
     protected int currentY;
@@ -58,14 +59,6 @@ public abstract class GameObject {
     public abstract void render(Graphics g);
     
     public abstract ObjectID getID();
-    
-    public void setxVel(int xVel) {
-        this.xVel = xVel;
-    }
-    
-    public int getxVel(){
-        return this.xVel;
-    }   
 
     public int getX() {
         return x;
@@ -75,6 +68,22 @@ public abstract class GameObject {
         return y;
     }
 
+    public int getxVel() {
+        return xVel;
+    }
+
+    public int getyVel() {
+        return yVel;
+    }
+
+    public void setxVel(int xVel) {
+        this.xVel = xVel;
+    }
+
+    public void setyVel(int yVel) {
+        this.yVel = yVel;
+    }
+    
     public int getWidth() {
         return width;
     }

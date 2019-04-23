@@ -1,20 +1,16 @@
 package gamestate;
 
-import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
-import javafx.scene.shape.Circle;
 import resourcemanage.ImageResource;
 import scene.BackGround;
 import scene.PaintUtil;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 
-public class PuzzleGame extends GameState {
+public class MiniPuzzleGame extends GameState {
     private static final BufferedImage ORIGINAL = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
     private BackGround fakeBackground;
     Pieces[] pieces;
@@ -22,7 +18,7 @@ public class PuzzleGame extends GameState {
     private int keyPressed, selection;
 
     //constructor
-    protected PuzzleGame(GameStateManager gsm) {
+    protected MiniPuzzleGame(GameStateManager gsm) {
         super(gsm);
         init();
     }

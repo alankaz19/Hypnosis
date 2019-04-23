@@ -17,14 +17,16 @@ import scene.Animation;
 public class Player extends GameObject {
     Texture tex = Texture.getInstance();
     private Animation playerWalk;
+    private Animation playerRun;
+    int movementSpeed;
 
-    public Player(int x, int y,ObjectID id) {
+    public Player(int x, int y,ObjectID id,int movementSpeed) {
         super(x, y,id);
         this.width = 128;
         this.height = 256;
         this.dir = 1;
-        this.playerWalk = new Animation(8, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
-                                           tex.player[6], tex.player[7], tex.player[8], tex.player[9]);
+        this.playerWalk = new Animation(movementSpeed, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
+                                           tex.player[6], tex.player[7], tex.player[8]);
     }
     
     @Override
@@ -45,8 +47,8 @@ public class Player extends GameObject {
     @Override //move method
     public void tick() {
         x += xVel;
+        y += yVel;
         playerWalk.runAnimation();
-        this.checkBorder();
     }
 
     @Override   
@@ -62,11 +64,11 @@ public class Player extends GameObject {
         else{
             if(this.dir == 1){
                 g.drawImage(tex.player[0],x,y,width,height,null);
-                g.drawRect(x, y, width, height);
+//                g.drawRect(x, y, width, height);//畫判斷框
             }
             if(this.dir == 0){
                 g.drawImage(tex.player[0],x + width,y,-width,height,null);
-                g.drawRect(x, y, width, height);
+//                g.drawRect(x, y, width, height);//畫判斷框
             }
         }
     }

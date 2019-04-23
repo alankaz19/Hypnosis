@@ -25,7 +25,6 @@ public class Picture extends GameObject {
         this.width = 128;
         this.height = 178;
         this.clickable =false;
-        this.dir = 0;
     }
     
     public void setOnClickable(boolean clickable) {

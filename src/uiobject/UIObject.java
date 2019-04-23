@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gameobject;
+package uiobject;
 
 /**
  *
  * @author Kai
  */
-public class Item {
+public class UIObject {
     
 }

@@ -29,6 +29,8 @@ public enum ObjectID {
     CLOSET(),
     
     DOOR(),
+    BOARD(),
+    PUZZLE()
     
     PUZZLE1(),
     PUZZLE2(),

@@ -59,7 +59,7 @@ public class Option extends GameState {
         }
         //返回主選單
         if(x >= 512 && x <= 822 && y >= 640 && y <= 685){
-            gsm.setState(gsm.MENU_STATE);
+            gsm.setState(GameStateManager.MENU_STATE);
         }
 
     }

@@ -30,11 +30,6 @@ public enum ObjectID {
     
     DOOR(),
     BOARD(),
-    PUZZLE()
-    
-    PUZZLE1(),
-    PUZZLE2(),
-    PUZZLE3(),
-    PUZZLE4(),
+    PUZZLE(),
     
 }

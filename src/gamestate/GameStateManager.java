@@ -23,10 +23,12 @@ public class GameStateManager {
     protected static final int MENU_STATE = 0;
     protected static final int OPTION_STATE = 1;
     protected static final int LEVEL1_STATE = 2;
-    protected static final int PUZZLE = 3;
+    protected static final int PUZZLE_GAME = 3;
     protected static final int LEVEL2_STATE = 4;
     protected static final int LEVEL3_STATE = 5;
-    protected static final int LEVEL4_STATE = 6;
+    protected static final int CLICK_GAME = 6;
+    protected static final int SCRATCH_GAME = 7;
+    protected static final int INTRO = 8;
     public static GameStateManager gsm;
 
     public static GameStateManager getInstance(){
@@ -54,14 +56,26 @@ public class GameStateManager {
         if(state == OPTION_STATE){
             gameStates[state] = new Option(this);
         }
+        if(state == INTRO){
+            gameStates[state] = new Intro(this);
+        }
         if(state == LEVEL1_STATE){
             gameStates[state] = new LevelOne(this);
         }
         if(state == LEVEL2_STATE){
             gameStates[state] = new LevelTwo(this);
         }
-        if(state == PUZZLE){
+        if(state == LEVEL3_STATE){
+            gameStates[state] = new LevelThree(this);
+        }
+        if(state == PUZZLE_GAME){
             gameStates[state] = new MiniPuzzleGame(this);
+        }
+        if(state == CLICK_GAME){
+            gameStates[state] = new MiniClickGame(this);
+        }
+        if(state == SCRATCH_GAME){
+            gameStates[state] = new MiniScratchOffGame(this);
         }
     }
 

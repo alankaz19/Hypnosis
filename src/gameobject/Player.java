@@ -64,11 +64,11 @@ public class Player extends GameObject {
         else{
             if(this.dir == 1){
                 g.drawImage(tex.player[0],x,y,width,height,null);
-                g.drawRect(x, y, width, height);
+//                g.drawRect(x, y, width, height);//畫判斷框
             }
             if(this.dir == 0){
                 g.drawImage(tex.player[0],x + width,y,-width,height,null);
-                g.drawRect(x, y, width, height);
+//                g.drawRect(x, y, width, height);//畫判斷框
             }
         }
     }

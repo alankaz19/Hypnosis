@@ -109,4 +109,9 @@ public class LevelThree extends GameState{
     public void mouseDragged(int x, int y) {
 
     }
+
+    @Override
+    public void mouseReleased(int x) {
+
+    }
 }

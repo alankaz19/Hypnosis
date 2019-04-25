@@ -75,5 +75,10 @@ public class MenuState extends GameState {
     @Override
     public void mouseDragged(int x, int y) {
     }
-    
+
+    @Override
+    public void mouseReleased(int x) {
+
+    }
+
 }

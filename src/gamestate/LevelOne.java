@@ -5,11 +5,14 @@ import game.Handler;
 import gameobject.ObjectID;
 import gameobject.Player;
 import gameobject.items.*;
-import java.awt.Graphics;
+
+import java.awt.*;
+
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
 import scene.Camera;
+import scene.PaintUtil;
 
 public class LevelOne extends GameState {
     private final int PLAYER = 0;
@@ -43,10 +46,10 @@ public class LevelOne extends GameState {
         backGround = new BackGround(1);
         cam = new Camera(0, 0,400);
         handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER,8));
-        handler.addObject(new Picture(818, ObjectID.PICTURE1));
-        handler.addObject(new Picture(820+640, ObjectID.PICTURE2));
-        handler.addObject(new Picture(820+1280, ObjectID.PICTURE3));
-        handler.addObject(new Picture(824+1920, ObjectID.PICTURE4));
+        handler.addObject(new Picture(818, ObjectID.PICTURE));
+        handler.addObject(new Picture(820+640, ObjectID.PICTURE));
+        handler.addObject(new Picture(824+1280, ObjectID.PICTURE));
+        handler.addObject(new Picture(826+1920, ObjectID.PICTURE));
         handler.addObject(new Door(824+2260, ObjectID.DOOR));
     }
 
@@ -63,18 +66,28 @@ public class LevelOne extends GameState {
     @Override
     public void render(Graphics g) {
         backGround.render(g);
-        
+
+
+        for (int i = 1; i < handler.getObject().size(); i++) {
+            if(handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))){
+                if(handler.getObject().get(i).getID() == ObjectID.PICTURE){
+                    g.translate(cam.getX(), cam.getY());
+                    PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(i).x,handler.getObject().get(i).y,128,178),6);
+                    g.translate(-cam.getX(), -cam.getY());
+                }
+                if(handler.getObject().get(i).getID() == ObjectID.DOOR){
+                    g.translate(cam.getX(), cam.getY());
+                    PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(i).x,handler.getObject().get(i).y,200,300),6);
+                    g.translate(-cam.getX(), -cam.getY());
+                }
+            }
+        }
         g.translate(cam.getX(), cam.getY()); //begin of cam
-        
+
         handler.render(g);
 
         g.translate(-cam.getX(), -cam.getY());//end of cam
-        
-//        for (int i = 1; i < handler.getObject().size(); i++) {
-//            if(handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))){
-//               handler.getObject().get(PLAYER).renderMsg(g, 50);
-//            }
-//        }    
+
         
     }
 
@@ -161,6 +174,11 @@ public class LevelOne extends GameState {
 
     @Override
     public void mouseDragged(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseReleased(int x) {
 
     }
 }

@@ -142,5 +142,10 @@ public class MiniScratchOffGame extends GameState{
     public void mouseDragged(int x, int y) {
         //瓜瓜瓜
     }
-   
+
+    @Override
+    public void mouseReleased(int x) {
+
+    }
+
 }

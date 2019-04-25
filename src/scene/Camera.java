@@ -41,7 +41,7 @@ public class Camera {
     
     public void tick(GameObject o){
         x = - o.getX() + this.position;
-        System.out.println("c X:"+this.x);
-        System.out.println("C Y:"+this.y);
+        //System.out.println("c X:"+this.x);
+        //System.out.println("C Y:"+this.y);
     }
 }

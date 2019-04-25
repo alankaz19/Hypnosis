@@ -5,8 +5,10 @@ import game.Handler;
 import gameobject.ObjectID;
 import gameobject.Player;
 import gameobject.items.*;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;

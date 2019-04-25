@@ -8,6 +8,9 @@ package gamestate;
 import gameobject.GameObject;
 import gameobject.ObjectID;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import resourcemanage.ImageResource;
+import scene.BackGround;
 import uiobject.DialogBox;
 import uiobject.Button;
 
@@ -16,6 +19,13 @@ import uiobject.Button;
  * @author Kai
  */
 public class MiniScratchOffGame extends GameState{
+    private static final BufferedImage ORIGINAL = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
+    private BufferedImage check;
+    private BufferedImage exit;
+    
+    private BackGround fakeBackground;
+    private int keyPressed, selection;
+    
     public static MiniScratchOffGame MINI_SCRATCH_GAME;
     
     private class Frame extends GameObject {

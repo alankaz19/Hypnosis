@@ -19,6 +19,8 @@ public class Texture {
 
     public BufferedImage[] background = new BufferedImage[7];
     public BufferedImage[] player = new BufferedImage[10];
+    public BufferedImage[] ui = new BufferedImage[10];
+    public BufferedImage[] cursor = new BufferedImage[2];
 
     //texture loader
     private static Texture tex;
@@ -56,6 +58,8 @@ public class Texture {
         background[4] = ImageResource.getInstance().getImage("/Art/Background/farMountain.png");
         background[5] = ImageResource.getInstance().getImage("/Art/Background/nearMountains.png");
         background[6] = ImageResource.getInstance().getImage("/Art/Background/grassGround.png");
+        
+        ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
     }
     
 }

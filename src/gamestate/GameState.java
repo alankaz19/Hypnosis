@@ -5,7 +5,10 @@
  */
 package gamestate;
 
+import gameobject.GameObject;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import uiobject.UIObject;
 
 /**
  *
@@ -14,9 +17,8 @@ import java.awt.Graphics;
 public abstract class GameState {
     
     protected GameStateManager gsm;
-
     
-    protected GameState(GameStateManager gsm){
+    protected GameState(GameStateManager gsm){  
         this.gsm = gsm;
         init();
     }

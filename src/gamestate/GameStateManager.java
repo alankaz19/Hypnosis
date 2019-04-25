@@ -19,6 +19,10 @@ public class GameStateManager {
     private int currentState;
     private int prevState;
     
+    //滑鼠座標
+    private int mouseX;
+    private int mouseY;
+    
     //各個狀態常數
     protected static final int MENU_STATE = 0;
     protected static final int OPTION_STATE = 1;
@@ -40,10 +44,6 @@ public class GameStateManager {
 
     public GameStateManager() {
         gameStates = new GameState[10];
-//        gameStates.add(new MenuState(this));
-//        gameStates.add(new Option(this));
-//        gameStates.add(new LevelOne(this));
-//        gameStates.add(new PuzzleGame(this));
         currentState = MENU_STATE;
         loadState(currentState);
     }
@@ -120,5 +120,18 @@ public class GameStateManager {
     }
     public  void mouseDragged(int x, int y){
         gameStates[currentState].mouseDragged(x, y);
+    }
+    
+    public void setMousePoiont(int x, int y){
+        this.mouseX = x;
+        this.mouseY = y;
+    }
+    
+    public int getMouseX() {
+        return this.mouseX;
+    }
+    
+    public int getMouseY() {
+        return this.mouseY;
     }
 }

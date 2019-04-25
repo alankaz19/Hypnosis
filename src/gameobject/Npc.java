@@ -5,10 +5,25 @@
  */
 package gameobject;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author Kai
  */
-public class Npc {
+public class Npc extends GameObject{
+
+    public Npc(int x, int y, ObjectID id) {
+        super(x, y, id);
+    }
+    
+
+    @Override
+    public void tick() {
+    }
+
+    @Override
+    public void render(Graphics g) {
+    }
     
 }

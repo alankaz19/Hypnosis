@@ -43,6 +43,9 @@ public class Game extends Canvas implements Runnable {
         public void mouseDragged(MouseEvent e){
             gsm.mouseDragged(e.getXOnScreen(),e.getYOnScreen());
         }
+        public void setMousePoint(MouseEvent e){
+            gsm.setMousePoiont(e.getX(), e.getY());
+        }
 
     }
     //end

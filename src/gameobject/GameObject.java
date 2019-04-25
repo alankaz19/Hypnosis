@@ -8,14 +8,16 @@ package gameobject;
 
 import java.awt.Graphics;
 import game.Game;
+import game.Updater;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.image.BufferedImage;
 /**
  *
  * @author Kai
  */
-public abstract class GameObject {
+public abstract class GameObject implements Updater{
     // 長寬
     protected int width;
     protected int height;
@@ -45,7 +47,9 @@ public abstract class GameObject {
     protected Color color;
     protected int msgFrame;
     protected int msgFrameCount;
-
+    protected int msgPosition;
+    protected BufferedImage chatBubble;
+    
 
     //需要給object 生成的位置
     public GameObject(int x, int y,ObjectID id){
@@ -54,11 +58,9 @@ public abstract class GameObject {
         this.id = id;
     }
 
-    public abstract void tick();
-
-    public abstract void render(Graphics g);
-    
-    public abstract ObjectID getID();
+    public ObjectID getID(){
+        return this.id;
+    }
 
     public int getX() {
         return x;
@@ -143,27 +145,49 @@ public abstract class GameObject {
     public void setIsCollision(boolean isCollision) {
         this.isCollision = isCollision;
     }
+
+    public void setMsgPosition(int msgPosition) {
+        this.msgPosition = msgPosition;
+    }
     
-    public void showMsg(String msg,int Duration,Color color){
+    public void showMsg(String msg,int Duration,Color color,int MsgPosition){
         this.msg = msg;
         this.color = color;
         this.msgFrame = Duration;
         this.msgFrameCount = 0;
+        this.msgPosition = MsgPosition;
     }
     
-    public void renderMsg(Graphics g,int MsgPosition){
+    public void renderMsg(Graphics g){
         if(msgFrameCount < msgFrame){
             Font font = g.getFont().deriveFont(20.0f);
             g.setFont(font);
             g.setColor(color);
             FontMetrics fm = g.getFontMetrics();
-            int sw = fm.stringWidth(msg);
             int sa = fm.getAscent();
-//            g.drawImage(null, x, y, null);//先畫對話框
-            g.drawString(msg , 400 , y + height/2 -sa/2 - 150);//再畫字
+            g.drawImage(chatBubble, 410 + msgPosition, y + height / 2 - chatBubble.getHeight() -130, null);//先畫對話框
+            drawString(g, msg, 430 + msgPosition,  y + height / 2 -sa / 2 - 245);
             msgFrameCount++;
         }
     }
     
-    
+    private void drawString(Graphics g, String text, int x, int y) {
+        int bubbleWidth = 11;
+        int count = 1;
+        for (int i = 0; i < i + bubbleWidth; i += bubbleWidth){
+            if(text.length() - i > bubbleWidth){
+                String line = text.substring(i, bubbleWidth * count++);
+                g.drawString(line, x, y += g.getFontMetrics().getHeight());
+            }
+            else if(text.length() <= bubbleWidth){
+                g.drawString(text, x, y += g.getFontMetrics().getHeight() * 2);
+                break;
+            }
+            else if(text.length() - i <= bubbleWidth){
+                String line = text.substring(i);
+                g.drawString(line, x, y += g.getFontMetrics().getHeight());
+                break;
+            }
+        }
+    }
 }

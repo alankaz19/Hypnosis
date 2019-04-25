@@ -12,9 +12,13 @@ import java.awt.image.BufferedImage;
 
 public class MiniPuzzleGame extends GameState {
     private static final BufferedImage ORIGINAL = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
+    private BufferedImage check;
+    private BufferedImage exit;
+
     private BackGround fakeBackground;
     Pieces[] pieces;
-    Board gameBoard;
+    private Board gameBoard;
+    private Pieces currentPiece;
     private int keyPressed, selection;
 
     //constructor
@@ -27,13 +31,29 @@ public class MiniPuzzleGame extends GameState {
     // class
     class Pieces extends GameObject{
         private BufferedImage img;
-        protected boolean correctPos;
-        public Pieces(int x, int y, ObjectID id, int r, int c) {
+        private boolean pos;
+        private int order;
+        private int centerX, centerY;
+        protected Pieces(int x, int y, ObjectID id, int r, int c, int order) {
             super(x,y,id);
             img = ORIGINAL.getSubimage(100 * r ,100 * c,100,100);
-            correctPos = false;
+            pos = false;
+            this.order = order;
         }
 
+        private boolean getPos(){
+            return pos;
+        }
+        private void getCenter(){
+            this.centerX = (this.x + this.width)/2;
+            this.centerY = (this.y + this.height)/2;
+        }
+        private int getCenterX(){
+            return this.centerX;
+        }
+        private int getCenterY(){
+            return this.centerY;
+        }
         @Override
         public void tick() {
 
@@ -56,32 +76,14 @@ public class MiniPuzzleGame extends GameState {
     class Board extends GameObject{
         BufferedImage img;
         Pieces[] pieces;
-        boolean [] checkMap;
+        boolean finished;
         public Board(int x, int y, ObjectID id, Pieces[] pieces) {
             super(x, y, id);
             img = ImageResource.getInstance().getImage("/Art/Game Material/puzzleBoard.png");
             this.pieces = pieces;
-            checkMap = new boolean[9];
-
-
+            finished = false;
         }
 
-        private boolean checkBoard(){
-            int count = 0;
-            for(int i = 0; i < 9; i++){
-                if(pieces[i].correctPos){
-                    count ++;
-                }
-                //error check
-                System.out.println(i + "  " + pieces[i].correctPos);
-            }
-           if(count == 9){
-               return true;
-           }
-           //error check
-           System.out.println(count);
-           return false;
-        }
 
         @Override
         public void tick() {
@@ -101,6 +103,21 @@ public class MiniPuzzleGame extends GameState {
     }
     //end
 
+
+    private boolean checkBoard(){
+        int count = 0;
+        for(int i = 0; i < 9; i++){
+            if(pieces[i].pos){
+                count ++;
+            }
+        }
+        if(count == 9){
+            gameBoard.finished = true;
+            return true;
+        }
+
+        return false;
+    }
     @Override
     public GameState getInstance() {
         return null;
@@ -108,13 +125,15 @@ public class MiniPuzzleGame extends GameState {
 
     @Override
     public void init() {
-        selection = 0;
         fakeBackground = new BackGround(1);
+        selection = 0;
         pieces = new Pieces[9];
-        //int random = (int)(Math.random()*9);
-        int x = 0,y = 0, r = 0, c = 0, count = 1;
+        check = ImageResource.getInstance().getImage("/Art/Game Material/checkButton.png");
+        exit = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");
+        int x = 200,y = 200, r = 0, c = 0, count = 1;
         for(int i = 0; i < 9; i++){
-            int random = (int)(Math.random()*9);
+            int randomX = (int)(Math.random()*600);
+            int randomY = (int)(Math.random()*600);
             if(count % 3 == 1){
                 c = 0;
             }
@@ -124,15 +143,19 @@ public class MiniPuzzleGame extends GameState {
             if(count % 3 == 0){
                 c = 2;
             }
-            pieces[i] = new Pieces(random * 75,random * 50,ObjectID.PUZZLE,r,c);
+            pieces[i] = new Pieces(x,y,ObjectID.PUZZLE,r,c,i);
+            x += 120;
             if(count % 3 == 0){
                 r++;
+                x = 200;
+                y += 120;
             }
             count++;
-            x +=30;
-            y +=30;
+
+
         }
         gameBoard = new Board(700,240,ObjectID.BOARD, pieces);
+        currentPiece = pieces[0];
 
     }
 
@@ -154,32 +177,26 @@ public class MiniPuzzleGame extends GameState {
         for( int i = 0; i < 9; i ++){
             pieces[i].render(g);
         }
-        PaintUtil.paintFocus((Graphics2D) g, new Rectangle(pieces[selection].x,pieces[selection].y,100,100),6);
-        //g.setColor(Color.black);
-        //g.drawRect(pieces[selection].x,pieces[selection].y,100,100);
+        if(!gameBoard.finished){
+            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(currentPiece.x, currentPiece.y,100,100),6);
+        }else{
+            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(gameBoard.getX(), gameBoard.getY(),300,300),6);
+            g.drawImage(exit,1000,440,100,100,null);
+        }
+
+
     }
 
     @Override
     public void keyPressed(int k) {
         keyPressed = k;
-        if( keyPressed == KeyEvent.VK_A){
-            if(selection != 0){
-                selection -= 1;
-            }
-        }
-        if( keyPressed == KeyEvent.VK_D){
-            if(selection != 8){
-                selection += 1;
-            }
-        }
+        getClosest(keyPressed);
         if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
-        if(keyPressed == KeyEvent.VK_ENTER){
-            System.out.println(gameBoard.checkBoard());
-        }
 
     }
+
 
     @Override
     public void keyReleased(int k) {
@@ -187,95 +204,99 @@ public class MiniPuzzleGame extends GameState {
             keyPressed = -1;
         }
 
+
     }
 
     @Override
     public void mousePressed(int x, int y) {
         int r = 100, c = 100;
-        if(x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y && y <= gameBoard.y + c){
-            if(selection == 0){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x;
-            pieces[selection].y = gameBoard.y;
+        if(x >= gameBoard.getX() && x <= gameBoard.getX() + 300 && y >= gameBoard.getY() && y < gameBoard.getY() + 300) {
+            if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y && y <= gameBoard.y + c && !pieces[selection].getPos()) {
+                if (currentPiece.order == 0) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x;
+                currentPiece.y = gameBoard.y;
 
-        }else if(x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y && y <= gameBoard.y + c){
-            if(selection == 3){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x + r;
-            pieces[selection].y = gameBoard.y;
+            } if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y && y <= gameBoard.y + c && !pieces[selection].getPos()) {
+                if (currentPiece.order == 3) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x + r;
+                currentPiece.y = gameBoard.y;
 
-        }else if(x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y && y <= gameBoard.y + c){
-            if(selection == 6){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x + (2 * r);
-            pieces[selection].y = gameBoard.y;
+            } if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y && y <= gameBoard.y + c && !pieces[selection].getPos()) {
+                if (currentPiece.order == 6) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x + (2 * r);
+                currentPiece.y = gameBoard.y;
 
-        }else if(x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c)){
-            if(selection == 1){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x;
-            pieces[selection].y = gameBoard.y + c;
+            } if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !pieces[selection].getPos()) {
+                if (currentPiece.order == 1) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x;
+                currentPiece.y = gameBoard.y + c;
 
-        }else if(x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c)){
-            if(selection == 4){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x + r;
-            pieces[selection].y = gameBoard.y + c;
+            } if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !pieces[selection].getPos()) {
+                if (currentPiece.order == 4) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x + r;
+                currentPiece.y = gameBoard.y + c;
 
-        }else if(x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c)){
-            if(selection == 7){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x + (2 * r);
-            pieces[selection].y = gameBoard.y + c;
+            }  if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !pieces[selection].getPos()) {
+                if (currentPiece.order == 7) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x + (2 * r);
+                currentPiece.y = gameBoard.y + c;
 
-        }else if(x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c)){
-            if(selection == 2){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x;
-            pieces[selection].y = gameBoard.y + (2 * c);
+            } if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !pieces[selection].getPos()) {
+                if (currentPiece.order == 2) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x;
+                currentPiece.y = gameBoard.y + (2 * c);
 
-        }else if(x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c)){
-            if(selection == 5){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x + r;
-            pieces[selection].y = gameBoard.y + (2 * c);
+            }  if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !pieces[selection].getPos()) {
+                if (currentPiece.order == 5) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x + r;
+                currentPiece.y = gameBoard.y + (2 * c);
 
-        }else if(x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c)){
-            if(selection == 8){
-                pieces[selection].correctPos = true;
-            }else{
-                pieces[selection].correctPos = false;
-            }
-            pieces[selection].x = gameBoard.x + (2 * r);
-            pieces[selection].y = gameBoard.y + (2 * c);
+            }  if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !pieces[selection].getPos()) {
+                if (currentPiece.order == 8) {
+                    currentPiece.pos = true;
+                } else {
+                    currentPiece.pos = false;
+                }
+                currentPiece.x = gameBoard.x + (2 * r);
+                currentPiece.y = gameBoard.y + (2 * c);
 
-        }else{
-            pieces[selection].x = x;
-            pieces[selection].y = y;
+            }
+
+        }
+        if (checkBoard() && x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {
+            gsm.setState(GameStateManager.LEVEL1_STATE);
         }
 
     }
@@ -287,4 +308,125 @@ public class MiniPuzzleGame extends GameState {
 
         //piece1.setPosition(piece1.screenX + deltaX, piece1.screenY + deltaY);
     }
+
+    @Override
+    public void mouseReleased(int x) {
+
+    }
+
+    private double getDistance(Pieces a, Pieces b){
+        double distance;
+        a.getCenter();
+        b.getCenter();
+
+        distance = Math.sqrt( Math.pow(Math.abs(a.getCenterX() - b.getCenterX()),2) +  Math.pow(Math.abs(a.getCenterY() - b.getCenterY()),2) - b.getCenterY());
+
+        return distance;
+    }
+
+    private void getClosest(int keyPressed){
+        int count = 0;
+        Pieces[] tmpPieces = new Pieces[8];
+        Pieces tmp;
+        currentPiece.getCenter();
+        //Get pieces on the right
+        if(keyPressed == KeyEvent.VK_D) {
+//            System.out.println(currentPiece.order + "  1");
+            for (int i = 0; i < 9; i++) {
+                if (i == currentPiece.order) {
+                    continue;
+                }
+                pieces[i].getCenter();
+//                System.out.println(pieces[i].getCenterX() +"  " + currentPiece.getCenterX());
+                if (pieces[i].getCenterX() > currentPiece.getCenterX()) {
+                    tmpPieces[count++] = pieces[i];
+                }
+            }
+            if(count != 0){
+                tmp = tmpPieces[0];
+                for(int i = 1; i < count; i ++){
+                    if(!(getDistance(tmp, currentPiece) <= getDistance(tmpPieces[i], currentPiece))){
+//                        System.out.println(getDistance(tmpPieces[i], currentPiece));
+                        tmp = tmpPieces[i];
+                        tmp.getCenter();
+
+                    }
+                }
+                currentPiece = tmp;
+            }
+        }
+        //Get pieces on the left
+        if(keyPressed == KeyEvent.VK_A) {
+            for (int i = 0; i < 9; i++) {
+                if (i == currentPiece.order) {
+                    continue;
+                }
+                pieces[i].getCenter();
+                if (pieces[i].getCenterX() < currentPiece.getCenterX()) {
+                    tmpPieces[count++] = pieces[i];
+                }
+            }
+            if(count != 0){
+                tmp = tmpPieces[0];
+                for(int i = 1; i < count; i ++){
+                    if(!(getDistance(tmp, currentPiece) <= getDistance(tmpPieces[i], currentPiece))){
+//                        System.out.println(getDistance(tmpPieces[i], currentPiece));
+                        tmp = tmpPieces[i];
+                        tmp.getCenter();
+
+                    }
+                }
+                currentPiece = tmp;
+            }
+        }
+        //Get pieces on the top side
+        if(keyPressed == KeyEvent.VK_W) {
+            for (int i = 0; i < 9; i++) {
+                if (i == currentPiece.order) {
+                    continue;
+                }
+                pieces[i].getCenter();
+                if (pieces[i].getCenterY() < currentPiece.getCenterY()) {
+                    tmpPieces[count++] = pieces[i];
+                }
+            }
+            if(count != 0){
+                tmp = tmpPieces[0];
+                for(int i = 1; i < count; i ++){
+                    if(!(getDistance(tmp, currentPiece) <= getDistance(tmpPieces[i], currentPiece))){
+//                        System.out.println(getDistance(tmpPieces[i], currentPiece));
+                        tmp = tmpPieces[i];
+                        tmp.getCenter();
+                    }
+                }
+                currentPiece = tmp;
+            }
+        }
+
+        //Get pieces on the down side
+        if(keyPressed == KeyEvent.VK_S) {
+            for (int i = 0; i < 9; i++) {
+                if (i == currentPiece.order) {
+                    continue;
+                }
+                pieces[i].getCenter();
+                if (pieces[i].getCenterY() > currentPiece.getCenterY()) {
+                    tmpPieces[count++] = pieces[i];
+                }
+            }
+            if(count != 0){
+                tmp = tmpPieces[0];
+                for(int i = 0; i < count; i ++){
+                    if(!(getDistance(tmp, currentPiece) <= getDistance(tmpPieces[i], currentPiece))){
+//                        System.out.println(getDistance(tmpPieces[i], currentPiece));
+                        tmp = tmpPieces[i];
+                        tmp.getCenter();
+                    }
+                }
+                currentPiece = tmp;
+            }
+        }
+
+    }
+
 }

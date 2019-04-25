@@ -47,6 +47,12 @@ public class Game extends Canvas implements Runnable {
             gsm.setMousePoiont(e.getX(), e.getY());
         }
 
+        @Override
+        public void mouseReleased(MouseEvent e){
+            gsm.mouseReleased(e.getButton());
+
+        }
+
     }
     //end
 
@@ -85,7 +91,7 @@ public class Game extends Canvas implements Runnable {
 
     @Override
     public void run() {
-        long lastTime = System.nanoTime();
+        long lastTime = System.nanoTime();  //track time taken by one tick
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
@@ -105,7 +111,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                //System.out.println("FPS: " + frames);
+                System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }

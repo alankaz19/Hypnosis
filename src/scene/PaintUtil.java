@@ -15,7 +15,9 @@ public class PaintUtil {
         Object obj = UIManager.getColor("focusRing");
         if(obj instanceof Color)
             return (Color)obj;
-        return new Color(255, 36, 87);
+        return new Color(255, 253, 34);
+
+
     }
 
     public static void paintFocus(Graphics2D g,Shape shape,int biggestStroke) {

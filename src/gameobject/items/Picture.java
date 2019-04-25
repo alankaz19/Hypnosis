@@ -43,7 +43,7 @@ public class Picture extends GameObject {
         if(clickable){
             this.Shining.renderAnimation(g, x, y);
        }
-        g.drawRect(x, y, width, height);
+        //g.drawRect(x, y, width, height);
 
     }
 

@@ -16,10 +16,8 @@ public enum ObjectID {
     
     FRAME(),
     
-    PICTURE1(),
-    PICTURE2(),
-    PICTURE3(),
-    PICTURE4(),
+    PICTURE(),
+
     
     PICTURE_IN_PUZZLE1(),
     PICTURE_IN_PUZZLE2(),

@@ -135,5 +135,10 @@ public class MiniClickGame extends GameState {
     @Override
     public void mouseDragged(int x, int y) {
     }
-   
+
+    @Override
+    public void mouseReleased(int x) {
+
+    }
+
 }

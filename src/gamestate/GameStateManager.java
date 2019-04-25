@@ -121,6 +121,9 @@ public class GameStateManager {
     public  void mouseDragged(int x, int y){
         gameStates[currentState].mouseDragged(x, y);
     }
+    public void mouseReleased(int x){
+        gameStates[currentState].mouseReleased(x);
+    }
     
     public void setMousePoiont(int x, int y){
         this.mouseX = x;

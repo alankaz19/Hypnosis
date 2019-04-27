@@ -65,6 +65,7 @@ public class LevelTwo extends GameState {
         grassGround.setVector(-3, 0);
 
         handler.addObject(new Player(0, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
+        handler.addObject(new Player(-200, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
         
         cam = new Camera(0, 0,400);
     }
@@ -108,6 +109,7 @@ public class LevelTwo extends GameState {
     public void event(){
 //        System.out.println("Player x: " +handler.getObject().get(PLAYER).getX());//pirnt 角色x
         handler.getObject().get(PLAYER).setxVel(1);
+        handler.getObject().get(1).setxVel(1);
     }
 
     @Override

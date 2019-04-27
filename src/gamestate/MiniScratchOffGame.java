@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import resourcemanage.ImageResource;
 import scene.BackGround;
+import scene.Texture;
 import uiobject.DialogBox;
 import uiobject.Button;
 
@@ -20,11 +21,10 @@ import uiobject.Button;
  */
 public class MiniScratchOffGame extends GameState{
     private static final BufferedImage ORIGINAL = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
-    private BufferedImage check;
     private BufferedImage exit;
     
     private BackGround fakeBackground;
-    private int keyPressed, selection;
+    private int keyPressed;
     
     public static MiniScratchOffGame MINI_SCRATCH_GAME;
     
@@ -44,49 +44,57 @@ public class MiniScratchOffGame extends GameState{
         public void render(Graphics g) {
             //畫圖
         }
-
-        @Override
-        public ObjectID getID() {
-            return this.id;
-        }
-
-
         
     }
     
-    private class Paint extends GameObject{
-    
-        private int keyPressed;
-        private boolean isVisible;
-        public Paint(int x, int y, ObjectID id) {
+    private class Mask extends GameObject {
+
+        public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
-            isVisible = false;
         }
         
         
         @Override
         public void tick() {
-            //點擊變亮
+            //
         }
 
         @Override
         public void render(Graphics g) {
             //畫圖
         }
-
-        @Override
-        public ObjectID getID() {
-            return this.id;
+        
+    }
+    
+    private class Paint extends GameObject{
+    
+        private boolean Visible;
+        public Paint(int x, int y, ObjectID id) {
+            super(x, y, id);
+            Visible = false;
+            this.width = 300;
+            this.height = 400;
         }
         
-        private void setIsVisible(){
-            //if 全亮 isVisible = true;
+        
+        @Override
+        public void tick() {
+        }
+
+        @Override
+        public void render(Graphics g) {
+            g.drawImage(Texture.getInstance().paint[0], x, y, null);
+        }
+        
+        public void setVisible(boolean Visible){
+            this.Visible = Visible;
         }
     }
     private Frame frame;
     private Paint paint;
+    private Mask mask;
     private DialogBox hint;
-    private Button continueButton;
+    private Button exitButton;
     private boolean isDone;
     
     
@@ -107,10 +115,10 @@ public class MiniScratchOffGame extends GameState{
     
     @Override
     public void init() {
-        frame = new Frame(300, 300, ObjectID.FRAME);
+        mask = new Mask(300, 300, ObjectID.FRAME);
         paint = new Paint(300, 300, ObjectID.PICTURE_IN_PUZZLE2);
         hint = new DialogBox();
-        continueButton = new Button();
+        exitButton = new Button();
         isDone = false;
     }
 
@@ -157,5 +165,6 @@ public class MiniScratchOffGame extends GameState{
     public void mouseReleased(int x) {
 
     }
+    
 
 }

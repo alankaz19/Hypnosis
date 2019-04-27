@@ -19,6 +19,7 @@ public class Texture {
 
     public BufferedImage[] background = new BufferedImage[7];
     public BufferedImage[] player = new BufferedImage[10];
+    public BufferedImage[] paint = new BufferedImage[6];
     public BufferedImage[] ui = new BufferedImage[10];
     public BufferedImage[] cursor = new BufferedImage[2];
 
@@ -58,6 +59,13 @@ public class Texture {
         background[4] = ImageResource.getInstance().getImage("/Art/Background/farMountain.png");
         background[5] = ImageResource.getInstance().getImage("/Art/Background/nearMountains.png");
         background[6] = ImageResource.getInstance().getImage("/Art/Background/grassGround.png");
+        
+        paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture1.png");
+        paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture2.png");
+        paint[2] = ImageResource.getInstance().getImage("/Art/Game Material/picture3.png");
+        paint[3] = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
+        paint[4] = ImageResource.getInstance().getImage("/Art/Game Material/qr.png");
+        paint[5] = ImageResource.getInstance().getImage("/Art/Game Material/jun.jpg");
         
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
     }

@@ -5,7 +5,8 @@
  */
 package gamestate;
 
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import game.Game;
@@ -56,6 +57,12 @@ public class MenuState extends GameState {
 
     @Override
     public void keyPressed(int k) {
+        if(k == KeyEvent.VK_2){
+            gsm.newState(GameStateManager.LEVEL2_STATE);
+        }
+        if(k == KeyEvent.VK_3){
+            gsm.newState(GameStateManager.SCRATCH_GAME);
+        }
 
     }
 

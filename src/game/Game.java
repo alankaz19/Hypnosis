@@ -40,8 +40,8 @@ public class Game extends Canvas implements Runnable {
             System.out.println(e.getX() + " " + e.getY());
         }
         @Override
-        public void mouseDragged(MouseEvent e){
-            gsm.mouseDragged(e.getXOnScreen(),e.getYOnScreen());
+        public void mouseMoved(MouseEvent e){
+            gsm.mouseDragged(e.getX(),e.getY());
         }
         public void setMousePoint(MouseEvent e){
             gsm.setMousePoiont(e.getX(), e.getY());
@@ -111,7 +111,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                //System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }

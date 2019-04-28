@@ -33,7 +33,8 @@ public class MiniPuzzleGame extends GameState {
         private BufferedImage img;
         private boolean pos;
         private int order;
-        private int centerX, centerY;
+        private int centerX;
+        private int centerY;
         protected Pieces(int x, int y, ObjectID id, int r, int c, int order) {
             super(x,y,id);
             img = ORIGINAL.getSubimage(100 * r ,100 * c,100,100);
@@ -131,8 +132,6 @@ public class MiniPuzzleGame extends GameState {
         exit = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");
         int x = 200,y = 200, r = 0, c = 0, count = 1;
         for(int i = 0; i < 9; i++){
-            int randomX = (int)(Math.random()*600);
-            int randomY = (int)(Math.random()*600);
             if(count % 3 == 1){
                 c = 0;
             }
@@ -150,8 +149,6 @@ public class MiniPuzzleGame extends GameState {
                 y += 120;
             }
             count++;
-
-
         }
         gameBoard = new Board(700,240,ObjectID.BOARD, pieces);
         currentPiece = pieces[0];
@@ -161,7 +158,6 @@ public class MiniPuzzleGame extends GameState {
     @Override
     public void tick() {
         event();
-
     }
 
     @Override
@@ -177,12 +173,11 @@ public class MiniPuzzleGame extends GameState {
             pieces[i].render(g);
         }
         if(!gameBoard.finished){
-            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(currentPiece.x, currentPiece.y,100,100),6);
+            PaintUtil.paintFocus((Graphics2D) g, new Rectangle((int)currentPiece.x, (int)currentPiece.y,100,100),6);
         }else{
-            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(gameBoard.getX(), gameBoard.getY(),300,300),6);
+            PaintUtil.paintFocus((Graphics2D) g, new Rectangle((int)gameBoard.getX(), (int)gameBoard.getY(),300,300),6);
             g.drawImage(exit,1000,440,100,100,null);
         }
-
 
     }
 
@@ -193,106 +188,74 @@ public class MiniPuzzleGame extends GameState {
         if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
-
     }
-
-
     @Override
     public void keyReleased(int k) {
         if(k == keyPressed){
             keyPressed = -1;
         }
-
-
     }
 
     @Override
     public void mousePressed(int x, int y) {
         int r = 100, c = 100;
         if(x >= gameBoard.getX() && x <= gameBoard.getX() + 300 && y >= gameBoard.getY() && y < gameBoard.getY() + 300) {
-            if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y && y <= gameBoard.y + c && !pieces[selection].getPos()) {
-                if (currentPiece.order == 0) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
+            if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y && y <= gameBoard.y + c && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 0;
                 currentPiece.x = gameBoard.x;
                 currentPiece.y = gameBoard.y;
 
-            } if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y && y <= gameBoard.y + c && !pieces[selection].getPos()) {
-                if (currentPiece.order == 3) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
+            }
+            if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y && y <= gameBoard.y + c && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 3;
                 currentPiece.x = gameBoard.x + r;
                 currentPiece.y = gameBoard.y;
 
-            } if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y && y <= gameBoard.y + c && !pieces[selection].getPos()) {
-                if (currentPiece.order == 6) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
+            }
+            if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y && y <= gameBoard.y + c && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 6;
                 currentPiece.x = gameBoard.x + (2 * r);
                 currentPiece.y = gameBoard.y;
 
-            } if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !pieces[selection].getPos()) {
-                if (currentPiece.order == 1) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
+            }
+            if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 1;
                 currentPiece.x = gameBoard.x;
                 currentPiece.y = gameBoard.y + c;
 
-            } if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !pieces[selection].getPos()) {
-                if (currentPiece.order == 4) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
+            }
+            if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 4;
                 currentPiece.x = gameBoard.x + r;
                 currentPiece.y = gameBoard.y + c;
 
-            }  if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !pieces[selection].getPos()) {
-                if (currentPiece.order == 7) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
+            }
+            if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 7;
                 currentPiece.x = gameBoard.x + (2 * r);
                 currentPiece.y = gameBoard.y + c;
 
-            } if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !pieces[selection].getPos()) {
-                if (currentPiece.order == 2) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
+            }
+            if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 2;
                 currentPiece.x = gameBoard.x;
-                currentPiece.y = gameBoard.y + (2 * c);
-
-            }  if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !pieces[selection].getPos()) {
-                if (currentPiece.order == 5) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
-                currentPiece.x = gameBoard.x + r;
-                currentPiece.y = gameBoard.y + (2 * c);
-
-            }  if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !pieces[selection].getPos()) {
-                if (currentPiece.order == 8) {
-                    currentPiece.pos = true;
-                } else {
-                    currentPiece.pos = false;
-                }
-                currentPiece.x = gameBoard.x + (2 * r);
                 currentPiece.y = gameBoard.y + (2 * c);
 
             }
+            if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 5;
+                currentPiece.x = gameBoard.x + r;
+                currentPiece.y = gameBoard.y + (2 * c);
 
+            }
+            if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !currentPiece.getPos()) {
+                currentPiece.pos = currentPiece.order == 8;
+                currentPiece.x = gameBoard.x + (2 * r);
+                currentPiece.y = gameBoard.y + (2 * c);
+            }
+        }else if(!currentPiece.getPos()){
+            currentPiece.x = x;
+            currentPiece.y = y;
         }
         if (checkBoard() && x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {
             gsm.setState(GameStateManager.LEVEL1_STATE);
@@ -302,10 +265,7 @@ public class MiniPuzzleGame extends GameState {
 
     @Override
     public void mouseDragged(int x, int y) {
-//        int deltaX = x - piece1.x;
-//        int deltaY = y - piece1.y;
 
-        //piece1.setPosition(piece1.screenX + deltaX, piece1.screenY + deltaY);
     }
 
     @Override
@@ -313,6 +273,7 @@ public class MiniPuzzleGame extends GameState {
 
     }
 
+    //distance between two puzzles
     private double getDistance(Pieces a, Pieces b){
         double distance;
         a.getCenter();
@@ -323,6 +284,7 @@ public class MiniPuzzleGame extends GameState {
         return distance;
     }
 
+    //choose the closest puzzle
     private void getClosest(int keyPressed){
         int count = 0;
         Pieces[] tmpPieces = new Pieces[8];

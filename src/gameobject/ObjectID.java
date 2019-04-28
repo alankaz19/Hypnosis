@@ -17,6 +17,7 @@ public enum ObjectID {
     FRAME(),
     
     PICTURE(),
+    OBSTACLE(),
 
     
     PICTURE_IN_PUZZLE1(),

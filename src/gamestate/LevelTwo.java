@@ -1,13 +1,19 @@
 package gamestate;
 
 import game.Game;
-import game.Handler;
+import gameobject.Npc;
 import gameobject.ObjectID;
 import gameobject.Player;
-import java.awt.Graphics;
+
+import java.awt.*;
+
+import gameobject.items.Obstacle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+
 import scene.Camera;
 import scene.ParallaxBackGround;
 import scene.Snow;
@@ -15,7 +21,6 @@ import scene.Texture;
 
 public class LevelTwo extends GameState {
 
-    private final int PLAYER = 0;
     private final int BACKGROUND2 = 3;
     private final int FARMOUNTAIN = 4;
     private final int NEARMOUNTAINS = 5;
@@ -25,10 +30,14 @@ public class LevelTwo extends GameState {
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
     private ParallaxBackGround road;
-    private Handler handler;
+    private ParallaxBackGround grassGround;
+    private Player player;
+    private Npc doppelganger;
+    private ArrayList<Obstacle> obstacleList;
     private int keyPressed;
     private Camera cam;
     private Snow[] snow;
+    private int timeC, spawnT, camPos;
 
     public static LevelTwo LevelTwo;
 
@@ -46,11 +55,13 @@ public class LevelTwo extends GameState {
 
     @Override
     public void init() {
+        timeC = 0;
+        spawnT = 0;
+        camPos = 400;
         snow  = new Snow[200];
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }
-        handler = new Handler();
         background2 = new BackGround(BACKGROUND2){
              @Override
             public void render(Graphics g) {
@@ -64,61 +75,124 @@ public class LevelTwo extends GameState {
         road  = new ParallaxBackGround(Texture.getInstance().background[ROAD],0);
         road.setVector(-4, 0);
 
-        handler.addObject(new Player(0, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
-        handler.addObject(new Player(-200, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
-        
-        cam = new Camera(0, 0,400);
+        //player
+        player = (new Player(0, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
+        player.setxVel(1);
+        player.setyVel(1);
+        player.setHeight(128);
+        player.setWidth(64);
+        //npc
+        doppelganger = new Npc(-400,Game.HEIGHT / 2+75,ObjectID.OBSTACLE,3, player);
+        doppelganger.setxVel(1);
+        //obstacle
+        obstacleList = new ArrayList<>();
+        obstacleList.add(new Obstacle(1000,Game.HEIGHT / 2+140, ObjectID.OBSTACLE,"/Art/Game Material/obstacle.png"));
+        //obstacle = new Obstacle(800,Game.HEIGHT / 2+140, ObjectID.DOOR,"/Art/Game Material/obstacle.png");
+
+        cam = new Camera(0, 0,camPos);
     }
 
     @Override
     public void tick() {
         event();
-        for (int i = 0; i < snow.length; i++) {
-            snow[i].tick();
+        for (Snow snow1 : snow) {
+            snow1.tick();
         }
-        handler.tick();
+        player.tick();
+        doppelganger.tick();
+        obstacleList.get(0).tick();
         background2.tick();
         nearMountain.tick();
         farMountain.tick();
         road.tick();
-        cam.tick(handler.getObject().get(PLAYER));
+        cam.tick(player);
     }
 
     
 
     @Override
     public void render(Graphics g) {
-        
         background2.render(g);
         farMountain.render(g);
         nearMountain.render(g);
         road.render(g);
         
         g.translate(cam.getX(), cam.getY()); //begin of cam
-        handler.render(g);
-        
-        g.translate(-cam.getX(), -cam.getY());//end of cam
-        for (int i = 0; i < snow.length; i++) {
-            snow[i].redner(g);
-        }
+        player.render(g);
+        doppelganger.render(g);
 
-        
+        if(!obstacleList.isEmpty())
+        obstacleList.get(0).render(g);
+
+        g.translate(-cam.getX(), -cam.getY());//end of cam
+        for (Snow snow1 : snow) {
+            snow1.redner(g);
+        }
+        grassGround.render(g);
+
     }
 
     @Override
     public void event(){
-//        System.out.println("Player x: " +handler.getObject().get(PLAYER).getX());//pirnt 角色x
-        handler.getObject().get(PLAYER).setxVel(1);
-        handler.getObject().get(1).setxVel(1);
+        timeC++;
+
+        //NPC CHARGE
+        if(timeC++ >=300 && (doppelganger.getX() <=doppelganger.getX() + 1000)){
+            if(doppelganger.getxVel() <= 7){
+                doppelganger.setxVel(doppelganger.getxVel()+1);
+            }
+        }
+        //END
+
+        //CollisionCheck
+        if(((player.checkCollision(obstacleList.get(0))) || player.checkCollision(doppelganger)) && !player.getIsCollision()){
+            player.setIsCollision(true);
+            System.out.println("COLLAPSE");
+        }
+
+        //NPC RESPAWN
+        if(doppelganger.getX() >= player.getX()+ 1000){
+            doppelganger.setxVel(1);
+            spawnT ++;
+            if(spawnT > 100){
+                doppelganger.setX(player.getX()-400);
+                timeC = 0;
+                spawnT = 0;
+            }
+        }
+        //END
+
+        if(obstacleList.get(0).getX() <= player.getX() - 400){
+            obstacleList.remove(0);
+        }
+        if(obstacleList.isEmpty()){
+            obstacleList.add(new Obstacle(player.getX()+ 1000,Game.HEIGHT / 2+140, ObjectID.DOOR,"/Art/Game Material/obstacle.png"));
+            player.setIsCollision(false);
+        }
+
+        //Player Jump
+        if(keyPressed == KeyEvent.VK_SPACE && player.getyVel() != 30 && !player.isJumping()){
+            player.setyVel(-27);
+            player.setJumping(true);
+        }else if(player.getY() < 410 || player.getY() == 350){
+            player.setyVel(player.getyVel() + 2);
+
+        }else{
+            player.setJumping(false);
+        }
+        //END
+
     }
+
+
 
     @Override
     public void keyPressed(int k) {
         keyPressed = k;
-        if(k == KeyEvent.VK_ESCAPE){
+        if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
         }
-        if(k == KeyEvent.VK_ENTER){
+        if(keyPressed == KeyEvent.VK_ENTER){
             gsm.setState(GameStateManager.MENU_STATE);
         }
     }
@@ -129,9 +203,7 @@ public class LevelTwo extends GameState {
             keyPressed = -1;
         }
     }
-    
-   
-    
+
     @Override
     public void mousePressed(int x, int y) {
       

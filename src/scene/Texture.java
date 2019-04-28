@@ -15,10 +15,14 @@ import resourcemanage.ImageResource;
 public class Texture {
     
     SpriteSheet playerSheet;
-    private BufferedImage player_sheet = null;
+    SpriteSheet npcSheet;
+    private BufferedImage player_sheet;
+    private BufferedImage npc_Sheet;
 
     public BufferedImage[] background = new BufferedImage[7];
     public BufferedImage[] player = new BufferedImage[10];
+    public BufferedImage[] playParkour;
+    public BufferedImage[] npc = new BufferedImage[3];
     public BufferedImage[] paint = new BufferedImage[6];
     public BufferedImage[] ui = new BufferedImage[10];
     public BufferedImage[] cursor = new BufferedImage[2];
@@ -36,6 +40,8 @@ public class Texture {
     public Texture() {
         player_sheet = ImageResource.getInstance().getImage("/Art/Character/testing2.png");
         playerSheet = new SpriteSheet(player_sheet);
+        npc_Sheet = ImageResource.getInstance().getImage("/Art/Character/Dragon.png");
+        npcSheet = new SpriteSheet(npc_Sheet);
         getTextures();
     }
     
@@ -51,7 +57,11 @@ public class Texture {
         player[7] = playerSheet.grabImage(8, 1, 64, 128);
         player[8] = playerSheet.grabImage(9, 1, 64, 128);
         player[9] = playerSheet.grabImage(10, 1, 64, 128);
-        
+
+        npc[0] = npcSheet.grabImage(1,2,80,64);
+        npc[1] = npcSheet.grabImage(2,2,80,64);
+        npc[2] = npcSheet.grabImage(3,2,80,64);
+
         background[0] = ImageResource.getInstance().getImage("/Art/Background/MenuEx1.png");
         background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");
         background[2] = ImageResource.getInstance().getImage("/Art/Background/TestOption.png");
@@ -66,7 +76,7 @@ public class Texture {
         paint[3] = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
         paint[4] = ImageResource.getInstance().getImage("/Art/Game Material/qr.png");
         paint[5] = ImageResource.getInstance().getImage("/Art/Game Material/jun.jpg");
-        
+
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
     }
     

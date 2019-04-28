@@ -67,7 +67,7 @@ public class MenuState extends GameState {
     public void mousePressed(int x, int y) {
         //開始遊戲
         if(x >= 295 && x <= 434 && y >= 456 && y <= 500){
-            gsm.newState(GameStateManager.CLICK_GAME);
+            gsm.newState(GameStateManager.LEVEL2_STATE);
         }
 
     }

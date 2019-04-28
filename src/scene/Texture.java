@@ -58,7 +58,7 @@ public class Texture {
         background[3] = ImageResource.getInstance().getImage("/Art/Background/backGround2.png");
         background[4] = ImageResource.getInstance().getImage("/Art/Background/farMountain.png");
         background[5] = ImageResource.getInstance().getImage("/Art/Background/nearMountains.png");
-        background[6] = ImageResource.getInstance().getImage("/Art/Background/grassGround.png");
+        background[6] = ImageResource.getInstance().getImage("/Art/Background/road.png");
         
         paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture1.png");
         paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture2.png");

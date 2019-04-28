@@ -19,12 +19,12 @@ public class LevelTwo extends GameState {
     private final int BACKGROUND2 = 3;
     private final int FARMOUNTAIN = 4;
     private final int NEARMOUNTAINS = 5;
-    private final int GRASSGROUND = 6;
+    private final int ROAD = 6;
     
     private BackGround background2;
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
-    private ParallaxBackGround grassGround;
+    private ParallaxBackGround road;
     private Handler handler;
     private int keyPressed;
     private Camera cam;
@@ -58,11 +58,11 @@ public class LevelTwo extends GameState {
             }
         };
         farMountain = new ParallaxBackGround(Texture.getInstance().background[FARMOUNTAIN],1);
-        farMountain.setVector(-4, 0);
+        farMountain.setVector(-0.1, 0);
         nearMountain = new ParallaxBackGround(Texture.getInstance().background[NEARMOUNTAINS],1);
-        nearMountain.setVector(-0.3, 0);
-        grassGround  = new ParallaxBackGround(Texture.getInstance().background[GRASSGROUND],1);
-        grassGround.setVector(-3, 0);
+        nearMountain.setVector(-0.2, 0);
+        road  = new ParallaxBackGround(Texture.getInstance().background[ROAD],0);
+        road.setVector(-4, 0);
 
         handler.addObject(new Player(0, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
         handler.addObject(new Player(-200, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
@@ -80,7 +80,7 @@ public class LevelTwo extends GameState {
         background2.tick();
         nearMountain.tick();
         farMountain.tick();
-        grassGround.tick();
+        road.tick();
         cam.tick(handler.getObject().get(PLAYER));
     }
 
@@ -90,8 +90,9 @@ public class LevelTwo extends GameState {
     public void render(Graphics g) {
         
         background2.render(g);
+        farMountain.render(g);
         nearMountain.render(g);
-//        farMountain.render(g);
+        road.render(g);
         
         g.translate(cam.getX(), cam.getY()); //begin of cam
         handler.render(g);
@@ -100,7 +101,6 @@ public class LevelTwo extends GameState {
         for (int i = 0; i < snow.length; i++) {
             snow[i].redner(g);
         }
-        grassGround.render(g);
 
         
     }

@@ -45,11 +45,11 @@ public class Animation {
         count++;
     }
     
-    public void renderAnimation(Graphics g,int x,int y){
+    public void renderAnimation(Graphics g, int x, int y){
         g.drawImage(currentImg, x, y, null);
     }
     
-    public void renderAnimation(Graphics g,int x,int y,int scaleX, int scaleY){
+    public void renderAnimation(Graphics g, int x, int y, int scaleX, int scaleY){
     g.drawImage(currentImg, x, y, scaleX, scaleY, null);
     }
     

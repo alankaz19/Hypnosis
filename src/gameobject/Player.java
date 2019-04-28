@@ -18,17 +18,27 @@ public class Player extends GameObject {
     Texture tex = Texture.getInstance();
     private Animation playerWalk;
     private Animation playerRun;
-    int movementSpeed;
+    boolean jumping;
+
 
     public Player(int x, int y,ObjectID id,int movementSpeed) {
         super(x, y,id);
         this.width = 128;
         this.height = 256;
         this.dir = 1;
+        this.jumping = false;
         this.playerWalk = new Animation(movementSpeed, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
                                            tex.player[6], tex.player[7], tex.player[8]);
     }
-    
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
+
     @Override
     public boolean checkBorder() {
         this.xDest = x + xVel;
@@ -48,6 +58,12 @@ public class Player extends GameObject {
     public void tick() {
         x += xVel;
         y += yVel;
+        if(y >= 410){
+            this.yVel = 0;
+        }
+        if( y <= 250){
+            this.y = 250;
+        }
         playerWalk.runAnimation();
     }
 

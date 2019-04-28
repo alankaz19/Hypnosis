@@ -6,6 +6,7 @@
 package gamestate;
 
 import java.awt.Graphics;
+import java.util.Stack;
 
 /**
  *
@@ -14,6 +15,7 @@ import java.awt.Graphics;
 public class GameStateManager {
     
     private GameState[] gameStates;
+    Stack stateStorage;
     
     //現在狀態 
     private int currentState;

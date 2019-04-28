@@ -91,7 +91,23 @@ public abstract class GameObject {
     public int getHeight() {
         return height;
     }
-    
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public void setID(ObjectID id){
         this.id = id;
     }
@@ -160,7 +176,7 @@ public abstract class GameObject {
             int sw = fm.stringWidth(msg);
             int sa = fm.getAscent();
 //            g.drawImage(null, x, y, null);//先畫對話框
-            g.drawString(msg , 400 , y + height/2 -sa/2 - 150);//再畫字
+            g.drawString(msg , 400, (int)(y + (height/2) - (sa / 2) - 150));//再畫字
             msgFrameCount++;
         }
     }

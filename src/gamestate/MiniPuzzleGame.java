@@ -93,7 +93,7 @@ public class MiniPuzzleGame extends GameState {
 
         @Override
         public void render(Graphics g) {
-            g.drawImage(img,(int)x,(int)y,300,300,null);
+            g.drawImage(img,x,y,300,300,null);
 
         }
 

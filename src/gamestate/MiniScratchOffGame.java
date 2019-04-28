@@ -7,11 +7,13 @@ package gamestate;
 
 import gameobject.GameObject;
 import gameobject.ObjectID;
-import java.awt.Graphics;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+
 import resourcemanage.ImageResource;
-import scene.BackGround;
-import scene.Texture;
 import uiobject.DialogBox;
 import uiobject.Button;
 
@@ -20,83 +22,70 @@ import uiobject.Button;
  * @author Kai
  */
 public class MiniScratchOffGame extends GameState{
-    private static final BufferedImage ORIGINAL = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
-    private BufferedImage exit;
-    
-    private BackGround fakeBackground;
-    private int keyPressed;
-    
+
     public static MiniScratchOffGame MINI_SCRATCH_GAME;
-    
-    private class Frame extends GameObject {
+    private int mouseX, mouseY;
+    private Mask mask;
+    private Riddle riddle;
 
-        public Frame(int x, int y, ObjectID id) {
-            super(x, y, id);
-        }
-        
-        
-        @Override
-        public void tick() {
-            //
-        }
-
-        @Override
-        public void render(Graphics g) {
-            //畫圖
-        }
-        
-    }
-    
-    private class Mask extends GameObject {
+    class Mask extends GameObject {
+        BufferedImage img;
 
         public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
+            this.img = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
         }
-        
-        
+
         @Override
         public void tick() {
-            //
+
         }
 
         @Override
         public void render(Graphics g) {
-            //畫圖
+            g.drawImage(img, x,y,400,400,null);
+
         }
-        
+
+        @Override
+        public ObjectID getID() {
+            return null;
+        }
     }
-    
-    private class Paint extends GameObject{
-    
-        private boolean Visible;
-        public Paint(int x, int y, ObjectID id) {
+
+    class Riddle extends GameObject{
+        BufferedImage img;
+
+        public Riddle(int x, int y, ObjectID id) {
             super(x, y, id);
-            Visible = false;
-            this.width = 300;
-            this.height = 400;
+            this.img = ImageResource.getInstance().getImage("/Art/Game Material/girl.png");
         }
-        
-        
+
         @Override
         public void tick() {
+
         }
 
         @Override
         public void render(Graphics g) {
-            g.drawImage(Texture.getInstance().paint[0], x, y, null);
+            g.setClip(new Ellipse2D.Float(mouseX,mouseY, 100,100));
+            g.drawImage(img,x,y,400,400,null);
         }
-        
-        public void setVisible(boolean Visible){
-            this.Visible = Visible;
+
+        @Override
+        public ObjectID getID() {
+            return null;
         }
     }
-    private Frame frame;
-    private Paint paint;
-    private Mask mask;
-    private DialogBox hint;
-    private Button exitButton;
-    private boolean isDone;
-    
+
+    @Override
+    public MiniScratchOffGame getInstance() {
+        if(MINI_SCRATCH_GAME == null){
+            MINI_SCRATCH_GAME = new MiniScratchOffGame(GameStateManager.getInstance());
+        }
+        return MINI_SCRATCH_GAME;
+    }
+
     
     public MiniScratchOffGame(GameStateManager gsm) {
         super(gsm);
@@ -104,30 +93,17 @@ public class MiniScratchOffGame extends GameState{
     }
     
 
-    @Override
-    public MiniScratchOffGame getInstance() {
-         if(MINI_SCRATCH_GAME == null){
-            MINI_SCRATCH_GAME = new MiniScratchOffGame(GameStateManager.getInstance());
-        }
-        return MINI_SCRATCH_GAME;
-    }
+
     
     
     @Override
     public void init() {
-        mask = new Mask(300, 300, ObjectID.FRAME);
-        paint = new Paint(300, 300, ObjectID.PICTURE_IN_PUZZLE2);
-        hint = new DialogBox();
-        exitButton = new Button();
-        isDone = false;
+         mask = new Mask (700,240,ObjectID.PICTURE);
+         riddle = new Riddle(700,240,ObjectID.PICTURE);
     }
 
     @Override
     public void tick() {
-        frame.tick();
-        paint.tick();
-//        hint.tick();
-//        continueButton.tick();
         
     }
 
@@ -137,14 +113,15 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void render(Graphics g) {
-        frame.render(g);
-        paint.render(g);
-//        hint.render();
-//        continueButton.render();
+        mask.render(g);
+        riddle.render(g);
     }
 
     @Override
     public void keyPressed(int k) {
+        if(k == KeyEvent.VK_ESCAPE){
+            gsm.setState(GameStateManager.MENU_STATE);
+        }
     }
 
     @Override
@@ -158,13 +135,13 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void mouseDragged(int x, int y) {
-        //瓜瓜瓜
+        mouseX = x;
+        mouseY = y;
     }
 
     @Override
     public void mouseReleased(int x) {
 
     }
-    
 
 }

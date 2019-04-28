@@ -60,6 +60,9 @@ public class MenuState extends GameState {
         if(k == KeyEvent.VK_2){
             gsm.newState(GameStateManager.LEVEL2_STATE);
         }
+        if(k == KeyEvent.VK_3){
+            gsm.newState(GameStateManager.SCRATCH_GAME);
+        }
 
     }
 

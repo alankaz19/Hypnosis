@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable {
             System.out.println(e.getX() + " " + e.getY());
         }
         @Override
-        public void mouseDragged(MouseEvent e){
+        public void mouseMoved(MouseEvent e){
             gsm.mouseDragged(e.getX(),e.getY());
         }
         public void setMousePoint(MouseEvent e){

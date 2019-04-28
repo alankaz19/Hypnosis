@@ -12,14 +12,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/MenuState.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Game.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/LevelOne.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/GameState.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Texture.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/GameStateManager.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Window.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Handler.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/Option.java</file>
             <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/MiniPuzzleGame.java</file>
+            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/MiniClickGame.java</file>
         </group>
     </open-files>
 </project-private>

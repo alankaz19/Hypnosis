@@ -5,26 +5,27 @@ import game.Handler;
 import gameobject.ObjectID;
 import gameobject.Player;
 import gameobject.items.*;
-
 import java.awt.*;
-
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
+import javax.swing.JTextArea;
 import scene.Camera;
 import scene.PaintUtil;
 
 public class LevelOne extends GameState {
     private final int PLAYER = 0;
-    private final int PICTURE1 = 1;
-    private final int PICTURE2 = 2;
-    private final int PICTURE3 = 3;
-    private final int PICTURE4 = 4;
+
+    private final int MSG_POSITION = 0;
     
     private Handler handler;
     private BackGround backGround;
     private int keyPressed;
     private Camera cam;
+    private String playerMsg;
 
     public static LevelOne LevelOne;
 
@@ -44,7 +45,9 @@ public class LevelOne extends GameState {
     public void init() {
         handler = new Handler();
         backGround = new BackGround(1);
+        
         cam = new Camera(0, 0,400);
+        playerMsg = "一二三四五六七八九十";
         handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER,8));
         handler.addObject(new Picture(818, ObjectID.PICTURE));
         handler.addObject(new Picture(820+640, ObjectID.PICTURE));
@@ -89,19 +92,24 @@ public class LevelOne extends GameState {
         g.translate(-cam.getX(), -cam.getY());//end of cam
 
         
+        handler.getObject().get(PLAYER).renderMsg(g);
+        
     }
 
     @Override
     public void event(){
-//        System.out.println("Player x: " +handler.getObject().get(PLAYER).getX());//pirnt 角色x
+        System.out.println("Player x: " +handler.getObject().get(PLAYER).getX());//pirnt 角色x
 
         for (int i = 1; i < handler.getObject().size(); i++) {
             if(handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))){
                 handler.getObject().get(i).setIsCollision(true);
-//                handler.getObject().get(PLAYER).showMsg("collision測試", 150, Color.BLACK);
             }else{
                 handler.getObject().get(i).setIsCollision(false);
             }
+        }
+        
+        if(handler.getObject().get(PLAYER).getX() == 0){
+            handler.getObject().get(PLAYER).showMsg(playerMsg, 500, Color.BLACK,MSG_POSITION);
         }
         
         if(keyPressed == KeyEvent.VK_D){
@@ -171,7 +179,7 @@ public class LevelOne extends GameState {
             }
         
     }
-
+    
     @Override
     public void mouseDragged(int x, int y) {
 

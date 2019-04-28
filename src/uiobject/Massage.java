@@ -5,20 +5,10 @@
  */
 package uiobject;
 
-import java.awt.Graphics;
-
 /**
  *
  * @author Kai
  */
-public class Frame extends UIObject{
-
-    @Override
-    public void tick() {
-    }
-
-    @Override
-    public void render(Graphics g) {
-    }
+public class Massage {
     
 }

@@ -57,7 +57,7 @@ public class MiniPuzzleGame extends GameState {
         }
         @Override
         public void tick() {
-
+            
         }
 
         public void render(Graphics g) {
@@ -129,7 +129,6 @@ public class MiniPuzzleGame extends GameState {
         fakeBackground = new BackGround(1);
         selection = 0;
         pieces = new Pieces[9];
-        check = ImageResource.getInstance().getImage("/Art/Game Material/checkButton.png");
         exit = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");
         int x = 200,y = 200, r = 0, c = 0, count = 1;
         for(int i = 0; i < 9; i++){

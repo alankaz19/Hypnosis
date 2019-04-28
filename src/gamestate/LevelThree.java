@@ -19,7 +19,7 @@ import scene.Texture;
  * @author Kai
  */
 public class LevelThree extends GameState{
-        
+    
     private final int PLAYER = 0;
     private final int EVIL = 1;
     private final int BACKGROUND = 10;//not correct number yet
@@ -45,6 +45,7 @@ public class LevelThree extends GameState{
 
     @Override
     public void init() {
+        
         handler = new Handler();
         background = new BackGround(BACKGROUND){
              @Override

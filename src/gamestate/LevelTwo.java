@@ -24,11 +24,12 @@ public class LevelTwo extends GameState {
     private final int BACKGROUND2 = 3;
     private final int FARMOUNTAIN = 4;
     private final int NEARMOUNTAINS = 5;
-    private final int GRASSGROUND = 6;
-
+    private final int ROAD = 6;
+    
     private BackGround background2;
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
+    private ParallaxBackGround road;
     private ParallaxBackGround grassGround;
     private Player player;
     private Npc doppelganger;
@@ -68,25 +69,25 @@ public class LevelTwo extends GameState {
             }
         };
         farMountain = new ParallaxBackGround(Texture.getInstance().background[FARMOUNTAIN],1);
-        farMountain.setVector(-4, 0);
+        farMountain.setVector(-0.1, 0);
         nearMountain = new ParallaxBackGround(Texture.getInstance().background[NEARMOUNTAINS],1);
-        nearMountain.setVector(-0.3, 0);
-        grassGround  = new ParallaxBackGround(Texture.getInstance().background[GRASSGROUND],1);
-        grassGround.setVector(-3, 0);
+        nearMountain.setVector(-0.2, 0);
+        road  = new ParallaxBackGround(Texture.getInstance().background[ROAD],0);
+        road.setVector(-4, 0);
 
         //player
-        player = (new Player(0, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
+        player = (new Player(0, Game.HEIGHT - 30 - 128, ObjectID.PLAYER,5));
         player.setxVel(1);
         player.setyVel(1);
         player.setHeight(128);
         player.setWidth(64);
         //npc
-        doppelganger = new Npc(-400,Game.HEIGHT / 2+75,ObjectID.OBSTACLE,3, player);
+        doppelganger = new Npc(-400,Game.HEIGHT /2 +30 ,ObjectID.OBSTACLE,3, player);
         doppelganger.setxVel(1);
         //obstacle
         obstacleList = new ArrayList<>();
-        obstacleList.add(new Obstacle(1000,Game.HEIGHT / 2+140, ObjectID.OBSTACLE,"/Art/Game Material/obstacle.png"));
-        //obstacle = new Obstacle(800,Game.HEIGHT / 2+140, ObjectID.DOOR,"/Art/Game Material/obstacle.png");
+        obstacleList.add(new Obstacle(1000,Game.HEIGHT -30 -140, ObjectID.OBSTACLE,"/Art/Game Material/obstacle.png"));
+//        obstacle = new Obstacle(800,Game.HEIGHT / 2+140, ObjectID.DOOR,"/Art/Game Material/obstacle.png");
 
         cam = new Camera(0, 0,camPos);
     }
@@ -103,7 +104,7 @@ public class LevelTwo extends GameState {
         background2.tick();
         nearMountain.tick();
         farMountain.tick();
-        grassGround.tick();
+        road.tick();
         cam.tick(player);
     }
 
@@ -112,8 +113,9 @@ public class LevelTwo extends GameState {
     @Override
     public void render(Graphics g) {
         background2.render(g);
+        farMountain.render(g);
         nearMountain.render(g);
-//        farMountain.render(g);
+        road.render(g);
         
         g.translate(cam.getX(), cam.getY()); //begin of cam
         player.render(g);
@@ -126,9 +128,7 @@ public class LevelTwo extends GameState {
         for (Snow snow1 : snow) {
             snow1.redner(g);
         }
-
-
-        grassGround.render(g);
+        road.render(g);
 
     }
 
@@ -166,7 +166,7 @@ public class LevelTwo extends GameState {
             obstacleList.remove(0);
         }
         if(obstacleList.isEmpty()){
-            obstacleList.add(new Obstacle(player.getX()+ 1000,Game.HEIGHT / 2+140, ObjectID.DOOR,"/Art/Game Material/obstacle.png"));
+            obstacleList.add(new Obstacle(player.getX()+ 1000,Game.HEIGHT - 140, ObjectID.DOOR,"/Art/Game Material/obstacle.png"));
             player.setIsCollision(false);
         }
 
@@ -174,7 +174,7 @@ public class LevelTwo extends GameState {
         if(keyPressed == KeyEvent.VK_SPACE && player.getyVel() != 30 && !player.isJumping()){
             player.setyVel(-27);
             player.setJumping(true);
-        }else if(player.getY() < 410 || player.getY() == 350){
+        }else if(player.getY() < 400 || player.getY() == 620 -128){
             player.setyVel(player.getyVel() + 2);
 
         }else{

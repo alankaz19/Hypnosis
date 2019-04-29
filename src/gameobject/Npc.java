@@ -34,12 +34,12 @@ public class Npc extends GameObject {
     @Override
     public void tick() {
         x += xVel;
-//        if(this.y > player.y){
-//            y -= 1;
-//        }
-//        if(this.y <= player.y){
-//            y += 1;
-//        }
+        if(this.y > player.y){
+            y -= 1;
+        }
+        if(this.y <= player.y){
+            y += 1;
+        }
 
         npcMove.runAnimation();
     }

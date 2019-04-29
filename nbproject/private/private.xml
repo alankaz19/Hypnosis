@@ -12,12 +12,22 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/MenuState.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/game/Game.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/scene/Texture.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/GameStateManager.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/MiniPuzzleGame.java</file>
-            <file>file:/Users/Kai/NetBeansProjects/Hypnosis/src/gamestate/MiniClickGame.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/ObjectID.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/scene/Texture.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/LevelOne.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/game/Handler.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/uiobject/DialogBox.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/uiobject/UIhandler.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/GameStateManager.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/GameObject.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MiniPuzzleGame.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MenuState.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/game/Updater.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/items/Picture.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/Npc.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/Player.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/GameState.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/LevelTwo.java</file>
         </group>
     </open-files>
 </project-private>

@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
+import scene.Texture;
 /**
  *
  * @author Kai
@@ -102,9 +103,33 @@ public abstract class GameObject implements Updater{
         this.x = x;
         this.y = y;
     }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
     
     public void setDirection(int dir){
         this.dir = dir;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+    
+    public int getCenterX(){
+        return this.x + this.width /2;
+    }
+    
+    public int getCenterY(){
+        return this.y + this.height /2;
     }
     
     public boolean getIsCollision(){
@@ -165,6 +190,7 @@ public abstract class GameObject implements Updater{
             g.setColor(color);
             FontMetrics fm = g.getFontMetrics();
             int sa = fm.getAscent();
+            chatBubble = Texture.getInstance().ui[0];
             g.drawImage(chatBubble, 410 + msgPosition, y + height / 2 - chatBubble.getHeight() -130, null);//先畫對話框
             drawString(g, msg, 430 + msgPosition,  y + height / 2 -sa / 2 - 245);
             msgFrameCount++;

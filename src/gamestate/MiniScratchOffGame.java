@@ -127,10 +127,9 @@ public class MiniScratchOffGame extends GameState{
     @Override
     public void keyReleased(int k) {
     }
-
+    
     @Override
     public void mousePressed(int x, int y) {
-        
     }
 
     @Override
@@ -141,7 +140,6 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void mouseReleased(int x) {
-
     }
 
 }

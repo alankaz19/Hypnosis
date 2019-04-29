@@ -49,12 +49,12 @@ public class MiniPuzzleGame extends GameState {
             this.centerX = (this.x + this.width)/2;
             this.centerY = (this.y + this.height)/2;
         }
-        private int getCenterX(){
-            return this.centerX;
-        }
-        private int getCenterY(){
-            return this.centerY;
-        }
+//        private int getCenterX(){
+//            return this.centerX;
+//        }
+//        private int getCenterY(){
+//            return this.centerY;
+//        }
         @Override
         public void tick() {
             

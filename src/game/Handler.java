@@ -25,15 +25,12 @@ public class Handler implements Updater{
     
     @Override
     public void render(Graphics g){
-//        for(int i = 0; i < object.size(); i++){
-//            GameObject tempObject = object.get(i);
-//            tempObject.render(g);
-//        }
-        
-        //foreach 語法
-        for (GameObject element : object) { 
-            element.render(g);
+        for(int i = object.size() - 1; i >= 0; i--){
+            GameObject tempObject = object.get(i);
+            tempObject.render(g);
         }
+        
+        
     }
 
     public ArrayList<GameObject> getObject() {

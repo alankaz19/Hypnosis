@@ -35,7 +35,7 @@ public class BackGround {
 
     //paint method
     public void render(Graphics g){
-        g.drawImage(img,0,0,1280, 720, x , y , 2142 + x, 1205, null);
+        g.drawImage(img,0,0,1280, 720, x , y , 2142 + x, img.getHeight(), null);
 
         //2141
     }

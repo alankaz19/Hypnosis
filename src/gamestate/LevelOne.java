@@ -12,6 +12,8 @@ import java.awt.Rectangle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import scene.Camera;
 import scene.PaintUtil;
 
@@ -48,11 +50,11 @@ public class LevelOne extends GameState {
         cam = new Camera(0, 0, 400);
         playerMsg = "一二三四五六七八九十";
         handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER, 8));
-        handler.addObject(new Picture(818, ObjectID.PICTURE));
-        handler.addObject(new Picture(820 + 640, ObjectID.PICTURE));
-        handler.addObject(new Picture(824 + 1280, ObjectID.PICTURE));
-        handler.addObject(new Picture(826 + 1920, ObjectID.PICTURE));
-        handler.addObject(new Door(824 + 2260, ObjectID.DOOR));
+        handler.addObject(new Picture(600, ObjectID.PICTURE));
+        handler.addObject(new Picture(600 + 640, ObjectID.PICTURE));
+        handler.addObject(new Picture(600 + 1280, ObjectID.PICTURE));
+        handler.addObject(new Picture(600 + 1920, ObjectID.PICTURE));
+        handler.addObject(new Door(800 + 2260, ObjectID.DOOR));
     }
 
     @Override
@@ -65,6 +67,7 @@ public class LevelOne extends GameState {
 
     @Override
     public void render(Graphics g) {
+        
         backGround.render(g);
 
         for (int i = 1; i < handler.getObject().size(); i++) {
@@ -85,6 +88,7 @@ public class LevelOne extends GameState {
 
         handler.render(g);
 
+
         g.translate(-cam.getX(), -cam.getY());//end of cam
 
         handler.getObject().get(PLAYER).renderMsg(g);
@@ -93,7 +97,7 @@ public class LevelOne extends GameState {
 
     @Override
     public void event() {
-        System.out.println("Player x: " + handler.getObject().get(PLAYER).getX());//pirnt 角色x
+//        System.out.println("Player x: " + handler.getObject().get(PLAYER).getX());//pirnt 角色x
 
         for (int i = 1; i < handler.getObject().size(); i++) {
             if (handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))) {

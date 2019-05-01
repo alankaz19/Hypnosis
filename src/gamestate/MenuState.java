@@ -5,11 +5,13 @@
  */
 package gamestate;
 
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import game.Game;
+import resourcemanage.SoundResource;
 import scene.Texture;
 
 /**
@@ -19,6 +21,7 @@ import scene.Texture;
 
 public class MenuState extends GameState {
     private BufferedImage img;
+    private AudioClip intro;
 
     public static MenuState menuState;
 
@@ -32,12 +35,15 @@ public class MenuState extends GameState {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
+        init();
         img = Texture.getInstance().background[0];
-
+        intro.loop();
     }
 
     @Override
     public void init() {
+        intro = SoundResource.getInstance().getClip("/Art/BackGround/IntroStage.wav");
+
     }
 
     @Override
@@ -62,6 +68,10 @@ public class MenuState extends GameState {
         }
         if(k == KeyEvent.VK_3){
             gsm.newState(GameStateManager.SCRATCH_GAME);
+        }
+        if(k == KeyEvent.VK_1){
+            intro.stop();
+            gsm.newState(GameStateManager.INTRO);
         }
 
     }

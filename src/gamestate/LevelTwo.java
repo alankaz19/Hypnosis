@@ -30,14 +30,13 @@ public class LevelTwo extends GameState {
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
     private ParallaxBackGround road;
-    private ParallaxBackGround grassGround;
     private Player player;
     private Npc doppelganger;
     private ArrayList<Obstacle> obstacleList;
     private int keyPressed;
     private Camera cam;
     private Snow[] snow;
-    private int timeC, spawnT, camPos;
+    private int timeC, spawnT, camPos, lifeCount;
 
     public static LevelTwo LevelTwo;
 
@@ -58,6 +57,7 @@ public class LevelTwo extends GameState {
         timeC = 0;
         spawnT = 0;
         camPos = 400;
+        lifeCount = 5;
         snow  = new Snow[200];
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
@@ -76,7 +76,7 @@ public class LevelTwo extends GameState {
         road.setVector(-4, 0);
 
         //player
-        player = (new Player(0, Game.HEIGHT - 30 - 128, ObjectID.PLAYER,5));
+        player = (new Player(0, Game.HEIGHT-170, ObjectID.PLAYER,5));
         player.setxVel(1);
         player.setyVel(1);
         player.setHeight(128);
@@ -86,8 +86,7 @@ public class LevelTwo extends GameState {
         doppelganger.setxVel(1);
         //obstacle
         obstacleList = new ArrayList<>();
-        obstacleList.add(new Obstacle(1000,Game.HEIGHT -30 -140, ObjectID.OBSTACLE,"/Art/Game Material/obstacle.png"));
-//        obstacle = new Obstacle(800,Game.HEIGHT / 2+140, ObjectID.DOOR,"/Art/Game Material/obstacle.png");
+        obstacleList.add(new Obstacle(1000,Game.HEIGHT-80, ObjectID.OBSTACLE,"/Art/Game Material/obstacle.png")); //y must be at /2 of character
 
         cam = new Camera(0, 0,camPos);
     }
@@ -121,14 +120,15 @@ public class LevelTwo extends GameState {
         player.render(g);
         doppelganger.render(g);
 
-        if(!obstacleList.isEmpty())
         obstacleList.get(0).render(g);
-
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Helvetica", Font.BOLD, 50));
+        g.drawString("Life Count : " + lifeCount,player.getX()+400,50);
         g.translate(-cam.getX(), -cam.getY());//end of cam
         for (Snow snow1 : snow) {
             snow1.redner(g);
         }
-        road.render(g);
+
 
     }
 
@@ -147,6 +147,8 @@ public class LevelTwo extends GameState {
         //CollisionCheck
         if(((player.checkCollision(obstacleList.get(0))) || player.checkCollision(doppelganger)) && !player.getIsCollision()){
             player.setIsCollision(true);
+            if(lifeCount > 0)
+            lifeCount --;
             System.out.println("COLLAPSE");
         }
 
@@ -166,7 +168,7 @@ public class LevelTwo extends GameState {
             obstacleList.remove(0);
         }
         if(obstacleList.isEmpty()){
-            obstacleList.add(new Obstacle(player.getX()+ 1000,Game.HEIGHT - 140, ObjectID.DOOR,"/Art/Game Material/obstacle.png"));
+            obstacleList.add(new Obstacle(player.getX()+ 1000,Game.HEIGHT-80, ObjectID.DOOR,"/Art/Game Material/obstacle.png"));
             player.setIsCollision(false);
         }
 
@@ -174,7 +176,7 @@ public class LevelTwo extends GameState {
         if(keyPressed == KeyEvent.VK_SPACE && player.getyVel() != 30 && !player.isJumping()){
             player.setyVel(-27);
             player.setJumping(true);
-        }else if(player.getY() < 400 || player.getY() == 620 -128){
+        }else if(player.getY() < Game.HEIGHT-170){  //change in player class as well
             player.setyVel(player.getyVel() + 2);
 
         }else{

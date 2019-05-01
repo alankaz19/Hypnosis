@@ -48,7 +48,7 @@ public class LevelOne extends GameState {
         handler = new Handler();
         backGround = new BackGround(1);
         cam = new Camera(0, 0, 400);
-        playerMsg = "一二三四五六七八九十";
+        playerMsg = "安安遊戲開始了";
         handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER, 8));
         handler.addObject(new Picture(600, ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 640, ObjectID.PICTURE));
@@ -87,11 +87,11 @@ public class LevelOne extends GameState {
         g.translate(cam.getX(), cam.getY()); //begin of cam
 
         handler.render(g);
+        handler.getObject().get(PLAYER).renderMsg(g); // message following character head
 
 
         g.translate(-cam.getX(), -cam.getY());//end of cam
 
-        handler.getObject().get(PLAYER).renderMsg(g);
 
     }
 

@@ -19,7 +19,7 @@ public class Texture {
     private BufferedImage player_sheet;
     private BufferedImage npc_Sheet;
 
-    public BufferedImage[] background = new BufferedImage[7];
+    public BufferedImage[] background = new BufferedImage[8];
     public BufferedImage[] player = new BufferedImage[10];
     public BufferedImage[] playParkour;
     public BufferedImage[] npc = new BufferedImage[3];
@@ -69,6 +69,7 @@ public class Texture {
         background[4] = ImageResource.getInstance().getImage("/Art/Background/farMountain.png");
         background[5] = ImageResource.getInstance().getImage("/Art/Background/nearMountains.png");
         background[6] = ImageResource.getInstance().getImage("/Art/Background/road.png");
+        background[7] = ImageResource.getInstance().getImage("/Art/Background/room.png");
         
         paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture1.png");
         paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture2.png");

@@ -58,12 +58,10 @@ public class Player extends GameObject {
     public void tick() {
         x += xVel;
         y += yVel;
-        if(y >= 410){
+        if(y >= Game.HEIGHT-170){
             this.yVel = 0;
         }
-        if( y <= 250){
-            this.y = 250;
-        }
+
         playerWalk.runAnimation();
     }
 

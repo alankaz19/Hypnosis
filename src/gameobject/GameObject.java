@@ -185,14 +185,14 @@ public abstract class GameObject implements Updater{
     
     public void renderMsg(Graphics g){
         if(msgFrameCount < msgFrame){
-            Font font = g.getFont().deriveFont(20.0f);
-            g.setFont(font);
+            //Font font = g.getFont().deriveFont(20.0f);
+            g.setFont(new Font("Helvetica", Font.BOLD, 20));
             g.setColor(color);
             FontMetrics fm = g.getFontMetrics();
             int sa = fm.getAscent();
             chatBubble = Texture.getInstance().ui[0];
-            g.drawImage(chatBubble, 410 + msgPosition, y + height / 2 - chatBubble.getHeight() -130, null);//先畫對話框
-            drawString(g, msg, 430 + msgPosition,  y + height / 2 -sa / 2 - 245);
+            g.drawImage(chatBubble, x + msgPosition, y + height / 2 - chatBubble.getHeight() -130, null);//先畫對話框
+            drawString(g, msg, x+20 + msgPosition,  y + height / 2 -sa / 2 - 245);
             msgFrameCount++;
         }
     }

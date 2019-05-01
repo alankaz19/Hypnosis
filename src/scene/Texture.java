@@ -19,7 +19,7 @@ public class Texture {
     private BufferedImage player_sheet;
     private BufferedImage npc_Sheet;
 
-    public BufferedImage[] background = new BufferedImage[7];
+    public BufferedImage[] background = new BufferedImage[9];
     public BufferedImage[] player = new BufferedImage[10];
     public BufferedImage[] playParkour;
     public BufferedImage[] npc = new BufferedImage[3];
@@ -69,13 +69,15 @@ public class Texture {
         background[4] = ImageResource.getInstance().getImage("/Art/Background/farMountain.png");
         background[5] = ImageResource.getInstance().getImage("/Art/Background/nearMountains.png");
         background[6] = ImageResource.getInstance().getImage("/Art/Background/road.png");
+        background[7] = ImageResource.getInstance().getImage("/Art/Background/fakeBackground.png");
+        background[8] = ImageResource.getInstance().getImage("/Art/Background/magicBackground.png");
         
         paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture1.png");
         paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture2.png");
         paint[2] = ImageResource.getInstance().getImage("/Art/Game Material/picture3.png");
         paint[3] = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
         paint[4] = ImageResource.getInstance().getImage("/Art/Game Material/qr.png");
-        paint[5] = ImageResource.getInstance().getImage("/Art/Game Material/jun.jpg");
+        paint[5] = ImageResource.getInstance().getImage("/Art/Game Material/frame.png");
         paint[6] = ImageResource.getInstance().getImage("/Art/Game Material/picture.png");
 
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");

@@ -12,22 +12,21 @@ import java.awt.Rectangle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import scene.Camera;
 import scene.PaintUtil;
 
 public class LevelOne extends GameState {
 
     private final int PLAYER = 0;
-
+    private final int PICTURE1 = 1;
     private final int MSG_POSITION = 0;
-
+    
     private Handler handler;
     private BackGround backGround;
     private int keyPressed;
     private Camera cam;
     private String playerMsg;
+    boolean sceneshow;
 
     public static LevelOne LevelOne;
 
@@ -45,12 +44,18 @@ public class LevelOne extends GameState {
 
     @Override
     public void init() {
+        sceneshow = false;
         handler = new Handler();
         backGround = new BackGround(1);
         cam = new Camera(0, 0, 400);
-        playerMsg = "一二三四五六七八九十";
+        playerMsg = " 利用WASD鍵來移動 ···";
         handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER, 8));
-        handler.addObject(new Picture(600, ObjectID.PICTURE));
+        handler.addObject(new Picture(600, ObjectID.PICTURE){
+            @Override
+            public void render(Graphics g) {
+               this.renderRotate(g,10);
+            }
+        });
         handler.addObject(new Picture(600 + 640, ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 1280, ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 1920, ObjectID.PICTURE));
@@ -85,7 +90,8 @@ public class LevelOne extends GameState {
             }
         }
         g.translate(cam.getX(), cam.getY()); //begin of cam
-
+        
+        
         handler.render(g);
 
 
@@ -98,7 +104,18 @@ public class LevelOne extends GameState {
     @Override
     public void event() {
 //        System.out.println("Player x: " + handler.getObject().get(PLAYER).getX());//pirnt 角色x
-
+        
+        if(handler.getObject().get(PICTURE1).isShow()){
+            if(!sceneshow){
+                gsm.newState(GameStateManager.LEVEL1_SCENE);
+                sceneshow = true;
+            }
+            
+            for (int i = 2; i < handler.getObject().size() - 1; i++) {
+                handler.getObject().get(i).setShow(true);
+            }
+        }
+        
         for (int i = 1; i < handler.getObject().size(); i++) {
             if (handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))) {
                 handler.getObject().get(i).setIsCollision(true);
@@ -108,7 +125,7 @@ public class LevelOne extends GameState {
         }
 
         if (handler.getObject().get(PLAYER).getX() == 0) {
-            handler.getObject().get(PLAYER).showMsg(playerMsg, 500, Color.BLACK, MSG_POSITION);
+            handler.getObject().get(PLAYER).showMsg(playerMsg, 300, Color.BLACK, MSG_POSITION);
         }
 
         if (keyPressed == KeyEvent.VK_D) {
@@ -167,6 +184,15 @@ public class LevelOne extends GameState {
     @Override
     public void mousePressed(int x, int y) {
         if (handler.getObject().get(1).getIsCollision()) {
+            handler.getObject().get(1).setClicked(true);
+        }
+        if (handler.getObject().get(2).getIsCollision()) {
+            gsm.newState(GameStateManager.CLICK_GAME);
+        }
+        if (handler.getObject().get(3).getIsCollision()) {
+            gsm.newState(GameStateManager.SCRATCH_GAME);
+        }
+        if (handler.getObject().get(4).getIsCollision()) {
             gsm.newState(GameStateManager.PUZZLE_GAME);
         }
         if (handler.getObject().get(5).getIsCollision()) {

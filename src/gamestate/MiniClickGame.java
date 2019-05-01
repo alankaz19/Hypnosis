@@ -5,6 +5,7 @@
  */
 package gamestate;
 
+import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
 import java.awt.AlphaComposite;
@@ -23,57 +24,56 @@ import uiobject.Button;
  */
 public class MiniClickGame extends GameState {
     
-            public static MiniClickGame MINI_CLICK_GAME;
-
+    public static MiniClickGame MINI_CLICK_GAME;
     
+    private Frame frame;
+    private Mask mask;
+    private DialogBox hint;
+    private Button exitButton;
+    private boolean isDone;
+    private BufferedImage fakeBackground;
+    private int keyPressed;
     
-            private class Mask extends GameObject {
-                        BufferedImage img;
-                        private boolean cleared;
-                        private float alpha;
-                        public Mask(int x, int y, ObjectID id) {
-                        super(x, y, id);
-                        img = Texture.getInstance().paint[4];
-                        cleared = false;
-                        this.width = 300;
-                        this.height = 400;
-                        this.alpha = 1f;
-                        }    
-        
-                        public void renderMask(Graphics2D g2d){
-                                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
-                        }
+    private class Mask extends GameObject {
+        BufferedImage img;
+        private boolean cleared;
+        private float alpha;
+        public Mask(int x, int y, ObjectID id) {
+            super(x, y, id);
+            img = Texture.getInstance().paint[4];
+            cleared = false;
+            this.width = 300;
+            this.height = 400;
+            this.alpha = 1f;
+        }    
 
-                        @Override
-                        public void tick() {
+        public void renderMask(Graphics2D g2d){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+        }
 
-                        }
+        @Override
+        public void tick() {
+        }
 
-                        @Override
-                        public void render(Graphics g) {
-                                    this.renderMask((Graphics2D)g);
-                                    g.drawImage(Texture.getInstance().paint[4], x, y, null);
-                        }
+        @Override
+        public void render(Graphics g) {
+            this.renderMask((Graphics2D)g);
+            //x y 必須加上畫框的邊框寬度
+            g.drawImage(Texture.getInstance().paint[4], x, y,316,450, null);
+        }
 
-                        public void setCleared(boolean cleared) {
-                            this.cleared = cleared;
-                        }
-            
-            }
-
-            private class Paint extends GameObject{
-
-        private boolean Visible;
-
-        public Paint(int x, int y, ObjectID id) {
-                        super(x, y, id);
-                        Visible = false;
-                        this.width = 300;
-                        this.height = 400;
-            }       
-            
-            
-
+        public void setCleared(boolean cleared) {
+            this.cleared = cleared;
+        }
+    }
+    
+    //frame
+    private class Frame extends GameObject{
+        public Frame(int x, int y, ObjectID id) {
+            super(x, y, id);
+            this.width = Texture.getInstance().paint[5].getWidth();
+            this.height = Texture.getInstance().paint[5].getHeight();
+        }       
 
         @Override
         public void tick() {
@@ -84,31 +84,16 @@ public class MiniClickGame extends GameState {
             g.drawImage(Texture.getInstance().paint[5], x, y, null);
         }
 
-        public void setVisible(boolean Visible){
-            this.Visible = Visible;
-        }
     }
-            
-            private Paint paint;
-            private Mask mask;
-            private DialogBox hint;
-            private Button exitButton;
-            private boolean isDone;
-            private BackGround fakeBackground;
-            private int keyPressed;
-
-
+    
     public MiniClickGame(GameStateManager gsm) {
         super(gsm);
         this.init();
     }
-
-
-
-
+    
     @Override
     public MiniClickGame getInstance() {
-         if(MINI_CLICK_GAME == null){
+        if(MINI_CLICK_GAME == null){
             MINI_CLICK_GAME = new MiniClickGame(GameStateManager.getInstance());
         }
         return MINI_CLICK_GAME;
@@ -117,14 +102,13 @@ public class MiniClickGame extends GameState {
 
     @Override
     public void init() {
-        mask = new Mask(600, 202, ObjectID.FRAME);
-        paint = new Paint(600, 200, ObjectID.PICTURE_IN_PUZZLE2);
+        // mask 加上畫框寬度
+        mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
+        frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
         hint = new DialogBox();
         exitButton = new Button();
         isDone = false;
-        fakeBackground = new BackGround(1);
-
-
+        fakeBackground = Texture.getInstance().background[7];
     }
 
     @Override
@@ -139,9 +123,8 @@ public class MiniClickGame extends GameState {
 
     @Override
     public void render(Graphics g) {
-        fakeBackground.render(g);
-    //        frame.render(g);
-        paint.render(g);
+        g.drawImage(fakeBackground, 0, 0, null);
+        frame.render(g);
         mask.render(g);
     //        hint.render();
     //        exitButton.render();
@@ -152,17 +135,20 @@ public class MiniClickGame extends GameState {
     public void keyPressed(int k) {
         keyPressed = k;
         if(keyPressed == KeyEvent.VK_ESCAPE){
-            gsm.newState(GameStateManager.LEVEL1_STATE);
+            gsm.setState(GameStateManager.LEVEL1_STATE);
         }
-
     }
 
     @Override
     public void keyReleased(int k) {
+        if(k == keyPressed){
+            keyPressed = -1;
+        }
     }
 
     @Override
     public void mousePressed(int x, int y) {
+        //點擊畫框變亮 
         if(x > mask.x && x < mask.x + mask.getWidth() && y > mask.y && y < mask.y + mask.getHeight()){
             if(mask.alpha - 0.05 < 0){
                 mask.alpha = 0;
@@ -171,16 +157,13 @@ public class MiniClickGame extends GameState {
             }
             mask.alpha -= 0.05f;
         }
-        //點擊畫框變亮 
     }
     
     @Override
     public void mouseDragged(int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseReleased(int x) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -17,6 +17,7 @@ public enum ObjectID {
     FRAME(),
     
     PICTURE(),
+    PICTURE_ROTATE(),
     OBSTACLE(),
 
     

@@ -51,6 +51,10 @@ public abstract class GameObject implements Updater{
     protected int msgPosition;
     protected BufferedImage chatBubble;
     
+    //點擊效果
+    protected boolean clicked;
+    protected boolean show;
+    
 
     //需要給object 生成的位置
     public GameObject(int x, int y,ObjectID id){
@@ -138,6 +142,28 @@ public abstract class GameObject implements Updater{
 
     public boolean checkBorder() {
         return xDest < 0 || xDest + width > Game.WIDTH || yDest  < 0 || yDest + height > Game.HEIGHT ;
+    }
+
+    
+
+    public void setChatBubble(BufferedImage chatBubble) {
+        this.chatBubble = chatBubble;
+    }
+    
+    public void setShow(boolean show) {
+        this.show = show;
+    }
+    
+    public boolean isShow() {
+        return show;
+    }
+
+    public void setClicked(boolean clicked) {
+        this.clicked = clicked;
+    }
+    
+    public boolean isClicked() {
+        return clicked;
     }
     
     public boolean checkCollision(GameObject o){

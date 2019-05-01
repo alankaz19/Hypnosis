@@ -35,6 +35,7 @@ public class GameStateManager {
     protected static final int CLICK_GAME = 6;
     protected static final int SCRATCH_GAME = 7;
     protected static final int INTRO = 8;
+    protected static final int LEVEL1_SCENE = 9;
     public static GameStateManager gsm;
 
     public static GameStateManager getInstance(){
@@ -63,6 +64,9 @@ public class GameStateManager {
         }
         if(state == LEVEL1_STATE){
             gameStates[state] = new LevelOne(this);
+        }
+        if(state == LEVEL1_SCENE){
+            gameStates[state] = new LevelOneScene(this);
         }
         if(state == LEVEL2_STATE){
             gameStates[state] = new LevelTwo(this);
@@ -103,6 +107,7 @@ public class GameStateManager {
     public int getPrevState(){
         return prevState;
     }
+    
     public void tick() {
         gameStates[currentState].tick();
     }

@@ -8,6 +8,7 @@ import scene.PaintUtil;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import scene.Texture;
 
 
 public class MiniPuzzleGame extends GameState {
@@ -15,7 +16,8 @@ public class MiniPuzzleGame extends GameState {
     private BufferedImage check;
     private BufferedImage exit;
 
-    private BackGround fakeBackground;
+    private BufferedImage fakeBackground;
+    private BufferedImage frame;
     Pieces[] pieces;
     private Board gameBoard;
     private Pieces currentPiece;
@@ -33,8 +35,8 @@ public class MiniPuzzleGame extends GameState {
         private BufferedImage img;
         private boolean pos;
         private int order;
-        private int centerX;
-        private int centerY;
+        private double centerX;
+        private double centerY;
         protected Pieces(int x, int y, ObjectID id, int r, int c, int order) {
             super(x,y,id);
             img = ORIGINAL.getSubimage(100 * r ,100 * c,100,100);
@@ -126,7 +128,8 @@ public class MiniPuzzleGame extends GameState {
 
     @Override
     public void init() {
-        fakeBackground = new BackGround(1);
+        fakeBackground = Texture.getInstance().background[7];
+        frame = Texture.getInstance().paint[5];
         selection = 0;
         pieces = new Pieces[9];
         exit = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");
@@ -167,7 +170,8 @@ public class MiniPuzzleGame extends GameState {
 
     @Override
     public void render(Graphics g) {
-        fakeBackground.render(g);
+        g.drawImage(fakeBackground, 0, 0, null);
+        g.drawImage(frame, 635, 80, null);
         gameBoard.render(g);
         for( int i = 0; i < 9; i ++){
             pieces[i].render(g);

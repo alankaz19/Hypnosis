@@ -19,7 +19,7 @@ public class SoundResource {
     
     private static SoundResource resourceManager;
     
-    public SoundResource getInstance(){
+    public  static SoundResource getInstance(){
         if(resourceManager == null){
             resourceManager = new SoundResource();
         }
@@ -32,7 +32,7 @@ public class SoundResource {
         count = 0;
     }
     
-    public AudioClip tryGetImage(String path){
+    public AudioClip getClip(String path){
         int index = findExisted(path);
         if(index == -1){
             return addSound(path);
@@ -42,7 +42,7 @@ public class SoundResource {
     
     private AudioClip addSound(String path){
         try{
-            AudioClip clip = Applet.newAudioClip(getClass().getResource("/resources/bomb.wav"));
+            AudioClip clip = Applet.newAudioClip(getClass().getResource(path));
             if(count == res.length){
                 doubleArr();
             }

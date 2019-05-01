@@ -93,11 +93,11 @@ public class LevelOne extends GameState {
         
         
         handler.render(g);
+        handler.getObject().get(PLAYER).renderMsg(g); // message following character head
 
 
         g.translate(-cam.getX(), -cam.getY());//end of cam
 
-        handler.getObject().get(PLAYER).renderMsg(g);
 
     }
 

@@ -29,7 +29,8 @@ public class MiniClickGame extends GameState {
     private Frame frame;
     private Mask mask;
     private DialogBox hint;
-    private Button exitButton;
+//    private Button exitButton;
+    private BufferedImage exit;
     private boolean isDone;
     private BufferedImage fakeBackground;
     private int keyPressed;
@@ -103,10 +104,10 @@ public class MiniClickGame extends GameState {
     @Override
     public void init() {
         // mask 加上畫框寬度
+        exit = Texture.getInstance().ui[1];
         mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
         hint = new DialogBox();
-        exitButton = new Button();
         isDone = false;
         fakeBackground = Texture.getInstance().background[7];
     }
@@ -126,6 +127,7 @@ public class MiniClickGame extends GameState {
         g.drawImage(fakeBackground, 0, 0, null);
         frame.render(g);
         mask.render(g);
+        g.drawImage(exit,1000,440,100,100,null);
     //        hint.render();
     //        exitButton.render();
     }
@@ -156,6 +158,10 @@ public class MiniClickGame extends GameState {
                 return;
             }
             mask.alpha -= 0.05f;
+        }
+        
+        if (x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {
+            gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }
     

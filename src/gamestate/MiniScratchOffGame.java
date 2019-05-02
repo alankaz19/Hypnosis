@@ -31,7 +31,8 @@ public class MiniScratchOffGame extends GameState{
     private Frame frame;
     private Mask mask;
     private Riddle riddle;
-    private BufferedImage fakeBackground; 
+    private BufferedImage fakeBackground;
+    private BufferedImage exit;
     
     private class Frame extends GameObject{
         private boolean Visible;
@@ -123,6 +124,7 @@ public class MiniScratchOffGame extends GameState{
     
     @Override
     public void init() {
+        exit = Texture.getInstance().ui[1];
         this.fakeBackground = Texture.getInstance().background[7];
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
         mask = new Mask ((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20,ObjectID.PICTURE);
@@ -141,6 +143,7 @@ public class MiniScratchOffGame extends GameState{
     @Override
     public void render(Graphics g) {
         g.drawImage(fakeBackground, 0, 0, null);
+        g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);
         mask.render(g);
         riddle.render(g);
@@ -164,6 +167,9 @@ public class MiniScratchOffGame extends GameState{
     
     @Override
     public void mousePressed(int x, int y) {
+        if ( x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {
+            gsm.setState(GameStateManager.LEVEL1_STATE);
+        }
     }
 
     @Override

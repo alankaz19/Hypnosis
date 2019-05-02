@@ -13,7 +13,6 @@ import gameobject.Player;
 import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -29,7 +28,7 @@ public class Intro extends GameState{
     
     private final int PLAYER = 0;
     private final int HYPNOTIST = 1;
-    private final int BACKGROUND = 7;
+    private final int BACKGROUND = 9;
     
     
     private BackGround background;
@@ -80,7 +79,6 @@ public class Intro extends GameState{
         //end
         bgm = SoundResource.getInstance().getClip("/Art/BackGround/IntroMusic.wav");
         background = new BackGround(BACKGROUND){
-             @Override
             public void render(Graphics g) {
                 g.drawImage(Texture.getInstance().background[BACKGROUND],0,0,Game.WIDTH, Game.HEIGHT, null);
             }
@@ -115,10 +113,10 @@ public class Intro extends GameState{
     public void event(){
         time++;
         //System.out.println(npcScript.size());
-        if(time == 200 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
+        if(time == 150 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(1).showMsg(npcScript.get(npcC), 500, Color.BLACK, 0);// npc message
+                handler.getObject().get(1).showMsg(npcScript.get(npcC), 1000, Color.BLACK, 0);// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;
@@ -126,10 +124,10 @@ public class Intro extends GameState{
             }
         }
         //System.out.println(playerScript.size());
-        if(time == 400 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
+        if(time == 150 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
             System.out.println("player Line " + msgC);
             if(!playerScript.get(msgC).equals(""))
-            handler.getObject().get(0).showMsg(playerScript.get(msgC), 500, Color.BLACK,0); //player message
+            handler.getObject().get(0).showMsg(playerScript.get(msgC), 1400, Color.BLACK,0); //player message
             if(msgC < playerScript.size()){
                 msgC ++;
                 System.out.println(msgC);
@@ -141,7 +139,7 @@ public class Intro extends GameState{
             sceneFinished = true;
         }
 
-        if(time >= 600 && sceneFinished){ //move one to next stage
+        if(time >= 400 && sceneFinished){ //move one to next stage
             gsm.newState(GameStateManager.LEVEL1_STATE);
         }
 

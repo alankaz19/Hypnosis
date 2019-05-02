@@ -5,12 +5,7 @@
  */
 package gamestate;
 
-import gameobject.GameObject;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import uiobject.UIObject;
 
 /**
  *

@@ -52,9 +52,6 @@ public class GameStateManager {
         gameStates = new GameState[10];
         currentState = MENU_STATE;
         loadState(currentState);
-
-
-
     }
 
 

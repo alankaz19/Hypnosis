@@ -212,7 +212,7 @@ public abstract class GameObject implements Updater{
     public void renderMsg(Graphics g){
         if(msgFrameCount < msgFrame){
             //Font font = g.getFont().deriveFont(20.0f);
-            g.setFont(new Font("Helvetica", Font.BOLD, 20));
+            g.setFont(new Font("Helvetica", Font.BOLD, 18));
             g.setColor(color);
             FontMetrics fm = g.getFontMetrics();
             int sa = fm.getAscent();

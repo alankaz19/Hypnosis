@@ -132,7 +132,7 @@ public class MiniPuzzleGame extends GameState {
         frame = Texture.getInstance().paint[5];
         selection = 0;
         pieces = new Pieces[9];
-        exit = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");
+        exit = Texture.getInstance().ui[1];
         int x = 200,y = 200, r = 0, c = 0, count = 1;
         for(int i = 0; i < 9; i++){
             if(count % 3 == 1){

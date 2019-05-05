@@ -25,7 +25,9 @@ public enum ObjectID {
     PICTURE_IN_PUZZLE2(),
     PICTURE_IN_PUZZLE3(),
     PICTURE_IN_PUZZLE4(),
-    
+
+
+
     CLOSET(),
     
     DOOR(),

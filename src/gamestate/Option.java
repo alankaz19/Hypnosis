@@ -1,11 +1,6 @@
 package gamestate;
-
-import game.Game;
 import scene.Texture;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class Option extends GameState {
@@ -61,7 +56,6 @@ public class Option extends GameState {
         if(x >= 512 && x <= 822 && y >= 640 && y <= 685){
             gsm.setState(GameStateManager.MENU_STATE);
         }
-
     }
 
     @Override
@@ -70,7 +64,7 @@ public class Option extends GameState {
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
 
     }
 }

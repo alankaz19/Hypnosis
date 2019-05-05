@@ -6,12 +6,11 @@
 package gameobject;
 
 
-import java.awt.Graphics;
+import java.awt.*;
+
 import game.Game;
 import game.Updater;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
+
 import java.awt.image.BufferedImage;
 import scene.Texture;
 /**
@@ -25,18 +24,35 @@ public abstract class GameObject implements Updater{
     // 座標 
     public int x;
     public int y;
+
     // 方向
     protected int dir;
     //加速度
     protected int xVel;
     protected int yVel;
     // 判定屬性
-    protected int currentX;
-    protected int currentY;
+
     protected int xDest;
     protected int yDest;
-    protected int xTemp;
-    protected int yTemp;
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
+
+    public boolean isFalling() {
+        return falling;
+    }
+
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
+
+    protected boolean jumping;
+    protected boolean falling;
     // 判定相交
     protected boolean isCollision;
     
@@ -165,18 +181,48 @@ public abstract class GameObject implements Updater{
     public boolean isClicked() {
         return clicked;
     }
-    
+
+
+    public Rectangle getBot(){
+        return new Rectangle(x + 10,y + height/2,width - 30,height/2);
+    }
+    public Rectangle getTop(){
+        return new Rectangle(x + 10,y,width - 30,height/2);
+    }
+    public Rectangle getRight(){
+        return new Rectangle(x ,y + 5,5,height - 5);
+    }
+    public Rectangle getLeft(){
+        return new Rectangle(x + width,y + 5,5,height - 5);
+    }
+    public Rectangle getBound(){
+        return new Rectangle(x ,y - 3,width,height + 5);
+    }
+
+    public boolean checkFloor(GameObject o ){
+        if(this.getBound().intersects(o.getBot())){
+            return true;
+        }
+        if(this.getBound().intersects(o.getTop())){
+            return true;
+        }
+        return false;
+    }
+
+
+
+
     public boolean checkCollision(GameObject o){
         int leftSide, oLeft;
         int rightSide, oRight;
         int top, oTop;
         int bottom, oBottom;
-        
+
         leftSide = this.x;  oLeft = o.x;
         rightSide = this.x + width; oRight = o.x + o.width;
         top = this.y ; oTop = o.y;
         bottom = this.y + height; oBottom = o.y + o.height;
-        
+
         if(leftSide > oRight){
             return false;
         }
@@ -190,7 +236,7 @@ public abstract class GameObject implements Updater{
             return false;
         }
         return true;
-       
+
     }
 
     public void setIsCollision(boolean isCollision) {

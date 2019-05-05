@@ -26,6 +26,7 @@ public class Texture {
     public BufferedImage[] paint = new BufferedImage[7];
     public BufferedImage[] ui = new BufferedImage[10];
     public BufferedImage[] cursor = new BufferedImage[2];
+    public BufferedImage[] floor = new BufferedImage[2];
 
     //texture loader
     private static Texture tex;
@@ -83,6 +84,9 @@ public class Texture {
 
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
         ui[1] = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");
+
+        floor[0] = ImageResource.getInstance().getImage("/Art/Game Material/floor.png");
+
     }
     
 }

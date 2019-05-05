@@ -39,6 +39,8 @@ public class GameStateManager {
     protected static final int SCRATCH_GAME = 7;
     protected static final int INTRO = 8;
     protected static final int LEVEL1_SCENE = 9;
+    protected static final int EASTER_EGG = 10;
+
     public static GameStateManager gsm;
 
     public static GameStateManager getInstance(){
@@ -49,7 +51,7 @@ public class GameStateManager {
     }
 
     public GameStateManager() {
-        gameStates = new GameState[10];
+        gameStates = new GameState[11];
         currentState = MENU_STATE;
         loadState(currentState);
     }
@@ -86,6 +88,10 @@ public class GameStateManager {
         if(state == SCRATCH_GAME){
             gameStates[state] = new MiniScratchOffGame(this);
         }
+        if(state == EASTER_EGG){
+            gameStates[state] = new EasterEgg(this);
+        }
+
     }
 
     public void unloadState(){
@@ -131,10 +137,9 @@ public class GameStateManager {
     public  void mouseDragged(int x, int y){
         gameStates[currentState].mouseDragged(x, y);
     }
-    public void mouseReleased(int x){
-        gameStates[currentState].mouseReleased(x);
+    public void mouseReleased(int x, int y){
+        gameStates[currentState].mouseReleased(x,y);
     }
-    
     public void setMousePoiont(int x, int y){
         this.mouseX = x;
         this.mouseY = y;

@@ -1,24 +1,20 @@
 package gamestate;
 
 import game.Game;
-import gameobject.Npc;
-import gameobject.ObjectID;
-import gameobject.Player;
+import gameobject.*;
 
+import java.applet.AudioClip;
 import java.awt.*;
-
 import gameobject.items.Obstacle;
+import resourcemanage.SoundResource;
 import scene.BackGround;
-
 import java.awt.event.KeyEvent;
-import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import scene.Camera;
 import scene.ParallaxBackGround;
 import scene.Snow;
 import scene.Texture;
-
 public class LevelTwo extends GameState {
 
     private final int BACKGROUND2 = 3;
@@ -30,13 +26,14 @@ public class LevelTwo extends GameState {
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
     private ParallaxBackGround road;
-    private Player player;
+    private ActionPlayer player;
     private Npc doppelganger;
     private ArrayList<Obstacle> obstacleList;
     private int keyPressed;
     private Camera cam;
     private Snow[] snow;
     private int timeC, spawnT, camPos, lifeCount;
+    private AudioClip bgm;
 
     public static LevelTwo LevelTwo;
 
@@ -50,6 +47,7 @@ public class LevelTwo extends GameState {
     public LevelTwo(GameStateManager gsm){
         super(gsm);
         init();
+        bgm.loop();
     }
 
     @Override
@@ -59,6 +57,7 @@ public class LevelTwo extends GameState {
         camPos = 400;
         lifeCount = 5;
         snow  = new Snow[200];
+        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }
@@ -76,7 +75,7 @@ public class LevelTwo extends GameState {
         road.setVector(-4, 0);
 
         //player
-        player = (new Player(0, Game.HEIGHT-170, ObjectID.PLAYER,5));
+        player = (new ActionPlayer(0, Game.HEIGHT-170, ObjectID.PLAYER,5));
         player.setxVel(1);
         player.setyVel(1);
         player.setHeight(128);
@@ -90,6 +89,7 @@ public class LevelTwo extends GameState {
 
         cam = new Camera(0, 0,camPos);
     }
+
 
     @Override
     public void tick() {
@@ -123,7 +123,7 @@ public class LevelTwo extends GameState {
         obstacleList.get(0).render(g);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Helvetica", Font.BOLD, 50));
-        g.drawString("Life Count : " + lifeCount,player.getX()+400,50);
+        g.drawString("Life Count : " + lifeCount,player.getX()+ 400,50);
         g.translate(-cam.getX(), -cam.getY());//end of cam
         for (Snow snow1 : snow) {
             snow1.redner(g);
@@ -187,15 +187,11 @@ public class LevelTwo extends GameState {
     }
 
 
-
     @Override
     public void keyPressed(int k) {
         keyPressed = k;
         if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
-        }
-        if(keyPressed == KeyEvent.VK_ENTER){
-            gsm.setState(GameStateManager.MENU_STATE);
         }
     }
 
@@ -218,7 +214,7 @@ public class LevelTwo extends GameState {
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
 
     }
 }

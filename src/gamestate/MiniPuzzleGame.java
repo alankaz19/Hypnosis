@@ -21,7 +21,7 @@ public class MiniPuzzleGame extends GameState {
     Pieces[] pieces;
     private Board gameBoard;
     private Pieces currentPiece;
-    private int keyPressed, selection;
+    private int keyPressed;
 
     //constructor
     protected MiniPuzzleGame(GameStateManager gsm) {
@@ -130,7 +130,6 @@ public class MiniPuzzleGame extends GameState {
     public void init() {
         fakeBackground = Texture.getInstance().background[7];
         frame = Texture.getInstance().paint[5];
-        selection = 0;
         pieces = new Pieces[9];
         exit = Texture.getInstance().ui[1];
         int x = 200,y = 200, r = 0, c = 0, count = 1;
@@ -155,7 +154,6 @@ public class MiniPuzzleGame extends GameState {
         }
         gameBoard = new Board(700,240,ObjectID.BOARD, pieces);
         currentPiece = pieces[0];
-
     }
 
     @Override
@@ -177,9 +175,9 @@ public class MiniPuzzleGame extends GameState {
             pieces[i].render(g);
         }
         if(!gameBoard.finished){
-            PaintUtil.paintFocus((Graphics2D) g, new Rectangle((int)currentPiece.x, (int)currentPiece.y,100,100),6);
+            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(currentPiece.x, currentPiece.y,100,100),6);
         }else{
-            PaintUtil.paintFocus((Graphics2D) g, new Rectangle((int)gameBoard.getX(), (int)gameBoard.getY(),300,300),6);
+            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(gameBoard.getX(), gameBoard.getY(),300,300),6);
             g.drawImage(exit,1000,440,100,100,null);
         }
 
@@ -203,77 +201,77 @@ public class MiniPuzzleGame extends GameState {
     @Override
     public void mousePressed(int x, int y) {
         int r = 100, c = 100;
+        for(int i = 0; i < 9; i ++){
+            if (x >= pieces[i].x && x <= pieces[i].x + r && y >= pieces[i].y && y <= pieces[i].y + c) {
+                currentPiece = pieces[i];
+            }
+        }
+        if (checkBoard() && x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {
+            gsm.setState(GameStateManager.LEVEL1_STATE);
+        }
+    }
+
+    @Override
+    public void mouseDragged(int x, int y) {
+        if(!currentPiece.pos){
+            currentPiece.x = x - 50;
+            currentPiece.y = y - 50;
+        }
+    }
+
+    @Override
+    public void mouseReleased(int x, int y) {
+        int r = 100, c = 100;
         if(x >= gameBoard.getX() && x <= gameBoard.getX() + 300 && y >= gameBoard.getY() && y < gameBoard.getY() + 300) {
             if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y && y <= gameBoard.y + c && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 0;
                 currentPiece.x = gameBoard.x;
                 currentPiece.y = gameBoard.y;
-
             }
             if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y && y <= gameBoard.y + c && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 3;
                 currentPiece.x = gameBoard.x + r;
                 currentPiece.y = gameBoard.y;
-
             }
             if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y && y <= gameBoard.y + c && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 6;
                 currentPiece.x = gameBoard.x + (2 * r);
                 currentPiece.y = gameBoard.y;
-
             }
             if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 1;
                 currentPiece.x = gameBoard.x;
                 currentPiece.y = gameBoard.y + c;
-
             }
             if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 4;
                 currentPiece.x = gameBoard.x + r;
                 currentPiece.y = gameBoard.y + c;
-
             }
             if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + c && y <= gameBoard.y + (2 * c) && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 7;
                 currentPiece.x = gameBoard.x + (2 * r);
                 currentPiece.y = gameBoard.y + c;
-
             }
             if (x >= gameBoard.x && x <= gameBoard.x + r && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 2;
                 currentPiece.x = gameBoard.x;
                 currentPiece.y = gameBoard.y + (2 * c);
-
             }
             if (x >= gameBoard.x + r && x <= gameBoard.x + (2 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 5;
                 currentPiece.x = gameBoard.x + r;
                 currentPiece.y = gameBoard.y + (2 * c);
-
             }
             if (x >= gameBoard.x + (2 * r) && x <= gameBoard.x + (3 * r) && y >= gameBoard.y + (2 * c) && y <= gameBoard.y + (3 * c) && !currentPiece.getPos()) {
                 currentPiece.pos = currentPiece.order == 8;
                 currentPiece.x = gameBoard.x + (2 * r);
                 currentPiece.y = gameBoard.y + (2 * c);
             }
-        }else if(!currentPiece.getPos()){
-            currentPiece.x = x;
-            currentPiece.y = y;
-        }
-        if (checkBoard() && x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {
-            gsm.setState(GameStateManager.LEVEL1_STATE);
+            checkBoard();
         }
 
-    }
 
-    @Override
-    public void mouseDragged(int x, int y) {
-
-    }
-
-    @Override
-    public void mouseReleased(int x) {
 
     }
 

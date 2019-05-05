@@ -14,6 +14,7 @@ import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import resourcemanage.SoundResource;
@@ -65,8 +66,8 @@ public class Intro extends GameState{
         sceneFinished = false;
         //read script
         try {
-            playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"),"UTF-16"));
-            npcScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("NpcScene1.txt"),"UTF-16"));
+            playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"), StandardCharsets.UTF_16));
+            npcScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("NpcScene1.txt"), StandardCharsets.UTF_16));
             while(playerScriptReader.ready()){
                 playerScript.add(playerScriptReader.readLine());
             }
@@ -140,11 +141,9 @@ public class Intro extends GameState{
         }
 
         if(time >= 400 && sceneFinished){ //move one to next stage
+            bgm.stop();
             gsm.newState(GameStateManager.LEVEL1_STATE);
         }
-
-
-
     }
 
     @Override
@@ -179,7 +178,7 @@ public class Intro extends GameState{
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
 
     }
 }

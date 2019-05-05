@@ -1,20 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameobject;
 
-import scene.Texture;
 import game.Game;
-import java.awt.*;
+import resourcemanage.ImageResource;
 import scene.Animation;
+import scene.Texture;
 
-/**
- *
- * @author Kai
- */
-public class Player extends GameObject {
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+public class ActionPlayer extends GameObject {
     private Texture tex = Texture.getInstance();
     private Animation playerWalk;
     private Animation playerRun;
@@ -22,14 +16,33 @@ public class Player extends GameObject {
     private final int MAX = 20;
 
 
-    public Player(int x, int y,ObjectID id,int movementSpeed) {
+    public ActionPlayer(int x, int y,ObjectID id,int movementSpeed) {
         super(x, y,id);
         this.width = 128;
         this.height = 256;
         this.dir = 1;
         this.playerWalk = new Animation(movementSpeed, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
-                                           tex.player[6], tex.player[7], tex.player[8]);
+                tex.player[6], tex.player[7], tex.player[8]);
         gravity = 1;
+    }
+
+    class Bullet extends GameObject {
+        private BufferedImage img;
+        public Bullet(int x, int y, ObjectID id) {
+            super(x, y, id);
+            img = ImageResource.getInstance().getImage("");
+
+        }
+
+        @Override
+        public void tick() {
+
+        }
+
+        @Override
+        public void render(Graphics g) {
+
+        }
     }
 
 
@@ -38,35 +51,35 @@ public class Player extends GameObject {
         this.xDest = x + xVel;
         this.yDest = y + yVel;
 
-            if(super.checkBorder()){
-                if(xDest + width > Game.WIDTH ){
-                    this.xVel = 0;
-                }else if(xDest < 0){
-                    this.xVel = 0;
-                }else if(yDest < 0){
-                    this.yVel = 0;
-                }
+        if(super.checkBorder()){
+            if(xDest + width > Game.WIDTH ){
+                this.xVel = 0;
+            }else if(xDest < 0){
+                this.xVel = 0;
+            }else if(yDest < 0){
+                this.yVel = 0;
             }
+        }
         return true;
     }
 
     @Override
     public void tick() {
-       checkBorder();
-       x += xVel;
-       y += yVel;
+        checkBorder();
+        x += xVel;
+        y += yVel;
 
-       if(falling || jumping){
-           yVel += gravity;
+        if(falling || jumping){
+            yVel += gravity;
 
-           if(yVel > MAX){
-               yVel = MAX;
-           }
-       }
-       playerWalk.runAnimation();
+            if(yVel > MAX){
+                yVel = MAX;
+            }
+        }
+        playerWalk.runAnimation();
     }
 
-    @Override   
+    @Override
     public void render(Graphics g) {
         if(this.xVel > 0){
             this.dir = 1;
@@ -112,5 +125,4 @@ public class Player extends GameObject {
     public ObjectID getID() {
         return this.id;
     }
-
 }

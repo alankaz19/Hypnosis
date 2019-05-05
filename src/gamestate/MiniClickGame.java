@@ -125,9 +125,10 @@ public class MiniClickGame extends GameState {
     @Override
     public void render(Graphics g) {
         g.drawImage(fakeBackground, 0, 0, null);
+        g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);
         mask.render(g);
-        g.drawImage(exit,1000,440,100,100,null);
+
     //        hint.render();
     //        exitButton.render();
     }
@@ -170,6 +171,6 @@ public class MiniClickGame extends GameState {
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
     }
 }

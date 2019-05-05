@@ -21,15 +21,15 @@ public class Game extends Canvas implements Runnable {
     class KeyInput extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e) {
-            keyPressed = e.getKeyCode();
-            gsm.keyPressed(keyPressed);
+//            keyPressed = e.getKeyCode();
+            gsm.keyPressed(e.getKeyCode());
         }
         @Override
         public void keyReleased(KeyEvent e) {
-            if(e.getKeyCode() == keyPressed ){ // only assign -1 to pressedKey if no other key is pressed to chane the pressedKey value
+//            if(e.getKeyCode() == keyPressed ){ // only assign -1 to pressedKey if no other key is pressed to chane the pressedKey value
                 //keyPressed = -1;
-                gsm.keyReleased(keyPressed);
-            }
+                gsm.keyReleased(e.getKeyCode());
+//            }
         }
     }
 
@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable {
             System.out.println(e.getX() + " " + e.getY());
         }
         @Override
-        public void mouseMoved(MouseEvent e){
+        public void mouseDragged(MouseEvent e){
             gsm.mouseDragged(e.getX(),e.getY());
         }
         public void setMousePoint(MouseEvent e){
@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable {
 
         @Override
         public void mouseReleased(MouseEvent e){
-            gsm.mouseReleased(e.getButton());
+            gsm.mouseReleased(e.getX(), e.getY());
 
         }
 

@@ -6,14 +6,14 @@
 package uiobject;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 /**
  *
  * @author Kai
  */
 public class Button extends UIObject{
-    
-    
+    private BufferedImage[] imgs;
     
     @Override
     public void tick() {

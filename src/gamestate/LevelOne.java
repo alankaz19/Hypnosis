@@ -5,6 +5,7 @@ import game.Handler;
 import gameobject.ObjectID;
 import gameobject.Player;
 import gameobject.items.*;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,6 +13,7 @@ import java.awt.Rectangle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
+import resourcemanage.SoundResource;
 import scene.Camera;
 import scene.PaintUtil;
 
@@ -27,6 +29,7 @@ public class LevelOne extends GameState {
     private Camera cam;
     private String playerMsg;
     boolean sceneshow;
+    private AudioClip bgm;
 
     public static LevelOne LevelOne;
 
@@ -39,11 +42,13 @@ public class LevelOne extends GameState {
 
     public LevelOne(GameStateManager gsm) {
         super(gsm);
+        bgm.loop();
         init();
     }
 
     @Override
     public void init() {
+        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level1.wav");
         sceneshow = false;
         handler = new Handler();
         backGround = new BackGround(1);
@@ -72,9 +77,11 @@ public class LevelOne extends GameState {
 
     @Override
     public void render(Graphics g) {
-        
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1280, 720);
+        this.fadeIn(g);
         backGround.render(g);
-
+        
         for (int i = 1; i < handler.getObject().size(); i++) {
             if (handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))) {
                 if (handler.getObject().get(i).getID() == ObjectID.PICTURE) {
@@ -170,6 +177,7 @@ public class LevelOne extends GameState {
             gsm.newState(GameStateManager.OPTION_STATE);
         }
         if (k == KeyEvent.VK_ENTER) {
+            bgm.stop();
             gsm.setState(GameStateManager.MENU_STATE);
         }
     }

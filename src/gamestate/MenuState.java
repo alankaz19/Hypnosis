@@ -35,15 +35,17 @@ public class MenuState extends GameState {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
+        intro.play();
         init();
+        
         img = Texture.getInstance().background[0];
-        intro.loop();
+        
     }
 
     @Override
     public void init() {
+        
         intro = SoundResource.getInstance().getClip("/Art/BackGround/IntroMusic.wav");
-
     }
 
     @Override
@@ -58,6 +60,9 @@ public class MenuState extends GameState {
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1280, 720);
+        this.fadeIn(g);
         g.drawImage(img,0,0, Game.WIDTH, Game.HEIGHT,null);
     }
 

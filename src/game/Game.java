@@ -74,12 +74,12 @@ public class Game extends Canvas implements Runnable {
     //end
 
 
-    public  synchronized void start(){
+    public synchronized void start(){
         thread = new Thread(this);
         running = true;
         thread.start();
     }
-    public  synchronized void stop(){
+    public synchronized void stop(){
         try{
             thread.join();
             running = false;
@@ -132,7 +132,8 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-
+//        g.setColor(Color.BLACK);
+//        g.fillRect(0, 0, 1280, 720);
         gsm.render(g);
 
         g.dispose();

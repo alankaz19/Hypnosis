@@ -9,11 +9,15 @@ package gameobject;
 import java.awt.Graphics;
 import game.Game;
 import game.Updater;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import scene.Texture;
+import uiobject.Fonts;
 /**
  *
  * @author Kai
@@ -50,6 +54,7 @@ public abstract class GameObject implements Updater{
     protected int msgFrameCount;
     protected int msgPosition;
     protected BufferedImage chatBubble;
+    protected float alpha;
     
     //點擊效果
     protected boolean clicked;
@@ -144,8 +149,6 @@ public abstract class GameObject implements Updater{
         return xDest < 0 || xDest + width > Game.WIDTH || yDest  < 0 || yDest + height > Game.HEIGHT ;
     }
 
-    
-
     public void setChatBubble(BufferedImage chatBubble) {
         this.chatBubble = chatBubble;
     }
@@ -190,7 +193,6 @@ public abstract class GameObject implements Updater{
             return false;
         }
         return true;
-       
     }
 
     public void setIsCollision(boolean isCollision) {
@@ -211,15 +213,28 @@ public abstract class GameObject implements Updater{
     
     public void renderMsg(Graphics g){
         if(msgFrameCount < msgFrame){
-            //Font font = g.getFont().deriveFont(20.0f);
-            g.setFont(new Font("Helvetica", Font.BOLD, 18));
+            Font font = Fonts.getBitFont(17);
+            g.setFont(font);
             g.setColor(color);
             FontMetrics fm = g.getFontMetrics();
             int sa = fm.getAscent();
             chatBubble = Texture.getInstance().ui[0];
+            Graphics2D g2d =(Graphics2D)g;
+            if(this.alpha <= 0.99f && this.alpha >= 0){
+            this.alpha += 0.09f;
+            }
+            else if(this.alpha >= 0.9f){
+                this.alpha = 1.0f;
+            }
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+
             g.drawImage(chatBubble, x + msgPosition, y + height / 2 - chatBubble.getHeight() -130, null);//先畫對話框
             drawString(g, msg, x+20 + msgPosition,  y + height / 2 -sa / 2 - 245);
             msgFrameCount++;
+            if(msgFrameCount == msgFrame){
+                this.alpha = 0;
+            }
         }
     }
     

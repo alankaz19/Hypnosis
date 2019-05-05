@@ -38,6 +38,7 @@ public class Option extends GameState {
 
     @Override
     public void render(Graphics g) {
+        this.fadeIn(g);
         g.drawImage(img,408,84, 883,695, 378,64,913,695,null);
 
     }

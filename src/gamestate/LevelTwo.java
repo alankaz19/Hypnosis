@@ -1,22 +1,19 @@
 package gamestate;
 
 import game.Game;
+import game.Updater;
 import gameobject.Npc;
 import gameobject.ObjectID;
 import gameobject.Player;
-
 import java.awt.*;
-
 import gameobject.items.Obstacle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import scene.Camera;
 import scene.ParallaxBackGround;
-import scene.Snow;
 import scene.Texture;
 
 public class LevelTwo extends GameState {
@@ -37,8 +34,34 @@ public class LevelTwo extends GameState {
     private Camera cam;
     private Snow[] snow;
     private int timeC, spawnT, camPos, lifeCount;
-
+    
     public static LevelTwo LevelTwo;
+    
+    private class Snow implements Updater{
+    double x = Math.random() * Game.WIDTH;
+    double y = (Math.random() *-500) +50;
+    double yVel = Math.random() * 2.5 ;
+    double xVel = Math.random() * 1 ;
+    
+    @Override
+    public void tick(){
+        y += yVel;
+        x -= xVel;
+        if( y > Game.HEIGHT){
+            y = Math.random() * -400;
+        }
+        if(x < 0){
+            x = Game.WIDTH;
+        }
+    }
+    
+    @Override
+    public void render(Graphics g){
+        g.setColor(java.awt.Color.white);
+        g.drawLine((int)x, (int)y, (int)x, (int)y+3);
+    }
+}
+
 
     public  LevelTwo getInstance(){
         if(LevelTwo == null){
@@ -111,6 +134,9 @@ public class LevelTwo extends GameState {
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1280, 720);
+        this.fadeIn(g);
         background2.render(g);
         farMountain.render(g);
         nearMountain.render(g);
@@ -126,7 +152,7 @@ public class LevelTwo extends GameState {
         g.drawString("Life Count : " + lifeCount,player.getX()+400,50);
         g.translate(-cam.getX(), -cam.getY());//end of cam
         for (Snow snow1 : snow) {
-            snow1.redner(g);
+            snow1.render(g);
         }
 
 

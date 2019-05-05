@@ -5,7 +5,9 @@
  */
 package gamestate;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  *
@@ -14,8 +16,10 @@ import java.awt.Graphics;
 public abstract class GameState {
     
     protected GameStateManager gsm;
+    protected float alpha;
     
     protected GameState(GameStateManager gsm){  
+        this.alpha = 0;
         this.gsm = gsm;
         init();
     }
@@ -30,4 +34,14 @@ public abstract class GameState {
     public abstract void mousePressed(int x, int y);
     public abstract void mouseDragged(int x, int y);
     public abstract void mouseReleased(int x);
+    public void fadeIn(Graphics g){
+        if(this.alpha <= 0.99f && this.alpha >= 0) {
+            this.alpha += 0.01f;
+        }
+        else if(this.alpha >= 0.99f) {
+            this.alpha = 1.0f;
+        }
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+    }
 }

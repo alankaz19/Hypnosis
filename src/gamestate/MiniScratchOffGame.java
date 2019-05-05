@@ -88,7 +88,7 @@ public class MiniScratchOffGame extends GameState{
         
         public Riddle(int x, int y, ObjectID id) {
             super(x, y, id);
-            this.img = ImageResource.getInstance().getImage("/Art/Game Material/picture3.png");
+            this.img = ImageResource.getInstance().getImage("/Art/Game Material/picture4.png");
         }
 
         @Override
@@ -142,6 +142,7 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void render(Graphics g) {
+        this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
         g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);

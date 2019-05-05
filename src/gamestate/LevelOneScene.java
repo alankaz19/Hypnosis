@@ -9,6 +9,7 @@ import game.Handler;
 import gameobject.GameObject;
 import gameobject.ObjectID;
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -47,7 +48,7 @@ public class LevelOneScene extends GameState{
         @Override
         public void tick() {
             if(this.alpha <= 0.99f && this.alpha >= 0){
-                this.alpha += 0.01;
+                this.alpha += 0.01f;
             }
             else if(this.alpha >= 0.99f){
                 this.alpha = 1.0f;
@@ -128,6 +129,9 @@ public class LevelOneScene extends GameState{
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1280, 720);
+        this.fadeIn(g);
         handler.getObject().get(0).render(g);
         for (int i = 0; i < handler.getObject().size() - 1; i++) {
             if(handler.getObject().get(i).isShow()){
@@ -140,7 +144,7 @@ public class LevelOneScene extends GameState{
     public void keyPressed(int k) {
         keyPressed = k;
         if(keyPressed == KeyEvent.VK_ESCAPE){
-            gsm.setState(GameStateManager.LEVEL1_STATE);
+            gsm.setState(gsm.getPrevState());
         }
     }
 
@@ -150,6 +154,7 @@ public class LevelOneScene extends GameState{
 
     @Override
     public void mousePressed(int x, int y) {
+            gsm.setState(gsm.getPrevState());
     }
 
     @Override

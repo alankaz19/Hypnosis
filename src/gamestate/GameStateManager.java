@@ -6,9 +6,6 @@
 package gamestate;
 
 import java.awt.Graphics;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Stack;
 
 /**
@@ -39,8 +36,11 @@ public class GameStateManager {
     protected static final int SCRATCH_GAME = 7;
     protected static final int INTRO = 8;
     protected static final int LEVEL1_SCENE = 9;
+    protected static final int TRANSITION = 10;
+    
     public static GameStateManager gsm;
-
+    
+    //單一實例
     public static GameStateManager getInstance(){
         if(gsm == null){
             gsm = new GameStateManager();
@@ -49,43 +49,79 @@ public class GameStateManager {
     }
 
     public GameStateManager() {
-        gameStates = new GameState[10];
+        gameStates = new GameState[12];
         currentState = MENU_STATE;
         loadState(currentState);
     }
 
-
+    // 載入場景
     public void loadState(int state){
-        if(state == MENU_STATE){
-            gameStates[state] = new MenuState(this);
+        switch(state){
+            case MENU_STATE:
+                gameStates[state] = new MenuState(this);
+                break;
+            case OPTION_STATE:
+                gameStates[state] = new Option(this);
+                break;
+            case INTRO:
+                gameStates[state] = new Intro(this);
+                break;
+            case TRANSITION:
+                gameStates[state] = new Transition(this);
+                break;
+            case LEVEL1_STATE:
+                gameStates[state] = new LevelOne(this);
+                break;
+            case LEVEL1_SCENE:
+                gameStates[state] = new LevelOneScene(this);
+                break;
+            case LEVEL2_STATE:
+                gameStates[state] = new LevelTwo(this); 
+                break;
+            case LEVEL3_STATE:
+                gameStates[state] = new LevelTwo(this); 
+                break;
+            case PUZZLE_GAME:
+                gameStates[state] = new MiniPuzzleGame(this);
+                break;
+            case CLICK_GAME:
+                gameStates[state] = new MiniClickGame(this);
+                break;
+            case SCRATCH_GAME:
+                gameStates[state] = new MiniScratchOffGame(this);
+                break;
         }
-        if(state == OPTION_STATE){
-            gameStates[state] = new Option(this);
-        }
-        if(state == INTRO){
-            gameStates[state] = new Intro(this);
-        }
-        if(state == LEVEL1_STATE){
-            gameStates[state] = new LevelOne(this);
-        }
-        if(state == LEVEL1_SCENE){
-            gameStates[state] = new LevelOneScene(this);
-        }
-        if(state == LEVEL2_STATE){
-            gameStates[state] = new LevelTwo(this);
-        }
-        if(state == LEVEL3_STATE){
-            gameStates[state] = new LevelThree(this);
-        }
-        if(state == PUZZLE_GAME){
-            gameStates[state] = new MiniPuzzleGame(this);
-        }
-        if(state == CLICK_GAME){
-            gameStates[state] = new MiniClickGame(this);
-        }
-        if(state == SCRATCH_GAME){
-            gameStates[state] = new MiniScratchOffGame(this);
-        }
+        
+//        if(state == MENU_STATE){
+//            gameStates[state] = new MenuState(this);
+//        }
+//        if(state == OPTION_STATE){
+//            gameStates[state] = new Option(this);
+//        }
+//        if(state == INTRO){
+//            gameStates[state] = new Intro(this);
+//        }
+//        if(state == LEVEL1_STATE){
+//            gameStates[state] = new LevelOne(this);
+//        }
+//        if(state == LEVEL1_SCENE){
+//            gameStates[state] = new LevelOneScene(this);
+//        }
+//        if(state == LEVEL2_STATE){
+//            gameStates[state] = new LevelTwo(this);
+//        }
+//        if(state == LEVEL3_STATE){
+//            gameStates[state] = new LevelThree(this);
+//        }
+//        if(state == PUZZLE_GAME){
+//            gameStates[state] = new MiniPuzzleGame(this);
+//        }
+//        if(state == CLICK_GAME){
+//            gameStates[state] = new MiniClickGame(this);
+//        }
+//        if(state == SCRATCH_GAME){
+//            gameStates[state] = new MiniScratchOffGame(this);
+//        }
     }
 
     public void unloadState(){

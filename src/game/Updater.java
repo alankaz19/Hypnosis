@@ -12,6 +12,6 @@ import java.awt.Graphics;
  * @author Kai
  */
 public interface Updater {
-    void tick();
-    void render(Graphics g);
+    public void tick();
+    public void render(Graphics g);
 }

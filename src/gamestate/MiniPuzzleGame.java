@@ -170,6 +170,7 @@ public class MiniPuzzleGame extends GameState {
 
     @Override
     public void render(Graphics g) {
+        this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
         g.drawImage(frame, 635, 80, null);
         gameBoard.render(g);

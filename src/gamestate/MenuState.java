@@ -39,7 +39,7 @@ public class MenuState extends GameState {
         init();
         
         img = Texture.getInstance().background[0];
-        
+        //intro.loop();
     }
 
     @Override
@@ -68,15 +68,13 @@ public class MenuState extends GameState {
 
     @Override
     public void keyPressed(int k) {
-        if(k == KeyEvent.VK_2){
-            gsm.newState(GameStateManager.LEVEL2_STATE);
-        }
-        if(k == KeyEvent.VK_3){
-            gsm.newState(GameStateManager.SCRATCH_GAME);
-        }
         if(k == KeyEvent.VK_1){
             intro.stop();
-            gsm.newState(GameStateManager.INTRO);
+            gsm.newState(GameStateManager.PUZZLE_GAME);
+        }
+        if(k == KeyEvent.VK_2){
+            intro.stop();
+            gsm.newState(GameStateManager.EASTER_EGG);
         }
 
     }
@@ -89,7 +87,7 @@ public class MenuState extends GameState {
     public void mousePressed(int x, int y) {
         //開始遊戲
         if(x >= 295 && x <= 434 && y >= 456 && y <= 500){
-            gsm.newState(GameStateManager.INTRO);
+            gsm.newState(GameStateManager.CLICK_GAME);
         }
 
     }
@@ -99,7 +97,7 @@ public class MenuState extends GameState {
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
 
     }
 

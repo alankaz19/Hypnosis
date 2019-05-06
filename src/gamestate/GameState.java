@@ -33,7 +33,7 @@ public abstract class GameState {
     public abstract void keyReleased(int k);
     public abstract void mousePressed(int x, int y);
     public abstract void mouseDragged(int x, int y);
-    public abstract void mouseReleased(int x);
+    public abstract void mouseReleased(int x, int y);
     public void fadeIn(Graphics g){
         if(this.alpha <= 0.99f && this.alpha >= 0) {
             this.alpha += 0.01f;

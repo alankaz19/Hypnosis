@@ -16,7 +16,7 @@ import uiobject.Message;
  *
  * @author alank
  */
-public class Transition extends GameState{
+public class Transition2 extends GameState{
     private class Line implements Updater{
         double x = (Math.random() * Game.WIDTH);
         double y = (Math.random() * Game.HEIGHT);
@@ -57,18 +57,18 @@ public class Transition extends GameState{
     
     }
     
-    public static Transition TRANSITION;
+    public static Transition2 TRANSITION_2;
     private Line[] lines;
     private Message msg;
     
-    public  Transition getInstance(){
-        if(TRANSITION == null){
-            TRANSITION = new Transition(GameStateManager.getInstance());
+    public  Transition2 getInstance(){
+        if(TRANSITION_2 == null){
+            TRANSITION_2 = new Transition2(GameStateManager.getInstance());
         }
-        return TRANSITION;
+        return TRANSITION_2;
     }
     
-    public Transition(GameStateManager gsm){
+    public Transition2(GameStateManager gsm){
         super(gsm);
         init();
     }
@@ -132,5 +132,6 @@ public class Transition extends GameState{
     @Override
     public void mouseReleased(int x,int y) {
     }
-    
+
 }
+

@@ -1,21 +1,23 @@
 package gamestate;
 
 import game.Game;
+import gameobject.*;
+
+import java.applet.AudioClip;
 import game.Updater;
 import gameobject.Npc;
 import gameobject.ObjectID;
 import gameobject.Player;
 import java.awt.*;
 import gameobject.items.Obstacle;
+import resourcemanage.SoundResource;
 import scene.BackGround;
-
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import scene.Camera;
 import scene.ParallaxBackGround;
 import scene.Texture;
-
 public class LevelTwo extends GameState {
 
     private final int BACKGROUND2 = 3;
@@ -27,14 +29,15 @@ public class LevelTwo extends GameState {
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
     private ParallaxBackGround road;
-    private Player player;
+    private ActionPlayer player;
     private Npc doppelganger;
     private ArrayList<Obstacle> obstacleList;
     private int keyPressed;
     private Camera cam;
     private Snow[] snow;
     private int timeC, spawnT, camPos, lifeCount;
-    
+    private AudioClip bgm;
+
     public static LevelTwo LevelTwo;
     
     private class Snow implements Updater{
@@ -73,6 +76,7 @@ public class LevelTwo extends GameState {
     public LevelTwo(GameStateManager gsm){
         super(gsm);
         init();
+        bgm.loop();
     }
 
     @Override
@@ -82,15 +86,16 @@ public class LevelTwo extends GameState {
         camPos = 400;
         lifeCount = 5;
         snow  = new Snow[200];
+        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }
-        background2 = new BackGround(BACKGROUND2){
-             @Override
-            public void render(Graphics g) {
-                g.drawImage(Texture.getInstance().background[BACKGROUND2],0,0,Game.WIDTH, Game.HEIGHT, null);
-            }
-        };
+//        background2 = new BackGround(BACKGROUND2){
+//             @Override
+//            public void render(Graphics g) {
+//                g.drawImage(Texture.getInstance().background[BACKGROUND2],0,0,Game.WIDTH, Game.HEIGHT, null);
+//            }
+//        };
         farMountain = new ParallaxBackGround(Texture.getInstance().background[FARMOUNTAIN],1);
         farMountain.setVector(-0.1, 0);
         nearMountain = new ParallaxBackGround(Texture.getInstance().background[NEARMOUNTAINS],1);
@@ -99,7 +104,7 @@ public class LevelTwo extends GameState {
         road.setVector(-4, 0);
 
         //player
-        player = (new Player(0, Game.HEIGHT-170, ObjectID.PLAYER,5));
+        player = (new ActionPlayer(0, Game.HEIGHT-170, ObjectID.PLAYER,5));
         player.setxVel(1);
         player.setyVel(1);
         player.setHeight(128);
@@ -113,6 +118,7 @@ public class LevelTwo extends GameState {
 
         cam = new Camera(0, 0,camPos);
     }
+
 
     @Override
     public void tick() {
@@ -149,7 +155,7 @@ public class LevelTwo extends GameState {
         obstacleList.get(0).render(g);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Helvetica", Font.BOLD, 50));
-        g.drawString("Life Count : " + lifeCount,player.getX()+400,50);
+        g.drawString("Life Count : " + lifeCount,player.getX()+ 400,50);
         g.translate(-cam.getX(), -cam.getY());//end of cam
         for (Snow snow1 : snow) {
             snow1.render(g);
@@ -213,15 +219,11 @@ public class LevelTwo extends GameState {
     }
 
 
-
     @Override
     public void keyPressed(int k) {
         keyPressed = k;
         if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
-        }
-        if(keyPressed == KeyEvent.VK_ENTER){
-            gsm.setState(GameStateManager.MENU_STATE);
         }
     }
 
@@ -244,7 +246,7 @@ public class LevelTwo extends GameState {
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
 
     }
 }

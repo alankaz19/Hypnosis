@@ -24,13 +24,16 @@ public class LevelOneScene extends GameState{
     public static LevelOneScene LEVEL1_SCENE;
     Handler handler;
     int keyPressed;
+
+    int timeC;
     
     
-    private BufferedImage background;
+    //private BufferedImage background;
 
     public class Paint extends GameObject {
         BufferedImage img;
         protected float alpha;
+
        
         
         public Paint(int x, int y, ObjectID id,BufferedImage img,float alpha) {
@@ -78,7 +81,8 @@ public class LevelOneScene extends GameState{
     @Override
     public void init() {
         handler = new Handler();
-        background = Texture.getInstance().background[8];
+        //background = Texture.getInstance().background[8];
+        timeC = 0;
         handler.addObject(new Paint(0 ,0 ,ObjectID.PICTURE ,Texture.getInstance().background[8], 0){
             
             @Override
@@ -107,7 +111,7 @@ public class LevelOneScene extends GameState{
         handler.addObject(new Paint(120 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
         handler.addObject(new Paint(440 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
         handler.addObject(new Paint(760 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
-        handler.addObject(new Paint(1020 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
+        handler.addObject(new Paint(1080 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
         handler.getObject().get(0).setShow(true);
     }
 
@@ -119,12 +123,17 @@ public class LevelOneScene extends GameState{
 
     @Override
     public void event() {
-        
-        for (int i = 0; i < handler.getObject().size()-1; i++) {
+        for (int i = 0; i < handler.getObject().size() - 1; i++) {
             if(handler.getObject().get(i).isShow()){
                 handler.getObject().get(i + 1).tick();
             }
         }
+        if(handler.getObject().get(1).isShow() && handler.getObject().get(2).isShow() && handler.getObject().get(3).isShow()){
+            timeC ++;
+            if(timeC >= 250)
+            gsm.setState(GameStateManager.LEVEL1_STATE);
+        }
+
     }
 
     @Override
@@ -162,7 +171,7 @@ public class LevelOneScene extends GameState{
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
     }
     
 }

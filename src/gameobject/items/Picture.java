@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import resourcemanage.ImageResource;
 import scene.Animation;
 import scene.Texture;
 
@@ -23,7 +24,7 @@ import scene.Texture;
 public class Picture extends GameObject {
     private boolean clickable;
     private Animation Shining;
-    private BufferedImage pic = Texture.getInstance().paint[6];
+    private BufferedImage pic = ImageResource.getInstance().getImage("/Art/Game Material/picture.png");
     private double rotateDegrees;
     private double DurationCount;
     

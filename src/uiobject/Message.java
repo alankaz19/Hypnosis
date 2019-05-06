@@ -33,7 +33,7 @@ public class Message extends UIObject{
         
     }
     
-    public void showMsg(int x,int y,String msg,int Duration,Color color, int size){
+    public void showMsg(int x,int y,String msg,int Duration,Color color){
         this.x = x;
         this.y = y;
         xtemp = x;
@@ -46,7 +46,7 @@ public class Message extends UIObject{
     }
     
     private void drawString(Graphics g, String text, int x, int y) {
-        int bubbleWidth = 50;
+        int bubbleWidth = 11;
         int count = 1;
         for (int i = 0; i < i + bubbleWidth; i += bubbleWidth){
             if(text.length() - i > bubbleWidth){
@@ -86,12 +86,17 @@ public class Message extends UIObject{
                 this.alpha = 1.0f;
             }
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
-//            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 
             drawString(g, msg, x,  y);
             msgFrameCount++;
             if(msgFrameCount == msgFrame){
-                this.alpha = 0;
+               if(this.alpha > 0.99f && this.alpha >= 0){
+                this.alpha -= 0.09f;
+                }
+                else if(this.alpha <= 0.09f){
+                    this.alpha = 0;
+                }
             }
         }
     }

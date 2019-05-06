@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import resourcemanage.SoundResource;
 import scene.Camera;
 import scene.PaintUtil;
+import uiobject.Fonts;
 
 public class LevelOne extends GameState {
 
@@ -54,7 +55,8 @@ public class LevelOne extends GameState {
         backGround = new BackGround(1);
         cam = new Camera(0, 0, 400);
         playerMsg = " 利用WASD鍵來移動 ···";
-        handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER, 8));
+        try{
+            handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER, 8));
         handler.addObject(new Picture(600, ObjectID.PICTURE){
             @Override
             public void render(Graphics g) {
@@ -65,6 +67,9 @@ public class LevelOne extends GameState {
         handler.addObject(new Picture(600 + 1280, ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 1920, ObjectID.PICTURE));
         handler.addObject(new Door(800 + 2260, ObjectID.DOOR));
+        }catch(ExceptionInInitializerError e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -84,25 +89,30 @@ public class LevelOne extends GameState {
         
         for (int i = 1; i < handler.getObject().size(); i++) {
             if (handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))) {
-                if (handler.getObject().get(i).getID() == ObjectID.PICTURE) {
+                //show hint for the first paint only
+                if (handler.getObject().get(1).getID() == ObjectID.PICTURE) {
                     g.translate(cam.getX(), cam.getY());
-                    PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(i).x, handler.getObject().get(i).y, 128, 178), 6);
+                    PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(1).x, handler.getObject().get(i).y, 128, 178), 6);
                     g.translate(-cam.getX(), -cam.getY());
                 }
-                if (handler.getObject().get(i).getID() == ObjectID.DOOR) {
-                    g.translate(cam.getX(), cam.getY());
-                    PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(i).x, handler.getObject().get(i).y, 200, 300), 6);
-                    g.translate(-cam.getX(), -cam.getY());
+                //show hint only after scene is shown
+                if(sceneshow){
+                    if (handler.getObject().get(i).getID() == ObjectID.PICTURE) {
+                        g.translate(cam.getX(), cam.getY());
+                        PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(i).x, handler.getObject().get(i).y, 128, 178), 6);
+                        g.translate(-cam.getX(), -cam.getY());
+                    }
+                    if (handler.getObject().get(i).getID() == ObjectID.DOOR) {
+                        g.translate(cam.getX(), cam.getY());
+                        PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(i).x, handler.getObject().get(i).y, 200, 300), 6);
+                        g.translate(-cam.getX(), -cam.getY());
+                    }
                 }
             }
         }
         g.translate(cam.getX(), cam.getY()); //begin of cam
-        
-        
         handler.render(g);
         handler.getObject().get(PLAYER).renderMsg(g); // message following character head
-
-
         g.translate(-cam.getX(), -cam.getY());//end of cam
 
 
@@ -111,18 +121,15 @@ public class LevelOne extends GameState {
     @Override
     public void event() {
 //        System.out.println("Player x: " + handler.getObject().get(PLAYER).getX());//pirnt 角色x
-        
         if(handler.getObject().get(PICTURE1).isShow()){
             if(!sceneshow){
                 gsm.newState(GameStateManager.LEVEL1_SCENE);
                 sceneshow = true;
             }
-            
             for (int i = 2; i < handler.getObject().size() - 1; i++) {
                 handler.getObject().get(i).setShow(true);
             }
         }
-        
         for (int i = 1; i < handler.getObject().size(); i++) {
             if (handler.getObject().get(PLAYER).checkCollision(handler.getObject().get(i))) {
                 handler.getObject().get(i).setIsCollision(true);
@@ -132,7 +139,7 @@ public class LevelOne extends GameState {
         }
 
         if (handler.getObject().get(PLAYER).getX() == 0) {
-            handler.getObject().get(PLAYER).showMsg(playerMsg, 300, Color.BLACK, MSG_POSITION);
+            handler.getObject().get(PLAYER).showMsg(playerMsg, 300, Color.BLACK, MSG_POSITION,Fonts.getBitFont(30));
         }
 
         if (keyPressed == KeyEvent.VK_D) {
@@ -215,7 +222,7 @@ public class LevelOne extends GameState {
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
 
     }
 }

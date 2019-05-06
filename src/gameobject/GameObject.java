@@ -6,18 +6,15 @@
 package gameobject;
 
 
-import java.awt.Graphics;
+import java.awt.*;
+
 import game.Game;
 import game.Updater;
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import scene.Texture;
-import uiobject.Fonts;
+import uiobject.Message;
 /**
  *
  * @author Kai
@@ -29,18 +26,35 @@ public abstract class GameObject implements Updater{
     // 座標 
     public int x;
     public int y;
+
     // 方向
     protected int dir;
     //加速度
     protected int xVel;
     protected int yVel;
     // 判定屬性
-    protected int currentX;
-    protected int currentY;
+
     protected int xDest;
     protected int yDest;
-    protected int xTemp;
-    protected int yTemp;
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
+
+    public boolean isFalling() {
+        return falling;
+    }
+
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
+
+    protected boolean jumping;
+    protected boolean falling;
     // 判定相交
     protected boolean isCollision;
     
@@ -48,7 +62,8 @@ public abstract class GameObject implements Updater{
     protected ObjectID id;
     
     // 對白相關
-    protected String msg;
+    protected Message msg;
+    protected String word;
     protected Color color;
     protected int msgFrame;
     protected int msgFrameCount;
@@ -168,18 +183,45 @@ public abstract class GameObject implements Updater{
     public boolean isClicked() {
         return clicked;
     }
-    
+
+
+    public Rectangle getBot(){
+        return new Rectangle(x + 10,y + height/2,width - 30,height/2);
+    }
+    public Rectangle getTop(){
+        return new Rectangle(x + 10,y,width - 30,height/2);
+    }
+    public Rectangle getRight(){
+        return new Rectangle(x ,y + 5,5,height - 5);
+    }
+    public Rectangle getLeft(){
+        return new Rectangle(x + width,y + 5,5,height - 5);
+    }
+    public Rectangle getBound(){
+        return new Rectangle(x ,y - 3,width,height + 5);
+    }
+
+    public boolean checkFloor(GameObject o ){
+        if(this.getBound().intersects(o.getBot())){
+            return true;
+        }
+        if(this.getBound().intersects(o.getTop())){
+            return true;
+        }
+        return false;
+    }
+
     public boolean checkCollision(GameObject o){
         int leftSide, oLeft;
         int rightSide, oRight;
         int top, oTop;
         int bottom, oBottom;
-        
+
         leftSide = this.x;  oLeft = o.x;
         rightSide = this.x + width; oRight = o.x + o.width;
         top = this.y ; oTop = o.y;
         bottom = this.y + height; oBottom = o.y + o.height;
-        
+
         if(leftSide > oRight){
             return false;
         }
@@ -203,58 +245,21 @@ public abstract class GameObject implements Updater{
         this.msgPosition = msgPosition;
     }
     
-    public void showMsg(String msg,int Duration,Color color,int MsgPosition){
-        this.msg = msg;
-        this.color = color;
+    public void showMsg(String msg,int Duration,Color color,int MsgPosition,Font font){
+        this.msg = new Message();
+        this.word = msg;
+        this.msg.setFont(font);
         this.msgFrame = Duration;
-        this.msgFrameCount = 0;
         this.msgPosition = MsgPosition;
+        this.msgFrameCount =0;
     }
     
     public void renderMsg(Graphics g){
         if(msgFrameCount < msgFrame){
-            Font font = Fonts.getBitFont(17);
-            g.setFont(font);
-            g.setColor(color);
-            FontMetrics fm = g.getFontMetrics();
-            int sa = fm.getAscent();
-            chatBubble = Texture.getInstance().ui[0];
-            Graphics2D g2d =(Graphics2D)g;
-            if(this.alpha <= 0.99f && this.alpha >= 0){
-            this.alpha += 0.09f;
-            }
-            else if(this.alpha >= 0.9f){
-                this.alpha = 1.0f;
-            }
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-
-            g.drawImage(chatBubble, x + msgPosition, y + height / 2 - chatBubble.getHeight() -130, null);//先畫對話框
-            drawString(g, msg, x+20 + msgPosition,  y + height / 2 -sa / 2 - 245);
+            g.drawImage(Texture.getInstance().ui[0], x + msgPosition, y + height / 2 - Texture.getInstance().ui[0].getHeight() -130, null);//先畫對話框
+            this.msg.showMsg( x+20 + msgPosition,  y + height / 2 -20 / 2 - 245, word, msgFrame, color);
+            msg.render(g);
             msgFrameCount++;
-            if(msgFrameCount == msgFrame){
-                this.alpha = 0;
-            }
-        }
-    }
-    
-    private void drawString(Graphics g, String text, int x, int y) {
-        int bubbleWidth = 11;
-        int count = 1;
-        for (int i = 0; i < i + bubbleWidth; i += bubbleWidth){
-            if(text.length() - i > bubbleWidth){
-                String line = text.substring(i, bubbleWidth * count++);
-                g.drawString(line, x, y += g.getFontMetrics().getHeight());
-            }
-            else if(text.length() <= bubbleWidth){
-                g.drawString(text, x, y += g.getFontMetrics().getHeight() * 2);
-                break;
-            }
-            else if(text.length() - i <= bubbleWidth){
-                String line = text.substring(i);
-                g.drawString(line, x, y += g.getFontMetrics().getHeight());
-                break;
-            }
         }
     }
 }

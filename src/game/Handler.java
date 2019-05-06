@@ -22,15 +22,12 @@ public class Handler implements Updater{
             element.tick();
         }
     }
-    
     @Override
     public void render(Graphics g){
         for(int i = object.size() - 1; i >= 0; i--){
             GameObject tempObject = object.get(i);
             tempObject.render(g);
         }
-        
-        
     }
 
     public ArrayList<GameObject> getObject() {

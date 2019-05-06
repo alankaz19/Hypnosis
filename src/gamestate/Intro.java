@@ -12,16 +12,15 @@ import gameobject.Player;
 
 import java.applet.AudioClip;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Timer;
 
 import resourcemanage.SoundResource;
 import scene.BackGround;
 import scene.Texture;
+import uiobject.Fonts;
 
 /**
  *
@@ -69,8 +68,8 @@ public class Intro extends GameState{
         
         //read script
         try {
-            playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"),"UTF-16"));
-            npcScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("NpcScene1.txt"),"UTF-16"));
+            playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"), StandardCharsets.UTF_16));
+            npcScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("NpcScene1.txt"), StandardCharsets.UTF_16));
             while(playerScriptReader.ready()){
                 playerScript.add(playerScriptReader.readLine());
             }
@@ -121,7 +120,7 @@ public class Intro extends GameState{
         if(time == 150 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(1).showMsg(npcScript.get(npcC), 100, Color.BLACK, 0);// npc message
+                handler.getObject().get(1).showMsg(npcScript.get(npcC), 800, Color.BLACK,0,Fonts.getBitFont(20));// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;
@@ -132,7 +131,7 @@ public class Intro extends GameState{
         if(time == 150 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
             System.out.println("player Line " + msgC);
             if(!playerScript.get(msgC).equals(""))
-            handler.getObject().get(0).showMsg(playerScript.get(msgC), 100, Color.BLACK,0); //player message
+            handler.getObject().get(0).showMsg(playerScript.get(msgC), 800, Color.BLACK,0,Fonts.getBitFont(20)); //player message
             if(msgC < playerScript.size()){
                 msgC ++;
                 System.out.println(msgC);
@@ -147,9 +146,6 @@ public class Intro extends GameState{
         if(time >= 50 && sceneFinished){ //move one to next stage
             gsm.newState(GameStateManager.LEVEL1_STATE);
         }
-
-
-
     }
 
     @Override
@@ -184,7 +180,7 @@ public class Intro extends GameState{
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
 
     }
 }

@@ -37,7 +37,8 @@ public class GameStateManager {
     protected static final int INTRO = 8;
     protected static final int LEVEL1_SCENE = 9;
     protected static final int TRANSITION = 10;
-    
+    protected static final int EASTER_EGG = 11;
+
     public static GameStateManager gsm;
     
     //單一實例
@@ -56,72 +57,81 @@ public class GameStateManager {
 
     // 載入場景
     public void loadState(int state){
-        switch(state){
-            case MENU_STATE:
-                gameStates[state] = new MenuState(this);
-                break;
-            case OPTION_STATE:
-                gameStates[state] = new Option(this);
-                break;
-            case INTRO:
-                gameStates[state] = new Intro(this);
-                break;
-            case TRANSITION:
-                gameStates[state] = new Transition(this);
-                break;
-            case LEVEL1_STATE:
-                gameStates[state] = new LevelOne(this);
-                break;
-            case LEVEL1_SCENE:
-                gameStates[state] = new LevelOneScene(this);
-                break;
-            case LEVEL2_STATE:
-                gameStates[state] = new LevelTwo(this); 
-                break;
-            case LEVEL3_STATE:
-                gameStates[state] = new LevelTwo(this); 
-                break;
-            case PUZZLE_GAME:
-                gameStates[state] = new MiniPuzzleGame(this);
-                break;
-            case CLICK_GAME:
-                gameStates[state] = new MiniClickGame(this);
-                break;
-            case SCRATCH_GAME:
-                gameStates[state] = new MiniScratchOffGame(this);
-                break;
-        }
+//        switch(state){
+//            case MENU_STATE:
+//                gameStates[state] = new MenuState(this);
+//                break;
+//            case OPTION_STATE:
+//                gameStates[state] = new Option(this);
+//                break;
+//            case INTRO:
+//                gameStates[state] = new Intro(this);
+//                break;
+//            case TRANSITION:
+//                gameStates[state] = new Transition(this);
+//                break;
+//            case LEVEL1_STATE:
+//                gameStates[state] = new LevelOne(this);
+//                break;
+//            case LEVEL1_SCENE:
+//                gameStates[state] = new LevelOneScene(this);
+//                break;
+//            case LEVEL2_STATE:
+//                gameStates[state] = new LevelTwo(this); 
+//                break;
+//            case LEVEL3_STATE:
+//                gameStates[state] = new LevelTwo(this); 
+//                break;
+//            case PUZZLE_GAME:
+//                gameStates[state] = new MiniPuzzleGame(this);
+//                break;
+//            case CLICK_GAME:
+//                gameStates[state] = new MiniClickGame(this);
+//                break;
+//            case SCRATCH_GAME:
+//                gameStates[state] = new MiniScratchOffGame(this);
+//                break;
+//            case EASTER_EGG:
+//                gameStates[state] = new EasterEgg(this);
+//                break;
+//        }
         
-//        if(state == MENU_STATE){
-//            gameStates[state] = new MenuState(this);
-//        }
-//        if(state == OPTION_STATE){
-//            gameStates[state] = new Option(this);
-//        }
-//        if(state == INTRO){
-//            gameStates[state] = new Intro(this);
-//        }
-//        if(state == LEVEL1_STATE){
-//            gameStates[state] = new LevelOne(this);
-//        }
-//        if(state == LEVEL1_SCENE){
-//            gameStates[state] = new LevelOneScene(this);
-//        }
-//        if(state == LEVEL2_STATE){
-//            gameStates[state] = new LevelTwo(this);
-//        }
-//        if(state == LEVEL3_STATE){
-//            gameStates[state] = new LevelThree(this);
-//        }
-//        if(state == PUZZLE_GAME){
-//            gameStates[state] = new MiniPuzzleGame(this);
-//        }
-//        if(state == CLICK_GAME){
-//            gameStates[state] = new MiniClickGame(this);
-//        }
-//        if(state == SCRATCH_GAME){
-//            gameStates[state] = new MiniScratchOffGame(this);
-//        }
+        if(state == MENU_STATE){
+            gameStates[state] = new MenuState(this);
+        }
+        if(state == OPTION_STATE){
+            gameStates[state] = new Option(this);
+        }
+        if(state == INTRO){
+            gameStates[state] = new Intro(this);
+        }
+        if(state == LEVEL1_STATE){
+            gameStates[state] = new LevelOne(this);
+        }
+        if(state == LEVEL1_SCENE){
+            gameStates[state] = new LevelOneScene(this);
+        }
+        if(state == LEVEL2_STATE){
+            gameStates[state] = new LevelTwo(this);
+        }
+        if(state == LEVEL3_STATE){
+            gameStates[state] = new LevelThree(this);
+        }
+        if(state == PUZZLE_GAME){
+            gameStates[state] = new MiniPuzzleGame(this);
+        }
+        if(state == CLICK_GAME){
+            gameStates[state] = new MiniClickGame(this);
+        }
+        if(state == SCRATCH_GAME){
+            gameStates[state] = new MiniScratchOffGame(this);
+        }
+        if(state == TRANSITION){
+            gameStates[state] = new Transition(this);
+        }
+        if(state == EASTER_EGG){
+            gameStates[state] = new EasterEgg(this);
+        }
     }
 
     public void unloadState(){
@@ -167,10 +177,9 @@ public class GameStateManager {
     public  void mouseDragged(int x, int y){
         gameStates[currentState].mouseDragged(x, y);
     }
-    public void mouseReleased(int x){
-        gameStates[currentState].mouseReleased(x);
+    public void mouseReleased(int x, int y){
+        gameStates[currentState].mouseReleased(x,y);
     }
-    
     public void setMousePoiont(int x, int y){
         this.mouseX = x;
         this.mouseY = y;

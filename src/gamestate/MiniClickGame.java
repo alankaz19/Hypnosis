@@ -15,7 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import scene.BackGround;
 import scene.Texture;
-import uiobject.DialogBox;
+import uiobject.HintBox;
 import uiobject.Button;
 
 /**
@@ -28,7 +28,7 @@ public class MiniClickGame extends GameState {
     
     private Frame frame;
     private Mask mask;
-    private DialogBox hint;
+    private HintBox hint;
 //    private Button exitButton;
     private BufferedImage exit;
     private boolean isDone;
@@ -107,8 +107,9 @@ public class MiniClickGame extends GameState {
         exit = Texture.getInstance().ui[1];
         mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
-        hint = new DialogBox();
+        hint = new HintBox();
         isDone = false;
+        hint.showMsg(Game.WIDTH /2 + 100, 200, 500, "eoeoeooeoeoeoeeo");
         fakeBackground = Texture.getInstance().background[7];
     }
 
@@ -129,7 +130,7 @@ public class MiniClickGame extends GameState {
         g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);
         mask.render(g);
-    //        hint.render();
+        hint.render(g);
     //        exitButton.render();
     }
 
@@ -171,6 +172,6 @@ public class MiniClickGame extends GameState {
     }
 
     @Override
-    public void mouseReleased(int x) {
+    public void mouseReleased(int x, int y) {
     }
 }

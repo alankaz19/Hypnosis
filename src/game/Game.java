@@ -53,6 +53,12 @@ public class Game extends Canvas implements Runnable {
 
         }
 
+        @Override
+        public void mouseMoved(MouseEvent e){
+            gsm.mouseMoved(e.getX(), e.getY());
+
+        }
+
     }
     //end
 

@@ -20,7 +20,7 @@ public class Texture {
     private BufferedImage npc_Sheet;
 
     public BufferedImage[] background = new BufferedImage[10];
-    public BufferedImage[] player = new BufferedImage[30];
+    public BufferedImage[] player = new BufferedImage[40];
     public BufferedImage[] playParkour;
     public BufferedImage[] npc = new BufferedImage[3];
     public BufferedImage[] paint = new BufferedImage[7];
@@ -78,6 +78,16 @@ public class Texture {
         player[27] = playerSheet.grabImage(3, 6, 48, 48);
         player[28] = playerSheet.grabImage(4, 6, 48, 48);
         player[29] = playerSheet.grabImage(5, 6, 48, 48);
+        player[30] = playerSheet.grabImage(12, 6, 48, 48);//dead
+        player[31] = playerSheet.grabImage(13, 6, 48, 48);
+        player[32] = playerSheet.grabImage(14, 6, 48, 48);
+        player[33] = playerSheet.grabImage(15, 6, 48, 48);
+        player[34] = playerSheet.grabImage(16, 6, 48, 48);
+        player[35] = playerSheet.grabImage(16, 6, 48, 48);
+        player[36] = playerSheet.grabImage(17, 6, 48, 48);
+        player[37] = playerSheet.grabImage(18, 6, 48, 48);
+        player[38] = playerSheet.grabImage(19, 6, 48, 48);
+        player[39] = playerSheet.grabImage(21, 6, 48, 48);
 
         npc[0] = playerSheet.grabImage(7, 6, 48, 48);
         npc[1] = playerSheet.grabImage(8, 6, 48, 48);

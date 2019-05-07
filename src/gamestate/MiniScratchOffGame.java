@@ -175,12 +175,18 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void mouseDragged(int x, int y) {
-        mouseX = x;
-        mouseY = y;
     }
 
     @Override
     public void mouseReleased(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+        mouseX = x;
+        mouseY = y;
+
     }
 
 }

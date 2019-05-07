@@ -173,5 +173,10 @@ public class LevelOneScene extends GameState{
     @Override
     public void mouseReleased(int x, int y) {
     }
-    
+
+    @Override
+    public void mouseMoved(int x, int y) {
+
+    }
+
 }

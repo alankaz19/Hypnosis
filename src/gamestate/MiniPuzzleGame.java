@@ -276,6 +276,11 @@ public class MiniPuzzleGame extends GameState {
 
     }
 
+    @Override
+    public void mouseMoved(int x, int y) {
+
+    }
+
     //distance between two puzzles
     private double getDistance(Pieces a, Pieces b){
         double distance;

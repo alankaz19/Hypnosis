@@ -21,6 +21,7 @@ public class Animation {
     
     private BufferedImage[] images;
     private BufferedImage currentImg;
+    private boolean playedOnce;
 
     public Animation(int speed, BufferedImage... args) {
         this.speed = speed;
@@ -29,9 +30,13 @@ public class Animation {
             images[i] = args[i];
         }
         frames = args.length;
+        playedOnce = false;
     }
-    
-    
+
+    public boolean hasPlayedOnce() {
+        return playedOnce;
+    }
+
     public void runAnimation(){
         index++;
         if(index > speed){
@@ -43,14 +48,22 @@ public class Animation {
     private void nextFrame(){
         currentImg = images[count%frames];
         count++;
+        if(count == frames - 1){
+            playedOnce = true;
+        }
     }
+
+
     
     public void renderAnimation(Graphics g, int x, int y){
         g.drawImage(currentImg, x, y, null);
     }
     
     public void renderAnimation(Graphics g, int x, int y, int scaleX, int scaleY){
-    g.drawImage(currentImg, x, y, scaleX, scaleY, null);
+        g.drawImage(currentImg, x, y, scaleX, scaleY, null);
+    }
+    public void renderOnce(Graphics g, int x, int y, int scaleX, int scaleY){
+        g.drawImage(currentImg, x, y, scaleX, scaleY, null);
     }
     
 }

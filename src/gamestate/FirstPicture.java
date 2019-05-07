@@ -169,5 +169,10 @@ public class FirstPicture extends GameState {
                 gsm.setState(GameStateManager.LEVEL1_STATE);
             }
     }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+
+    }
 }
 

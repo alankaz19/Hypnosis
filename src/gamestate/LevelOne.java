@@ -211,7 +211,7 @@ public class LevelOne extends GameState {
             gsm.newState(GameStateManager.PUZZLE_GAME);
         }
         if (handler.getObject().get(5).getIsCollision()) {
-            gsm.newState(GameStateManager.LEVEL2_STATE);
+            gsm.newState(GameStateManager.EASTER_EGG);
         }
 
     }
@@ -223,6 +223,11 @@ public class LevelOne extends GameState {
 
     @Override
     public void mouseReleased(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
 
     }
 }

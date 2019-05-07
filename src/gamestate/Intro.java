@@ -166,9 +166,7 @@ public class Intro extends GameState{
             keyPressed = -1;
         }
     }
-    
-   
-    
+
     @Override
     public void mousePressed(int x, int y) {
 
@@ -181,6 +179,11 @@ public class Intro extends GameState{
 
     @Override
     public void mouseReleased(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
 
     }
 }

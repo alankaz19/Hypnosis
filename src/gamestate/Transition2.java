@@ -133,5 +133,10 @@ public class Transition2 extends GameState{
     public void mouseReleased(int x,int y) {
     }
 
+    @Override
+    public void mouseMoved(int x, int y) {
+
+    }
+
 }
 

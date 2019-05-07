@@ -16,31 +16,6 @@ import uiobject.Fonts;
 import uiobject.Message;
 
 public class EasterEgg extends GameState {
-    private class Snow implements Updater{
-    double x = Math.random() * Game.WIDTH;
-    double y = (Math.random() *-500) +50;
-    double yVel = Math.random() * 2.5 + 0.5 ;
-    double xVel = Math.random() * 2 ;
-    
-    @Override
-    public void tick(){
-        y += yVel;
-        x -= xVel;
-        if( y > Game.HEIGHT){
-            y = Math.random() * -400;
-        }
-        if(x < 0){
-            x = Game.WIDTH;
-        }
-    }
-    
-    @Override
-    public void render(Graphics g){
-        g.setColor(java.awt.Color.white);
-        g.drawLine((int)x, (int)y, (int)x, (int)y+3);
-    }
-}
-    
     private final int BACKGROUND2 = 3;
     private final int FARMOUNTAIN = 4;
     private final int NEARMOUNTAINS = 5;
@@ -55,6 +30,32 @@ public class EasterEgg extends GameState {
     private ArrayList<Floor> floor;
     private ActionPlayer player;
     private Npc doppelganger;
+    private class Snow implements Updater{
+        double x = Math.random() * Game.WIDTH;
+        double y = (Math.random() *-500) +50;
+        double yVel = Math.random() * 2.5 + 0.5 ;
+        double xVel = Math.random() * 2 ;
+
+
+        @Override
+        public void tick(){
+            y += yVel;
+            x -= xVel;
+            if( y > Game.HEIGHT){
+                y = Math.random() * -400;
+            }
+            if(x < 0){
+                x = Game.WIDTH;
+            }
+        }
+
+        @Override
+        public void render(Graphics g){
+            g.setColor(java.awt.Color.white);
+            g.drawLine((int)x, (int)y, (int)x, (int)y+3);
+        }
+    }
+
     public static EasterEgg EasterEgg;
 
 
@@ -115,7 +116,7 @@ public class EasterEgg extends GameState {
         floor.add(new Floor(276,450,ObjectID.OBSTACLE));
         floor.add(new Floor(576,300,ObjectID.OBSTACLE));
         floor.add(new Floor(896,450,ObjectID.OBSTACLE));
-        for(int i = 0; i < Game.WIDTH; i+=128){
+        for(int i = 0; i < Game.WIDTH + 128; i+=128){ // add 128 because the lower right corner issue// Cannot jump
             floor.add(new Floor(i,666,ObjectID.OBSTACLE));
         }
 
@@ -155,36 +156,45 @@ public class EasterEgg extends GameState {
             }
             //RIGHT COLLISION
             if(player.getRight().intersects(floor.get(i).getBound())){
-                player.setX(floor.get(i).getX() - player.getWidth());;
+                player.setX(floor.get(i).getX() - player.getWidth() + 33);
             }
             //LEFT COLLISION
             if(player.getLeft().intersects(floor.get(i).getBound())){
-                player.setX(floor.get(i).getX() + floor.get(i).getWidth());
+                player.setX(floor.get(i).getX() + floor.get(i).getWidth() - 23);
+            }
+            //NPC COLLISION with FLOOR
+            if(doppelganger.npcExhausted() &&doppelganger.getBound().intersects(floor.get(i).getBound())){
+                doppelganger.setY(floor.get(i).getY() - doppelganger.getHeight()+ 15);
+                doppelganger.setyVel(0);
+                doppelganger.setFalling(false);
             }
         }
         //ENEMY COLLISION
-        if(player.getBound().intersects(doppelganger.getBound())){
-            player.setIsCollision(true);
-            
+        if(player.getBound().intersects(doppelganger.getBound()) && !doppelganger.getIsCollision()){
+           player.setLifeC(player.getLifeC()-1);
         }
         //KEYLISTENER
-        if(key.keyState[key.LEFT]){
-            player.setxVel(-5);
-        }else if(key.keyState[key.RIGHT]){
-            player.setxVel(5);
-        }else{
-            player.setxVel(0);
-        }
-        if((key.keyState[key.SPACE] && !player.isJumping())||(key.keyState[key.UP] && !player.isJumping())){
-            if(player.isFalling()){
-                player.setyVel(-25);
-                player.setJumping(true);
-                player.showMsg("654654654", 1000, Color.red, 0,Fonts.getHorrorFont(30));
+        if(!player.playerDead()){
+            if(key.keyState[key.LEFT]){
+                player.setxVel(-5);
+            }else if(key.keyState[key.RIGHT]){
+                player.setxVel(5);
+            }else{
+                player.setxVel(0);
             }
-            
+            if((key.keyState[key.SPACE] && !player.isJumping())||(key.keyState[key.UP] && !player.isJumping())){
+                System.out.println("Test");
+                if(player.isFalling()){
+                    System.out.println("Test");
+                    player.setyVel(-24);
+                    player.setJumping(true);
+                    //player.showMsg("654654654", 1000, Color.red, 0,Fonts.getHorrorFont(30));
+                }
+            }
         }
         //END
         doppelganger.dive();
+
     }
     @Override
     public void render(Graphics g) {
@@ -206,18 +216,22 @@ public class EasterEgg extends GameState {
 //        for(int i = 0; i< floor.size(); i++){
 //            g2d.draw(floor.get(i).getBound());
 //        }
-        g2d.draw(doppelganger.getBound());
-        g2d.draw(player.getTop());
-        g2d.draw(player.getBot());
-        g2d.draw(player.getRight());
-        g2d.draw(player.getLeft());
-        player.renderMsg(g);
+        //g2d.draw(doppelganger.getBound());
+        //g2d.draw(player.getBound());
+//        g2d.draw(player.getTop());
+//        g2d.draw(player.getBot());
+//        g2d.draw(player.getRight());
+//        g2d.draw(player.getLeft());
+        //player.renderMsg(g);
        
     }
 
     @Override
     public void keyPressed(int k) {
         key.keySet(k, true);
+        if(key.keyState[key.ESCAPE]){
+            gsm.newState(GameStateManager.OPTION_STATE);
+        }
 
     }
 
@@ -242,6 +256,12 @@ public class EasterEgg extends GameState {
     public void mouseReleased(int x, int y) {
 
     }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+
+    }
+
     private class Keys {
 
         public static final int NUM_KEYS = 16;

@@ -5,9 +5,9 @@
  */
 package uiobject;
 
+import game.Game;
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -22,10 +22,13 @@ public class HintBox extends UIObject{
     private BufferedImage img;
     public boolean showed;
     public float alpha;
+    
 
-    public HintBox() {
+    public HintBox(BufferedImage img) {
         this.showed = false;
+        this.img = img;
         this.alpha = 0;
+        this.msg = new Message();
     }
     
     
@@ -53,6 +56,6 @@ public class HintBox extends UIObject{
             }
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
         this.msg.render(g);
-        g.drawImage(Texture.getInstance().ui[2], 0, 0, null);
+        g.drawImage(this.img, 0, 0,Game.WIDTH,Game.HEIGHT, null);
     }
 }

@@ -46,7 +46,7 @@ public class Message extends UIObject{
     }
     
     private void drawString(Graphics g, String text, int x, int y) {
-        int bubbleWidth = 11;
+        int bubbleWidth = 20;
         int count = 1;
         for (int i = 0; i < i + bubbleWidth; i += bubbleWidth){
             if(text.length() - i > bubbleWidth){

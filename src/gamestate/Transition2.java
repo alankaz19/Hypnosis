@@ -30,7 +30,7 @@ public class Transition2 extends GameState{
         
         @Override
         public void tick(){
-            length = (Math.random() * 2) + 1;
+            length = (Math.random() * 3) + 10;
             x -= xVel;
             if(x + length < 0){
                 x = Game.WIDTH + 100;
@@ -40,7 +40,7 @@ public class Transition2 extends GameState{
     
         @Override
         public void render(Graphics g){
-            switch((int)(Math.random() * colorNumber)){
+            switch((int)(Math.random() * 4)){
                 case 1:
                     g.setColor(java.awt.Color.blue);
                     break;
@@ -48,7 +48,7 @@ public class Transition2 extends GameState{
                     g.setColor(java.awt.Color.red);
                     break;
                 case 3:
-                    g.setColor(java.awt.Color.green);
+                    g.setColor(java.awt.Color.white);
                     break;
             }
             
@@ -80,7 +80,7 @@ public class Transition2 extends GameState{
             lines[i] = new Line();
         }
         msg = new Message();
-        msg.setFont(Fonts.getHorrorFont(50));
+        msg.setFont(Fonts.getCrazyFont(65));
         
     }
     
@@ -97,7 +97,7 @@ public class Transition2 extends GameState{
     @Override
     public void event() {
         if(!msg.isShow()){
-            msg.showMsg(Game.WIDTH / 2 - 140 , Game.HEIGHT /2 - 60,"妳今天吃青菜了嗎？？", 2000, Color.red);
+            msg.showMsg(Game.WIDTH / 2 - 330 , Game.HEIGHT /2 - 120,"終  於  見  到  妳  了  。", 2500, Color.red);
         }
     }
 

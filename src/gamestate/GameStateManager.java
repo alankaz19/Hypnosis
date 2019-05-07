@@ -38,6 +38,8 @@ public class GameStateManager {
     protected static final int LEVEL1_SCENE = 9;
     protected static final int TRANSITION = 10;
     protected static final int EASTER_EGG = 11;
+    protected static final int TRANSITION_2 = 12;
+    protected static final int NUMBER_LOCK = 13;
 
     public static GameStateManager gsm;
     
@@ -50,7 +52,7 @@ public class GameStateManager {
     }
 
     public GameStateManager() {
-        gameStates = new GameState[12];
+        gameStates = new GameState[15];
         currentState = MENU_STATE;
         loadState(currentState);
     }
@@ -126,8 +128,14 @@ public class GameStateManager {
         if(state == SCRATCH_GAME){
             gameStates[state] = new MiniScratchOffGame(this);
         }
+        if(state == NUMBER_LOCK){
+            gameStates[state] = new NumberLock(this);
+        }
         if(state == TRANSITION){
             gameStates[state] = new Transition(this);
+        }
+        if(state == TRANSITION_2){
+            gameStates[state] = new Transition2(this);
         }
         if(state == EASTER_EGG){
             gameStates[state] = new EasterEgg(this);

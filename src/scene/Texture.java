@@ -25,6 +25,7 @@ public class Texture {
     public BufferedImage[] npc = new BufferedImage[3];
     public BufferedImage[] paint = new BufferedImage[7];
     public BufferedImage[] ui = new BufferedImage[10];
+    public BufferedImage[] hint = new BufferedImage[10];
     public BufferedImage[] cursor = new BufferedImage[2];
     public BufferedImage[] floor = new BufferedImage[2];
 
@@ -41,7 +42,7 @@ public class Texture {
     public Texture() {
         player_sheet = ImageResource.getInstance().getImage("/Art/Character/player.png");
         playerSheet = new SpriteSheet(player_sheet);
-        npc_Sheet = ImageResource.getInstance().getImage("/Art/Character/Dragon.png");
+        npc_Sheet = ImageResource.getInstance().getImage("/Art/Character/enemy.png");
         npcSheet = new SpriteSheet(npc_Sheet);
         getTextures();
     }
@@ -79,9 +80,9 @@ public class Texture {
         player[28] = playerSheet.grabImage(4, 6, 48, 48);
         player[29] = playerSheet.grabImage(5, 6, 48, 48);
 
-        npc[0] = playerSheet.grabImage(7, 6, 48, 48);
-        npc[1] = playerSheet.grabImage(8, 6, 48, 48);
-        npc[2] = playerSheet.grabImage(9, 6, 48, 48);
+        npc[0] = npcSheet.grabImage(7, 6, 48, 48);
+        npc[1] = npcSheet.grabImage(8, 6, 48, 48);
+        npc[2] = npcSheet.grabImage(9, 6, 48, 48);
 
         background[0] = ImageResource.getInstance().getImage("/Art/Background/MenuEx1.png");
         background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");
@@ -105,6 +106,9 @@ public class Texture {
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
         ui[1] = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");
         ui[2] = ImageResource.getInstance().getImage("/Art/UI/dialogBox.png");
+        
+        hint[0] = ImageResource.getInstance().getImage("/Art/Hint/hint1.png");
+        hint[1] = ImageResource.getInstance().getImage("/Art/Hint/picture1Hint.png");
 
         floor[0] = ImageResource.getInstance().getImage("/Art/Game Material/floor.png");
 

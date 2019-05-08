@@ -3,6 +3,7 @@ package gamestate;
 import game.Game;
 import game.Updater;
 import gameobject.*;
+import resourcemanage.SoundResource;
 import scene.BackGround;
 import scene.ParallaxBackGround;
 import scene.Texture;
@@ -24,12 +25,12 @@ public class EasterEgg extends GameState {
     private BufferedImage background2;
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
-    private ParallaxBackGround road;
     private Snow[] snow;
     private AudioClip bgm;
     private ArrayList<Floor> floor;
     private ActionPlayer player;
     private Npc doppelganger;
+    private int keyPressed;
     private class Snow implements Updater{
         double x = Math.random() * Game.WIDTH;
         double y = (Math.random() *-500) +50;
@@ -62,7 +63,7 @@ public class EasterEgg extends GameState {
     protected EasterEgg(GameStateManager gsm) {
         super(gsm);
         init();
-        //bgm.loop();
+        bgm.loop();
     }
 
     @Override
@@ -72,7 +73,30 @@ public class EasterEgg extends GameState {
         }
         return EasterEgg;
     }
-    public class Floor extends GameObject {
+
+    private class Heart extends GameObject{
+        private BufferedImage img;
+
+        public Heart(int x, int y, ObjectID id) {
+            super(x, y, id);
+            this.img = ImageResource.getInstance().getImage("/Art/Game Material/heart.png");
+            width = 30;
+            height = 30;
+        }
+
+        @Override
+        public void tick() {
+
+        }
+
+        @Override
+        public void render(Graphics g) {
+            g.drawImage(img,x,y,20,20,null);
+        }
+    }
+
+
+    private class Floor extends GameObject {
         private BufferedImage img;
         public Floor(int x, int y, ObjectID id) {
             super(x, y, id);
@@ -93,18 +117,16 @@ public class EasterEgg extends GameState {
     @Override
     public void init() {
         snow  = new Snow[200];
-        //bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
+        bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level2.wav");
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }
-        
         //inputMethod
         key = new Keys();
         //background
         background2 = Texture.getInstance().background[BACKGROUND2];
         farMountain = new ParallaxBackGround(Texture.getInstance().background[FARMOUNTAIN],1);
         nearMountain = new ParallaxBackGround(Texture.getInstance().background[NEARMOUNTAINS],1);
-        road  = new ParallaxBackGround(Texture.getInstance().background[ROAD],0);
         floor = new ArrayList<>();
         //player
         player = new ActionPlayer(276,450,ObjectID.PLAYER,5);
@@ -119,9 +141,9 @@ public class EasterEgg extends GameState {
         for(int i = 0; i < Game.WIDTH + 128; i+=128){ // add 128 because the lower right corner issue// Cannot jump
             floor.add(new Floor(i,666,ObjectID.OBSTACLE));
         }
+        //Enemy or player Life
 
     }
-
     @Override
     public void tick() {
         event();
@@ -193,7 +215,10 @@ public class EasterEgg extends GameState {
             }
         }
         //END
-        doppelganger.dive();
+        doppelganger.checkBorder();
+        if(!doppelganger.npcExhausted() && !player.playerDead()){
+            doppelganger.dive();
+        }
 
     }
     @Override
@@ -201,45 +226,50 @@ public class EasterEgg extends GameState {
         g.drawImage(background2, 0, 0, Game.WIDTH, Game.HEIGHT, null);
         farMountain.render(g);
         nearMountain.render(g);
-        //road.render(g);
         doppelganger.render(g);
         player.render(g);
-        for(int i = 0; i < floor.size(); i++){
-            floor.get(i).render(g);
+        for(Floor floor : floor){
+            floor.render(g);
         }
         for (Snow snow1 : snow) {
             snow1.render(g);
         }
         //debug
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.GREEN);
+//        Graphics2D g2d = (Graphics2D) g;
+//        g2d.setColor(Color.GREEN);
 //        for(int i = 0; i< floor.size(); i++){
 //            g2d.draw(floor.get(i).getBound());
 //        }
-        //g2d.draw(doppelganger.getBound());
-        //g2d.draw(player.getBound());
+//        g2d.draw(doppelganger.getBound());
+//        g2d.draw(player.getBound());
 //        g2d.draw(player.getTop());
 //        g2d.draw(player.getBot());
 //        g2d.draw(player.getRight());
 //        g2d.draw(player.getLeft());
-        //player.renderMsg(g);
+//        player.renderMsg(g);
        
     }
 
     @Override
     public void keyPressed(int k) {
+        keyPressed = k;
         key.keySet(k, true);
-        if(key.keyState[key.ESCAPE]){
+        if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
         }
-
+        if(keyPressed == KeyEvent.VK_ENTER && player.playerDead()){
+            gsm.newState(GameStateManager.EASTER_EGG);
+        }
+        System.out.println(k);
     }
 
     @Override
     public void keyReleased(int k) {
         key.keySet(k,false);
-
-
+        if(k == keyPressed){
+            keyPressed = -1;
+        }
+        System.out.println(k);
     }
 
     @Override

@@ -86,7 +86,7 @@ public class LevelTwo extends GameState {
         camPos = 400;
         lifeCount = 5;
         snow  = new Snow[200];
-        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
+        bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level2.wav");
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }

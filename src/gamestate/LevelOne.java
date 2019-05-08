@@ -30,7 +30,7 @@ public class LevelOne extends GameState {
     private Camera cam;
     private String playerMsg;
     boolean sceneshow;
-    private AudioClip bgm;
+    private AudioClip bgm, clickObject, doorOpen;
 
     public static LevelOne LevelOne;
 
@@ -49,7 +49,9 @@ public class LevelOne extends GameState {
 
     @Override
     public void init() {
-        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level1.wav");
+        bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level1.wav");
+        clickObject = SoundResource.getInstance().getClip("/Art/Sound Effect/switch1.wav");
+        doorOpen = SoundResource.getInstance().getClip("/Art/Sound Effect/open5.wav");
         sceneshow = false;
         handler = new Handler();
         backGround = new BackGround(1);
@@ -199,18 +201,24 @@ public class LevelOne extends GameState {
     @Override
     public void mousePressed(int x, int y) {
         if (handler.getObject().get(1).getIsCollision()) {
+            clickObject.play();
             handler.getObject().get(1).setClicked(true);
         }
         if (handler.getObject().get(2).getIsCollision()) {
+            clickObject.play();
             gsm.newState(GameStateManager.CLICK_GAME);
         }
         if (handler.getObject().get(3).getIsCollision()) {
+            clickObject.play();
             gsm.newState(GameStateManager.SCRATCH_GAME);
         }
         if (handler.getObject().get(4).getIsCollision()) {
+            clickObject.play();
             gsm.newState(GameStateManager.PUZZLE_GAME);
         }
         if (handler.getObject().get(5).getIsCollision()) {
+            bgm.stop();
+            doorOpen.play();
             gsm.newState(GameStateManager.EASTER_EGG);
         }
 

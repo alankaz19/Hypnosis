@@ -20,9 +20,9 @@ public class Texture {
     private BufferedImage npc_Sheet;
 
     public BufferedImage[] background = new BufferedImage[10];
-    public BufferedImage[] player = new BufferedImage[40];
+    public BufferedImage[] player = new BufferedImage[45];
     public BufferedImage[] playParkour;
-    public BufferedImage[] npc = new BufferedImage[3];
+    public BufferedImage[] npc = new BufferedImage[4];
     public BufferedImage[] paint = new BufferedImage[7];
     public BufferedImage[] ui = new BufferedImage[10];
     public BufferedImage[] cursor = new BufferedImage[2];
@@ -41,7 +41,7 @@ public class Texture {
     public Texture() {
         player_sheet = ImageResource.getInstance().getImage("/Art/Character/player.png");
         playerSheet = new SpriteSheet(player_sheet);
-        npc_Sheet = ImageResource.getInstance().getImage("/Art/Character/Dragon.png");
+        npc_Sheet = ImageResource.getInstance().getImage("/Art/Character/enemy.png");
         npcSheet = new SpriteSheet(npc_Sheet);
         getTextures();
     }
@@ -87,11 +87,13 @@ public class Texture {
         player[36] = playerSheet.grabImage(17, 6, 48, 48);
         player[37] = playerSheet.grabImage(18, 6, 48, 48);
         player[38] = playerSheet.grabImage(19, 6, 48, 48);
-        player[39] = playerSheet.grabImage(21, 6, 48, 48);
+        player[40] = playerSheet.grabImage(2, 8, 48, 48);// sit
 
-        npc[0] = playerSheet.grabImage(7, 6, 48, 48);
-        npc[1] = playerSheet.grabImage(8, 6, 48, 48);
-        npc[2] = playerSheet.grabImage(9, 6, 48, 48);
+
+        npc[0] = npcSheet.grabImage(7, 6, 48, 48);
+        npc[1] = npcSheet.grabImage(8, 6, 48, 48);
+        npc[2] = npcSheet.grabImage(9, 6, 48, 48);
+        npc[3] = npcSheet.grabImage(21, 6, 48, 48);//npc dead
 
         background[0] = ImageResource.getInstance().getImage("/Art/Background/MenuEx1.png");
         background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");

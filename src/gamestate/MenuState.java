@@ -21,7 +21,7 @@ import scene.Texture;
 
 public class MenuState extends GameState {
     private BufferedImage img;
-    private AudioClip intro;
+    private AudioClip intro, click;
 
     public static MenuState menuState;
 
@@ -44,8 +44,8 @@ public class MenuState extends GameState {
 
     @Override
     public void init() {
-        
-        intro = SoundResource.getInstance().getClip("/Art/BackGround/IntroMusic.wav");
+        click = SoundResource.getInstance().getClip("/Art/Sound Effect/key.wav");
+        intro = SoundResource.getInstance().getClip("/Art/Sound Effect/IntroMusic.wav");
     }
 
     @Override
@@ -74,6 +74,14 @@ public class MenuState extends GameState {
         }
         if(k == KeyEvent.VK_2){
             intro.stop();
+            gsm.newState(GameStateManager.SCRATCH_GAME);
+        }
+        if(k == KeyEvent.VK_3){
+            intro.stop();
+            gsm.newState(GameStateManager.CLICK_GAME);
+        }
+        if(k == KeyEvent.VK_4){
+            intro.stop();
             gsm.newState(GameStateManager.EASTER_EGG);
         }
 
@@ -87,6 +95,7 @@ public class MenuState extends GameState {
     public void mousePressed(int x, int y) {
         //開始遊戲
         if(x >= 295 && x <= 434 && y >= 456 && y <= 500){
+            click.play();
             gsm.newState(GameStateManager.INTRO);
         }
 

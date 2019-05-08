@@ -24,18 +24,20 @@ public class HintBox extends UIObject{
     public float alpha;
 
     public HintBox() {
+        msg = new Message();
         this.showed = false;
         this.alpha = 0;
     }
-    
-    
+
     public void setMsgPosition(int msgX, int msgY) {
         this.msg.x = msgX;
         this.msg.y = msgY;
     }
     
     public void showMsg(int x, int y,int duration , String msg) {
-        this.msg.showMsg(x, y, msg, duration, Color.black);
+        this.msg.x = x;
+        this.msg.y = y;
+        this.msg.showMsg(x, y, msg, duration, Color.green);
     }
     
     @Override
@@ -52,7 +54,7 @@ public class HintBox extends UIObject{
                 this.alpha = 1.0f;
             }
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+        g.drawImage(Texture.getInstance().ui[2], msg.x, msg.y,300,300, null);
         this.msg.render(g);
-        g.drawImage(Texture.getInstance().ui[2], 0, 0, null);
     }
 }

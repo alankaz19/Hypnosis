@@ -60,7 +60,7 @@ public class ActionPlayer extends GameObject {
         this.yDest = y + yVel;
 
         if(super.checkBorder()){
-            if(xDest - 50 + width > Game.WIDTH ){
+            if(xDest - 45 + width > Game.WIDTH ){
                 this.xVel = 0;
             }else if(xDest + 50 < 0){
                 this.xVel = 0;
@@ -101,6 +101,7 @@ public class ActionPlayer extends GameObject {
         if(!playerDead()) {
             if (this.xVel > 0) {
                 if (falling && jumping) {
+                    this.dir = 1;
                     playerJump.renderAnimation(g, x + width, y, -this.width, this.height);
                 } else {
                     this.dir = 1;
@@ -108,6 +109,7 @@ public class ActionPlayer extends GameObject {
                 }
             } else if (this.xVel < 0) {
                 if (falling && jumping) {
+                    this.dir = 0;
                     playerJump.renderAnimation(g, x, y, this.width, this.height);
                 } else {
                     this.dir = 0;
@@ -140,16 +142,16 @@ public class ActionPlayer extends GameObject {
         }
     }
     public Rectangle getBot(){
-        return new Rectangle(x+width/4,y + height/2,width/2 - 10,height/2);
+        return new Rectangle(x+width/4 + 20,y + height/2,width/2 - 30,height/2);
     }
     public Rectangle getTop(){
-        return new Rectangle(x+width/4,y+10,width/2 -10,height/2);
+        return new Rectangle(x+width/4 + 20,y+10,width/2 -30,height/2);
     }
     public Rectangle getRight(){
         return new Rectangle(x + width - 42 ,y + 5,5,height - 10);
     }
     public Rectangle getLeft(){
-        return new Rectangle(x + 25,y + 5,5,height - 10);
+        return new Rectangle(x + 28,y + 5,5,height - 10);
     }
     public Rectangle getBound(){
         return new Rectangle(x+34,y+15,width-72,height-15);

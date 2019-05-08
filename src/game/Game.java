@@ -1,7 +1,9 @@
 package game;
 
 import gamestate.GameStateManager;
+import resourcemanage.SoundResource;
 
+import javax.sound.sampled.FloatControl;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
@@ -12,7 +14,8 @@ public class Game extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean running = false;
-    private int keyPressed, mouseClick;
+
+
 
     //gameStateManager
     private GameStateManager gsm;
@@ -21,7 +24,6 @@ public class Game extends Canvas implements Runnable {
     class KeyInput extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e) {
-//            keyPressed = e.getKeyCode();
             gsm.keyPressed(e.getKeyCode());
         }
         @Override
@@ -29,7 +31,6 @@ public class Game extends Canvas implements Runnable {
 //            if(e.getKeyCode() == keyPressed ){ // only assign -1 to pressedKey if no other key is pressed to chane the pressedKey value
                 //keyPressed = -1;
                 gsm.keyReleased(e.getKeyCode());
-//            }
         }
     }
 

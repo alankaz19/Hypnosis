@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import scene.Texture;
+import uiobject.HintBox;
 
 
 public class MiniPuzzleGame extends GameState {
@@ -22,6 +23,7 @@ public class MiniPuzzleGame extends GameState {
     private Board gameBoard;
     private Pieces currentPiece;
     private int keyPressed;
+    private HintBox hint;
 
     //constructor
     protected MiniPuzzleGame(GameStateManager gsm) {
@@ -132,6 +134,7 @@ public class MiniPuzzleGame extends GameState {
         frame = Texture.getInstance().paint[5];
         pieces = new Pieces[9];
         exit = Texture.getInstance().ui[1];
+        hint = new HintBox();
         int x = 200,y = 200, r = 0, c = 0, count = 1;
         for(int i = 0; i < 9; i++){
             if(count % 3 == 1){
@@ -180,7 +183,10 @@ public class MiniPuzzleGame extends GameState {
         }else{
             PaintUtil.paintFocus((Graphics2D) g, new Rectangle(gameBoard.getX(), gameBoard.getY(),300,300),6);
             g.drawImage(exit,1000,440,100,100,null);
+            hint.showMsg(100, 200, 2000, "提示或劇情");
+            hint.render(g);
         }
+
 
     }
 

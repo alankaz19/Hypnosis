@@ -109,7 +109,6 @@ public class MiniClickGame extends GameState {
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
         hint = new HintBox();
         isDone = false;
-        hint.showMsg(Game.WIDTH /2 + 100, 200, 500, "eoeoeooeoeoeoeeo");
         fakeBackground = Texture.getInstance().background[7];
     }
 
@@ -127,9 +126,11 @@ public class MiniClickGame extends GameState {
     public void render(Graphics g) {
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
+        if(mask.cleared)
         g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);
         mask.render(g);
+        hint.showMsg(100, 200, 2000, "提示或劇情");
         hint.render(g);
     //        exitButton.render();
     }

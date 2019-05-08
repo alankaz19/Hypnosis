@@ -28,6 +28,7 @@ public class MiniScratchOffGame extends GameState{
     public static MiniScratchOffGame MINI_SCRATCH_GAME;
     private int mouseX, mouseY;
     private int keyPressed;
+    private HintBox hint;
     private Frame frame;
     private Mask mask;
     private Riddle riddle;
@@ -124,6 +125,7 @@ public class MiniScratchOffGame extends GameState{
     
     @Override
     public void init() {
+        hint = new HintBox();
         exit = Texture.getInstance().ui[1];
         this.fakeBackground = Texture.getInstance().background[7];
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
@@ -145,6 +147,8 @@ public class MiniScratchOffGame extends GameState{
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
         g.drawImage(exit,1000,440,100,100,null);
+        hint.showMsg(100, 200, 2, "提示或劇情");
+        hint.render(g);
         frame.render(g);
         mask.render(g);
         riddle.render(g);

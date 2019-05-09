@@ -43,6 +43,8 @@ public class Door extends GameObject{
             this.setClickable(true);
             Shining.runAnimation();
             System.out.println("tuched");
+        }else{
+            this.setClickable(false);
         }
         this.collisionX = this.x + 100;
         this.collisionY = this.y + 20;

@@ -26,7 +26,7 @@ public class Picture extends GameObject {
     private double DurationCount;
     
     //旋轉變大的屬性
-    private int heightForPicture1 = 100;
+    private int heightForPicture1 = 50;
     private int widthForPicture1 = 50;
     private int changeValueForHeight = 1;
     private int changeValueForWidth = 1;
@@ -55,6 +55,8 @@ public class Picture extends GameObject {
             this.setClickable(true);
             System.out.println("tuched");
             Shining.runAnimation();
+        }else{
+            this.setClickable(false);
         }
         this.collisionX = this.x + 40;
         this.collisionY = this.y + 17;
@@ -67,7 +69,6 @@ public class Picture extends GameObject {
                 g.drawImage(tex.pictureFrame[0], x, y,width,height, null);
                 this.Shining.renderAnimation(g, x, y,width,height);
             }else{
-                
                 g.drawImage(tex.pictureFrame[0], x, y,width,height, null);
             }
 //            g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框

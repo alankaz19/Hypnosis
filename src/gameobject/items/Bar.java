@@ -38,6 +38,8 @@ public class Bar extends GameObject{
             this.setClickable(true);
             System.out.println("tuched");
             Shining.runAnimation();
+        }else{
+            this.setClickable(false);
         }
         
     }
@@ -51,7 +53,7 @@ public class Bar extends GameObject{
         }
         
         if(clickable && !this.clicked){
-            this.Shining.renderAnimation(g, x, y, width, height);
+            this.Shining.renderAnimation(g, x, y, width, width);
         }
 //        g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
     }

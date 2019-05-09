@@ -33,8 +33,6 @@ public class FirstPicture extends GameState {
     private boolean hintShowed;
     private BufferedImage fakeBackground;
     private int keyPressed;
-    private int mouseX;
-    private int mouseY;
     
     private class Mask extends GameObject {
         BufferedImage img;
@@ -106,7 +104,7 @@ public class FirstPicture extends GameState {
         hint = new HintBox(Texture.getInstance().hint[1]);
         hint.showMsg(Game.WIDTH /2 + 100, 200, 500, "eoeoeooeoeoeoeeo");
         fakeBackground = Texture.getInstance().background[7];
-        cursor.setMouse(mouseX, mouseY);
+        cursor = new Cursor();
     }
 
     @Override
@@ -117,6 +115,7 @@ public class FirstPicture extends GameState {
 
     @Override
     public void event() {
+        cursor.setPosition(mouseX, mouseY);
     }
 
     @Override
@@ -168,6 +167,12 @@ public class FirstPicture extends GameState {
         if(exitButton.isReleased()){
                 gsm.setState(GameStateManager.LEVEL1_STATE);
             }
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+        this.mouseX = x;
+        this.mouseY = y;
     }
 }
 

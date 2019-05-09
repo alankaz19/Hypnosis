@@ -16,8 +16,6 @@ import java.awt.image.BufferedImage;
 
 import resourcemanage.ImageResource;
 import scene.Texture;
-import uiobject.HintBox;
-import uiobject.Button;
 
 /**
  *
@@ -175,12 +173,18 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void mouseDragged(int x, int y) {
-        mouseX = x;
-        mouseY = y;
     }
 
     @Override
     public void mouseReleased(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+        mouseX = x;
+        mouseY = y;
+
     }
 
 }

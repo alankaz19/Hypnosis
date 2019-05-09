@@ -51,7 +51,7 @@ public class LevelOneScene extends GameState{
         @Override
         public void tick() {
             if(this.alpha <= 0.99f && this.alpha >= 0){
-                this.alpha += 0.01f;
+                this.alpha += 0.016f;
             }
             else if(this.alpha >= 0.99f){
                 this.alpha = 1.0f;
@@ -88,7 +88,7 @@ public class LevelOneScene extends GameState{
             @Override
             public void tick() {
                 if(this.alpha <= 0.99f && this.alpha >= 0){
-                    this.alpha += 0.0015;
+                    this.alpha += 0.01;
                 }
                 else if(this.alpha >= 0.99f){
                     this.alpha = 1.0f;
@@ -130,7 +130,7 @@ public class LevelOneScene extends GameState{
         }
         if(handler.getObject().get(1).isShow() && handler.getObject().get(2).isShow() && handler.getObject().get(3).isShow()){
             timeC ++;
-            if(timeC >= 250)
+            if(timeC >= 180)
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
 
@@ -173,5 +173,10 @@ public class LevelOneScene extends GameState{
     @Override
     public void mouseReleased(int x, int y) {
     }
-    
+
+    @Override
+    public void mouseMoved(int x, int y) {
+
+    }
+
 }

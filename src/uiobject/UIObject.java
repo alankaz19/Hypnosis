@@ -108,8 +108,4 @@ public abstract class UIObject implements Updater{
     public boolean isHovered() {
         return Hovered;
     }
-    
-    
-    
-    
 }

@@ -10,7 +10,7 @@ import javax.swing.*;
  * @author Jeremy Wood
  **/
 public class PaintUtil {
-
+    private float alpha = 0;
     public static Color getFocusRingColor() {
         Object obj = UIManager.getColor("focusRing");
         if(obj instanceof Color)

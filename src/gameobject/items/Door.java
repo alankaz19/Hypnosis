@@ -17,14 +17,17 @@ import scene.Texture;
  */
 public class Door extends GameObject{
     Texture tex = Texture.getInstance();
-    private boolean clickable;
     private Animation Shining;
 
     public Door(int x,ObjectID id) {
-        super(x, 312,id);
-        this.width = 200;
-        this.height = 300;
+        super(x, 270,id);
+        this.width = 350;
+        this.height = 350;
         this.clickable =false;
+        this.collisionWidth = 160;
+        this.collisionHeight = 315;
+        Shining = new Animation(10, tex.door[1], tex.door[2], tex.door[3], tex.door[4], tex.door[5], tex.door[6], tex.door[5], tex.door[4], tex.door[3], tex.door[2], tex.door[1]);
+
     }
     
     public void setOnClickable(boolean clickable) {
@@ -36,15 +39,23 @@ public class Door extends GameObject{
     @Override //clickMethod
     public void tick() {
         x += xVel;
+        if(this.getIsCollision()){
+            this.setClickable(true);
+            Shining.runAnimation();
+            System.out.println("tuched");
+        }
+        this.collisionX = this.x + 100;
+        this.collisionY = this.y + 20;
+        
     }
 
     @Override   //門框發光
     public void render(Graphics g) {
+        g.drawImage(tex.door[0],x, y, width, height,null);
         if(clickable){
-            this.Shining.renderAnimation(g, x, y);
+            this.Shining.renderAnimation(g, x, y, width, height);
        }
-//        g.drawRect(x, y, width, height);//判斷框
-
+//        g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
     }
 
     @Override

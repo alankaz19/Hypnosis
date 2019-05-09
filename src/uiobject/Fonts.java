@@ -14,7 +14,7 @@ import java.awt.Font;
 public class Fonts {
         public static Font getBitFont(int size) {
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, Fonts.class.getResourceAsStream("/Art/UI/font2.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, Fonts.class.getResourceAsStream("/Art/UI/fonts/font2.ttf"));
             font = font.deriveFont(Font.TRUETYPE_FONT, size);
             return font;
         } catch (Exception ex) {

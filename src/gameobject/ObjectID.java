@@ -34,4 +34,7 @@ public enum ObjectID {
     BOARD(),
     PUZZLE(),
     
+    BAR(),
+    SLOT(),
+    
 }

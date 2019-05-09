@@ -40,6 +40,7 @@ public class GameStateManager {
     protected static final int EASTER_EGG = 11;
     protected static final int TRANSITION_2 = 12;
     protected static final int NUMBER_LOCK = 13;
+    protected static final int FIRST_PICTURE = 14;
 
     public static GameStateManager gsm;
     
@@ -140,6 +141,9 @@ public class GameStateManager {
         if(state == EASTER_EGG){
             gameStates[state] = new EasterEgg(this);
         }
+        if(state == FIRST_PICTURE){
+            gameStates[state] = new FirstPicture(this);
+        }
     }
 
     public void unloadState(){
@@ -187,6 +191,9 @@ public class GameStateManager {
     }
     public void mouseReleased(int x, int y){
         gameStates[currentState].mouseReleased(x,y);
+    }
+    public void mouseMoved(int x, int y){
+        gameStates[currentState].mouseMoved(x,y);
     }
     public void setMousePoiont(int x, int y){
         this.mouseX = x;

@@ -23,9 +23,14 @@ public abstract class GameObject implements Updater{
     // 長寬
     protected int width;
     protected int height;
+    protected int collisionWidth;
+    protected int collisionHeight;
+    
     // 座標 
     public int x;
     public int y;
+    protected int collisionX;
+    protected int collisionY;
 
     // 方向
     protected int dir;
@@ -74,6 +79,7 @@ public abstract class GameObject implements Updater{
     //點擊效果
     protected boolean clicked;
     protected boolean show;
+    protected boolean clickable;
     
 
     //需要給object 生成的位置
@@ -161,7 +167,7 @@ public abstract class GameObject implements Updater{
     }
 
     public boolean checkBorder() {
-        return xDest < 0 || xDest + width > Game.WIDTH || yDest  < 0 || yDest + height > Game.HEIGHT ;
+        return xDest < 0 || xDest + width > Game.WIDTH|| yDest  < 0 || yDest + height > Game.HEIGHT ;
     }
 
     public void setChatBubble(BufferedImage chatBubble) {
@@ -179,6 +185,12 @@ public abstract class GameObject implements Updater{
     public void setClicked(boolean clicked) {
         this.clicked = clicked;
     }
+
+    public void setClickable(boolean clickable) {
+        this.clickable = clickable;
+    }
+    
+    
     
     public boolean isClicked() {
         return clicked;
@@ -221,6 +233,32 @@ public abstract class GameObject implements Updater{
         rightSide = this.x + width; oRight = o.x + o.width;
         top = this.y ; oTop = o.y;
         bottom = this.y + height; oBottom = o.y + o.height;
+
+        if(leftSide > oRight){
+            return false;
+        }
+        if(rightSide < oLeft){
+            return false;
+        }
+        if(top > oBottom){
+            return false;
+        }
+        if(bottom < oTop){
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean LevelOneCheckCollision(GameObject o){
+        int leftSide, oLeft;
+        int rightSide, oRight;
+        int top, oTop;
+        int bottom, oBottom;
+
+        leftSide = this.collisionX;  oLeft = o.collisionX;
+        rightSide = this.collisionX + collisionWidth; oRight = o.collisionX + o.collisionWidth;
+        top = this.collisionY ; oTop = o.collisionY;
+        bottom = this.collisionY + collisionHeight; oBottom = o.collisionY + o.collisionHeight;
 
         if(leftSide > oRight){
             return false;

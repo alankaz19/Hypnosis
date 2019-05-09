@@ -15,14 +15,34 @@ import java.awt.image.BufferedImage;
 public class Button extends UIObject{
     private BufferedImage[] imgs;
     private boolean released;
+    private boolean touchable;
     
-    public Button(int x,int y,BufferedImage img1, BufferedImage img2) {
+    
+    private int scale;
+    private int frame;
+    
+    public Button(int x,int y, int width, int height, BufferedImage img1, BufferedImage img2,int scale) {
         this.x = x;
         this.y = y;
+        this.width =width;
+        this.height = height;
+        this.imgs = new BufferedImage[2];
         this.imgs[0] = img1;
         this.imgs[1] = img2;
+        this.scale = scale;
+        released = true;
+        frame =0;
     }
 
+    public void setTouchable(boolean touchable) {
+        this.touchable = touchable;
+    }
+
+    public boolean isTouchable() {
+        return touchable;
+    }
+    
+    
     @Override
     public void setClicked(boolean clicked) {
         this.Clicked = clicked;
@@ -42,12 +62,26 @@ public class Button extends UIObject{
     }
     
     public void tick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.touchable){
+            if(this.released){
+                this.Clicked = false;
+            }
+        }
     }
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.Clicked){
+            frame++;
+            if(frame < 10){
+            g.drawImage(imgs[0], x, y, this.width * scale, this.height * scale, null);
+            frame = 0;    
+            }
+            
+        }
+        if(this.released){
+            g.drawImage(imgs[1], x, y, this.width * scale, this.height * scale, null);
+            }
+        }
     }
     
-}

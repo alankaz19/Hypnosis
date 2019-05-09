@@ -14,8 +14,6 @@ import scene.Texture;
  * @author Kai
  */
 public class Cursor extends UIObject{
-    private int mouseX;
-    private int mouseY;
     private boolean Checkable;
     private boolean Clickable;
 
@@ -24,12 +22,6 @@ public class Cursor extends UIObject{
         this.height = 10;
     }
     
-    
-    
-    private void setPoint() {
-        this.x = mouseX;
-        this.y = mouseY;
-    }
 
     public boolean isCheckable() {
         return Checkable;
@@ -47,15 +39,14 @@ public class Cursor extends UIObject{
         this.Clickable = Clickable;
     }
     
-    public void setMouse(int mouseX, int mouseY) {
-        this.mouseX = mouseX;
-        this.mouseY = mouseY;
+    public void setPosition(int mouseX, int mouseY) {
+        this.x = mouseX;
+        this.y = mouseY;
     }
 
     
     @Override
     public void tick() {
-        setPoint();
     }
 
     @Override

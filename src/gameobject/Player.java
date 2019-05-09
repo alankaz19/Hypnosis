@@ -24,14 +24,16 @@ public class Player extends GameObject {
 
     public Player(int x, int y,ObjectID id,int movementSpeed) {
         super(x, y,id);
-        this.width = 256+48;
-        this.height = 256+48;
+        this.width = 256+24;
+        this.height = 256+24;
         this.dir = 1;
         this.playerWalk = new Animation(movementSpeed, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
                 tex.player[6],tex.player[7],tex.player[8],tex.player[9]);
         this.playerIdle = new Animation(18, tex.player[10], tex.player[11], tex.player[12], tex.player[13], tex.player[14],
                 tex.player[15],tex.player[16],tex.player[17],tex.player[18],tex.player[19],tex.player[20],tex.player[21],tex.player[22],tex.player[23],tex.player[24],tex.player[25]);
         gravity = 1;
+        this.collisionWidth = 110;
+        this.collisionHeight = 260;
     }
 
 
@@ -65,6 +67,8 @@ public class Player extends GameObject {
                yVel = MAX;
            }
        }
+       this.collisionX = this.x + 85;
+       this.collisionY = this.y + 25;
        playerWalk.runAnimation();
        playerIdle.runAnimation();
     }
@@ -81,11 +85,13 @@ public class Player extends GameObject {
         else{
             if(this.dir == 1){
                 playerIdle.renderAnimation(g,x+ width, y, -width, height);
-                //g.drawRect(x, y, width, height);//畫判斷框
+//                g.drawRect(x, y, width, height);//畫判斷框
+//                g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
             }
             if(this.dir == 0){
                 playerIdle.renderAnimation(g, x , y, width, height);
-                //g.drawRect(x, y, width, height);//畫判斷框
+//                g.drawRect(x, y, width, height);//畫判斷框
+//                g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
             }
         }
     }

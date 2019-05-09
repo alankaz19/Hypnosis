@@ -76,7 +76,7 @@ public class LevelTwo extends GameState {
     public LevelTwo(GameStateManager gsm){
         super(gsm);
         init();
-        bgm.loop();
+//        bgm.loop();
     }
 
     @Override
@@ -86,16 +86,16 @@ public class LevelTwo extends GameState {
         camPos = 400;
         lifeCount = 5;
         snow  = new Snow[200];
-        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
+//        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }
-//        background2 = new BackGround(BACKGROUND2){
-//             @Override
-//            public void render(Graphics g) {
-//                g.drawImage(Texture.getInstance().background[BACKGROUND2],0,0,Game.WIDTH, Game.HEIGHT, null);
-//            }
-//        };
+        background2 = new BackGround(BACKGROUND2){
+             @Override
+            public void render(Graphics g) {
+                g.drawImage(Texture.getInstance().background[BACKGROUND2],0,0,Game.WIDTH, Game.HEIGHT, null);
+            }
+        };
         farMountain = new ParallaxBackGround(Texture.getInstance().background[FARMOUNTAIN],1);
         farMountain.setVector(-0.1, 0);
         nearMountain = new ParallaxBackGround(Texture.getInstance().background[NEARMOUNTAINS],1);
@@ -247,6 +247,11 @@ public class LevelTwo extends GameState {
 
     @Override
     public void mouseReleased(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
 
     }
 }

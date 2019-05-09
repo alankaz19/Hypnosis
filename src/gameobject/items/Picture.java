@@ -11,9 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import resourcemanage.ImageResource;
 import scene.Animation;
 import scene.Texture;
 
@@ -22,53 +20,57 @@ import scene.Texture;
  * @author Kai
  */
 public class Picture extends GameObject {
-    private boolean clickable;
+    Texture tex = Texture.getInstance();
     private Animation Shining;
-    private BufferedImage pic = ImageResource.getInstance().getImage("/Art/Game Material/picture.png");
     private double rotateDegrees;
     private double DurationCount;
     
     //旋轉變大的屬性
-    private int heightForPicture1 = 80;
-    private int widthForPicture1 = 40;
-    private int changeValueForHeight = 2;
+    private int heightForPicture1 = 100;
+    private int widthForPicture1 = 50;
+    private int changeValueForHeight = 1;
     private int changeValueForWidth = 1;
     private int frameCountForHeight = 0;
     private int frameCountForWidth = 0;
     
 
     public Picture(int x,ObjectID id) {
-        super(x, 242,id);
-        this.width = 128;
-        this.height = 178;
+        super(x, 222,id);
+        this.width = 220;
+        this.height = 220;
         this.clickable =false;
         this.DurationCount = 0;
+        this.collisionWidth = 140;
+        this.collisionHeight = 190;
+        this.Shining = new Animation(10, tex.pictureFrame[1], tex.pictureFrame[2], tex.pictureFrame[3], tex.pictureFrame[4], tex.pictureFrame[5], tex.pictureFrame[6], tex.pictureFrame[5], tex.pictureFrame[4], tex.pictureFrame[3], tex.pictureFrame[2], tex.pictureFrame[1]);
+
     }
-    
-    public void setOnClickable(boolean clickable) {
-        this.clickable = clickable;
-    }
-    
     
 
     @Override //clickMethod
     public void tick() {
         x += xVel;
         
-        if(this.show){
-            
+        if(this.getIsCollision()){
+            this.setClickable(true);
+            System.out.println("tuched");
+            Shining.runAnimation();
         }
+        this.collisionX = this.x + 40;
+        this.collisionY = this.y + 17;
     }
 
     @Override   //畫框發光
     public void render(Graphics g) {
         if(this.show){
-            Graphics2D g2d = (Graphics2D)g;
             if(clickable){
-                this.Shining.renderAnimation(g, x, y);
+                g.drawImage(tex.pictureFrame[0], x, y,width,height, null);
+                this.Shining.renderAnimation(g, x, y,width,height);
             }else{
-                g.drawImage(pic, x, y,width,height, null);
+                
+                g.drawImage(tex.pictureFrame[0], x, y,width,height, null);
             }
+//            g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
         }
         
     }
@@ -77,7 +79,7 @@ public class Picture extends GameObject {
         if(this.clicked){
             if(heightForPicture1 > changeValueForHeight && frameCountForHeight == MaxFrame){
                 changeValueForHeight +=1;
-                frameCountForHeight = 4;
+                frameCountForHeight = 5;
             }
             if(widthForPicture1 > changeValueForWidth && frameCountForWidth == MaxFrame){
                 changeValueForWidth +=1;
@@ -85,9 +87,9 @@ public class Picture extends GameObject {
             }
             frameCountForHeight++;
             frameCountForWidth++;
-            g.drawImage(rotate(Texture.getInstance().paint[6], 30.0), x, y,width - widthForPicture1 + changeValueForWidth,height - heightForPicture1 + changeValueForHeight, null);
+            g.drawImage(rotate(Texture.getInstance().pictureFrame[0], 30.0), x , y,width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
         }
-        g.drawImage(rotate(Texture.getInstance().paint[6], 30.0,x,y,Color.PINK,true), x, y,width - widthForPicture1 + changeValueForWidth,height - heightForPicture1 + changeValueForHeight, null);
+            g.drawImage(rotate(Texture.getInstance().pictureFrame[0], 30.0,x,y,null,true), x, y,width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
     }
     
     @Override
@@ -128,7 +130,7 @@ public class Picture extends GameObject {
         this.rotateDegrees = degrees;
         if(DurationCount < rotateDegrees){
             DurationCount += 0.0645;
-            return rotate(source, degrees, -1, -1, Color.WHITE, true);
+            return rotate(source, degrees, -1, -1, null, true);
         }else{
             this.show = true;
         }

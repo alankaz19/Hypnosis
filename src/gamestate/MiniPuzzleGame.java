@@ -3,7 +3,6 @@ package gamestate;
 import gameobject.GameObject;
 import gameobject.ObjectID;
 import resourcemanage.ImageResource;
-import scene.BackGround;
 import scene.PaintUtil;
 import java.awt.*;
 import java.awt.event.*;
@@ -273,6 +272,11 @@ public class MiniPuzzleGame extends GameState {
         }
 
 
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
 
     }
 

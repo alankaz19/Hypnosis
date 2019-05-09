@@ -3,6 +3,7 @@ package gamestate;
 import game.Game;
 import game.Handler;
 import game.Updater;
+import gameobject.GameObject;
 import gameobject.ObjectID;
 import gameobject.Player;
 import gameobject.items.*;
@@ -14,6 +15,8 @@ import java.awt.Rectangle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import resourcemanage.ImageResource;
 import resourcemanage.SoundResource;
 import scene.Camera;
 import scene.PaintUtil;
@@ -75,6 +78,7 @@ public class LevelOne extends GameState {
     private String playerMsg;
     boolean sceneshowed;
     private AudioClip bgm;
+    
 
     public static LevelOne LevelOne;
 
@@ -88,7 +92,6 @@ public class LevelOne extends GameState {
     public LevelOne(GameStateManager gsm) {
         super(gsm);
         bgm.loop();
-        
         init();
     }
 
@@ -117,6 +120,7 @@ public class LevelOne extends GameState {
         handler.addObject(new Picture(600 + 1380, ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 1980, ObjectID.PICTURE));
         handler.addObject(new Door(800 + 2160, ObjectID.DOOR));
+        handler.addObject(new Sofa(-100,400, ObjectID.DOOR));
     }
 
     @Override

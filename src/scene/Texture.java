@@ -34,9 +34,9 @@ public class Texture {
     private BufferedImage bar_Sheet;
 
     public BufferedImage[] background = new BufferedImage[11];
-    public BufferedImage[] player = new BufferedImage[40];
+    public BufferedImage[] player = new BufferedImage[50];
     public BufferedImage[] playParkour;
-    public BufferedImage[] npc = new BufferedImage[3];
+    public BufferedImage[] npc = new BufferedImage[4];
     public BufferedImage[] paint = new BufferedImage[7];
     public BufferedImage[] ui = new BufferedImage[10];
     public BufferedImage[] hint = new BufferedImage[10];
@@ -125,12 +125,14 @@ public class Texture {
         player[37] = playerSheet.grabImage(18, 6, 48, 48);
         player[38] = playerSheet.grabImage(19, 6, 48, 48);
         player[39] = playerSheet.grabImage(21, 6, 48, 48);
+		player[40] = playerSheet.grabImage(2, 8, 48, 48);// sit
         
         
         //enemyAnimation
         npc[0] = npcSheet.grabImage(7, 6, 48, 48);
         npc[1] = npcSheet.grabImage(8, 6, 48, 48);
         npc[2] = npcSheet.grabImage(9, 6, 48, 48);
+		npc[3] = npcSheet.grabImage(21, 6, 48, 48);//npc dead
         
         //arrowButton
         arrowButton[0] = arrowButtonSheet.grabImage(1, 1, 64, 64);

@@ -101,7 +101,7 @@ public class FirstPicture extends GameState {
         exit = Texture.getInstance().ui[1];
         mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
-        hint = new HintBox(Texture.getInstance().hint[1]);
+//        hint = new HintBox(Texture.getInstance().hint[1]);
         hint.showMsg(Game.WIDTH /2 + 100, 200, 500, "eoeoeooeoeoeoeeo");
         fakeBackground = Texture.getInstance().background[7];
         cursor = new Cursor();

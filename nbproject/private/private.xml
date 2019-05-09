@@ -12,25 +12,24 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/LevelOneScene.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/uiobject/Cursor.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/uiobject/HintBox.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/ObjectID.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/items/Door.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/scene/Texture.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/scene/Animation.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/LevelOne.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/uiobject/Fonts.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/Transition2.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/GameStateManager.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MenuState.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MiniScratchOffGame.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/items/Sofa.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MiniPuzzleGame.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/GameObject.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/resourcemanage/ImageResource.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/items/Picture.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/Intro.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/items/Bar.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/uiobject/Message.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/NumberLock.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/items/Closet.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/Npc.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/Player.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/GameState.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/scene/PaintUtil.java</file>
         </group>
     </open-files>
 </project-private>

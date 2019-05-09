@@ -11,6 +11,8 @@ package gameobject;
  */
 public enum ObjectID {
     PLAYER(),
+    INTROPLAYER(),
+    HEART(),
     
     SOFA(),
     
@@ -27,13 +29,12 @@ public enum ObjectID {
     PICTURE_IN_PUZZLE4(),
 
 
-
     CLOSET(),
     
     DOOR(),
     BOARD(),
     PUZZLE(),
-    
+
     BAR(),
     SLOT(),
     

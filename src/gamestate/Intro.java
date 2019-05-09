@@ -31,8 +31,6 @@ public class Intro extends GameState{
     private final int PLAYER = 0;
     private final int HYPNOTIST = 1;
     private final int BACKGROUND = 9;
-    
-    
     private BackGround background;
     private Handler handler;
     private int keyPressed;
@@ -65,7 +63,6 @@ public class Intro extends GameState{
         playerScript = new ArrayList<>();
         npcScript = new ArrayList<>();
         sceneFinished = false;
-        
         //read script
         try {
             playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"), StandardCharsets.UTF_16));
@@ -87,8 +84,8 @@ public class Intro extends GameState{
                 g.drawImage(Texture.getInstance().background[BACKGROUND],0,0,Game.WIDTH, Game.HEIGHT, null);
             }
         };
-        handler.addObject(new Player(650, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
-        handler.addObject(new Player(900, Game.HEIGHT / 2+50, ObjectID.PLAYER,5));
+        handler.addObject(new Player((Game.WIDTH * 45 / 100 ), (Game.HEIGHT * 50 / 100), ObjectID.INTROPLAYER,5));
+        handler.addObject(new Player((Game.WIDTH * 68 / 100 ), (Game.HEIGHT * 50 / 100), ObjectID.INTROPLAYER,5));
         handler.getObject().get(1).setDirection(0);
     }
 
@@ -144,6 +141,7 @@ public class Intro extends GameState{
         }
 
         if(time >= 50 && sceneFinished){ //move one to next stage
+            bgm.stop();
             gsm.newState(GameStateManager.LEVEL1_STATE);
         }
     }

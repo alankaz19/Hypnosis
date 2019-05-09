@@ -13,8 +13,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import scene.BackGround;
 import scene.Texture;
 import uiobject.HintBox;
+import uiobject.Button;
 
 /**
  *
@@ -105,9 +107,8 @@ public class MiniClickGame extends GameState {
         exit = Texture.getInstance().ui[1];
         mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
-        hint = new HintBox(Texture.getInstance().hint[1]);
+        hint = new HintBox();
         isDone = false;
-        hint.showMsg(Game.WIDTH /2 + 100, 200, 500, "eoeoeooeoeoeoeeo");
         fakeBackground = Texture.getInstance().background[7];
     }
 
@@ -125,10 +126,11 @@ public class MiniClickGame extends GameState {
     public void render(Graphics g) {
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
+        if(mask.cleared)
         g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);
         mask.render(g);
-        if(!isDone)
+        hint.showMsg(100, 200, 2000, "提示或劇情");
         hint.render(g);
     //        exitButton.render();
     }
@@ -156,10 +158,9 @@ public class MiniClickGame extends GameState {
             if(mask.alpha - 0.05 < 0){
                 mask.alpha = 0;
                 mask.cleared = true;
-                isDone = true;
                 return;
             }
-            mask.alpha -= 0.075f;
+            mask.alpha -= 0.05f;
         }
         
         if (x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {

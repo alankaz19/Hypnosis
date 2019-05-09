@@ -67,7 +67,7 @@ public class Picture extends GameObject {
         if(this.show){
             if(clickable){
                 g.drawImage(tex.pictureFrame[0], x, y,width,height, null);
-                this.Shining.renderAnimation(g, x, y,width,height);
+                this.Shining.renderAnimation(g, x, y, width,height);
             }else{
                 g.drawImage(tex.pictureFrame[0], x, y,width,height, null);
             }
@@ -88,14 +88,18 @@ public class Picture extends GameObject {
             }
             frameCountForHeight++;
             frameCountForWidth++;
-            g.drawImage(rotate(Texture.getInstance().pictureFrame[0], 30.0), x , y,width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
+            g.drawImage(rotate(Texture.getInstance().pictureFrame[0], 30.0), x , y, width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
         }
-            g.drawImage(rotate(Texture.getInstance().pictureFrame[0], 30.0,x,y,null,true), x, y,width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
+            g.drawImage(rotate(Texture.getInstance().pictureFrame[0], 30.0,x,y,null,true), x, y, width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
     }
     
     @Override
     public ObjectID getID() {
         return this.id;
+    }
+
+    public Animation getShining() {
+        return Shining;
     }
     
     public BufferedImage rotate(BufferedImage source, double degrees, int x, int y, Color color, boolean resizable){
@@ -130,7 +134,7 @@ public class Picture extends GameObject {
     public BufferedImage rotate(BufferedImage source, double degrees){
         this.rotateDegrees = degrees;
         if(DurationCount < rotateDegrees){
-            DurationCount += 0.0645;
+            DurationCount += 0.125;
             return rotate(source, degrees, -1, -1, null, true);
         }else{
             this.show = true;

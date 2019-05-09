@@ -125,14 +125,14 @@ public class Texture {
         player[37] = playerSheet.grabImage(18, 6, 48, 48);
         player[38] = playerSheet.grabImage(19, 6, 48, 48);
         player[39] = playerSheet.grabImage(21, 6, 48, 48);
-		player[40] = playerSheet.grabImage(2, 8, 48, 48);// sit
+        player[40] = playerSheet.grabImage(2, 8, 48, 48);// sit
         
         
         //enemyAnimation
         npc[0] = npcSheet.grabImage(7, 6, 48, 48);
         npc[1] = npcSheet.grabImage(8, 6, 48, 48);
         npc[2] = npcSheet.grabImage(9, 6, 48, 48);
-		npc[3] = npcSheet.grabImage(21, 6, 48, 48);//npc dead
+        npc[3] = npcSheet.grabImage(21, 6, 48, 48);//npc dead
         
         //arrowButton
         arrowButton[0] = arrowButtonSheet.grabImage(1, 1, 64, 64);
@@ -166,13 +166,13 @@ public class Texture {
         background[9] = ImageResource.getInstance().getImage("/Art/Background/room.png");
         background[10] = ImageResource.getInstance().getImage("/Art/Background/noise.png");
         
-        paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture1.png");
-        paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture2.png");
-        paint[2] = ImageResource.getInstance().getImage("/Art/Game Material/picture3.png");
-        paint[3] = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
-        paint[4] = ImageResource.getInstance().getImage("/Art/Game Material/girl.png");
+        paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture1.png");
+        paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture2.png");
+        paint[2] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture2Base.png");
+        paint[3] = ImageResource.getInstance().getImage("/Art/Game Material//picture/picture3.png");
+        paint[4] = ImageResource.getInstance().getImage("/Art/Game Material//picture/picture3Base.png");
         paint[5] = ImageResource.getInstance().getImage("/Art/Game Material/frame.png");
-        paint[6] = ImageResource.getInstance().getImage("/Art/Game Material/picture.png");
+        paint[6] = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
 
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
         ui[1] = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");

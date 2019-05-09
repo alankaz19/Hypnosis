@@ -13,10 +13,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import scene.BackGround;
 import scene.Texture;
 import uiobject.HintBox;
-import uiobject.Button;
 
 /**
  *
@@ -60,7 +58,7 @@ public class MiniClickGame extends GameState {
         public void render(Graphics g) {
             this.renderMask((Graphics2D)g);
             //x y 必須加上畫框的邊框寬度
-            g.drawImage(Texture.getInstance().paint[4], x, y,316,450, null);
+            g.drawImage(Texture.getInstance().paint[1], x, y,316,450, null);
         }
 
         public void setCleared(boolean cleared) {
@@ -83,6 +81,7 @@ public class MiniClickGame extends GameState {
         @Override
         public void render(Graphics g) {
             g.drawImage(Texture.getInstance().paint[5], x, y, null);
+            g.drawImage(Texture.getInstance().paint[2], x + 58, y + 56 ,316,450, null);
         }
 
     }
@@ -160,7 +159,7 @@ public class MiniClickGame extends GameState {
                 mask.cleared = true;
                 return;
             }
-            mask.alpha -= 0.05f;
+            mask.alpha -= 0.09f;
         }
         
         if (x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {

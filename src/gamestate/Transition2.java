@@ -60,6 +60,7 @@ public class Transition2 extends GameState{
     public static Transition2 TRANSITION_2;
     private Line[] lines;
     private Message msg;
+    private int timer;
     
     public  Transition2 getInstance(){
         if(TRANSITION_2 == null){
@@ -75,13 +76,14 @@ public class Transition2 extends GameState{
     
     @Override
     public void init() {
+        timer = 0;
         lines  = new Line[1000];
         for (int i = 0; i < lines.length; i++) {
             lines[i] = new Line();
         }
         msg = new Message();
         msg.setFont(Fonts.getCrazyFont(65));
-        
+        msg.setLongWord();
     }
     
     @Override
@@ -98,6 +100,9 @@ public class Transition2 extends GameState{
     public void event() {
         if(!msg.isShow()){
             msg.showMsg(Game.WIDTH / 2 - 330 , Game.HEIGHT /2 - 120,"終  於  見  到  妳  了  。", 2500, Color.red);
+        }
+        if(timer >= 180){
+            gsm.newState(GameStateManager.EASTER_EGG);
         }
     }
 

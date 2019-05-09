@@ -27,6 +27,7 @@ public class Message extends UIObject{
     private int xtemp;
     private int ytemp;
     private Font font;
+    private int bubbleWidth = 11;
 
     public Message() {
         this.alpha = 0;
@@ -46,7 +47,7 @@ public class Message extends UIObject{
     }
     
     private void drawString(Graphics g, String text, int x, int y) {
-        int bubbleWidth = 11;
+        int bubbleWidth = this.bubbleWidth;
         int count = 1;
         for (int i = 0; i < i + bubbleWidth; i += bubbleWidth){
             if(text.length() - i > bubbleWidth){
@@ -107,6 +108,10 @@ public class Message extends UIObject{
     
     public boolean isShow() {
         return show;
+    }
+    
+    public void setLongWord(){
+        this.bubbleWidth = 100;
     }
     
     public void shake(){

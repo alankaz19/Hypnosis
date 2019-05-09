@@ -17,7 +17,6 @@ import java.awt.image.BufferedImage;
 import resourcemanage.ImageResource;
 import scene.Texture;
 import uiobject.HintBox;
-import uiobject.Button;
 
 /**
  *
@@ -64,7 +63,7 @@ public class MiniScratchOffGame extends GameState{
 
         public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
-            this.img = ImageResource.getInstance().getImage("/Art/Game Material/picture2.png");
+            this.img = Texture.getInstance().paint[3];
         }
 
         @Override
@@ -89,7 +88,7 @@ public class MiniScratchOffGame extends GameState{
         
         public Riddle(int x, int y, ObjectID id) {
             super(x, y, id);
-            this.img = ImageResource.getInstance().getImage("/Art/Game Material/picture4.png");
+            this.img =  Texture.getInstance().paint[4];
         }
 
         @Override

@@ -24,7 +24,7 @@ public class Fonts {
     }
         public static Font getHorrorFont(int size) {
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, Fonts.class.getResourceAsStream("/Art/UI/font3.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, Fonts.class.getResourceAsStream("/Art/UI/fonts/font3.ttf"));
             font = font.deriveFont(Font.TRUETYPE_FONT, size);
             return font;
         } catch (Exception ex) {
@@ -34,7 +34,7 @@ public class Fonts {
     }
         public static Font getCrazyFont(int size) {
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, Fonts.class.getResourceAsStream("/Art/UI/font4.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, Fonts.class.getResourceAsStream("/Art/UI/fonts/font4.ttf"));
             font = font.deriveFont(Font.TRUETYPE_FONT, size);
             return font;
         } catch (Exception ex) {

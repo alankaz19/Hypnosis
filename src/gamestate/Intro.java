@@ -142,7 +142,7 @@ public class Intro extends GameState{
 
         if(time >= 50 && sceneFinished){ //move one to next stage
             bgm.stop();
-            gsm.newState(GameStateManager.LEVEL1_STATE);
+            gsm.newState(GameStateManager.TRANSITION);
         }
     }
 

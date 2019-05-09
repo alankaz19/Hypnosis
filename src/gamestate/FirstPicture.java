@@ -36,28 +36,19 @@ public class FirstPicture extends GameState {
     
     private class Mask extends GameObject {
         BufferedImage img;
-        private float alpha;
         public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
-            img = Texture.getInstance().paint[4];
+            img = Texture.getInstance().paint[0];
             this.width = 300;
             this.height = 400;
-            this.alpha = 1f;
         }    
-
-        public void renderMask(Graphics2D g2d){
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
-        }
-
         @Override
         public void tick() {
         }
 
         @Override
         public void render(Graphics g) {
-            this.renderMask((Graphics2D)g);
-            //x y 必須加上畫框的邊框寬度
-            g.drawImage(Texture.getInstance().paint[4], x, y,316,450, null);
+            g.drawImage(img, x, y,316,450, null);
         }
 
     }
@@ -102,7 +93,7 @@ public class FirstPicture extends GameState {
         mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
 //        hint = new HintBox(Texture.getInstance().hint[1]);
-        hint.showMsg(Game.WIDTH /2 + 100, 200, 500, "eoeoeooeoeoeoeeo");
+//        hint.showMsg(Game.WIDTH /2 + 100, 200, 500, "eoeoeooeoeoeoeeo");
         fakeBackground = Texture.getInstance().background[7];
         cursor = new Cursor();
     }
@@ -124,10 +115,11 @@ public class FirstPicture extends GameState {
         g.drawImage(fakeBackground, 0, 0, null);
         g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);
+        mask.render(g);
         if(this.hintShowed){
             hint.render(g);
         }
-        exitButton.render(g);
+//        exitButton.render(g);
     }
 
 
@@ -152,10 +144,9 @@ public class FirstPicture extends GameState {
         if(!hintShowed){
             this.hintShowed = true;
         }
-        if(exitButton.isHovered()){
-            exitButton.isClicked();
-            
-        }
+//        if(exitButton.isHovered()){
+//            exitButton.isClicked();
+//        }
     }
     
     @Override
@@ -164,9 +155,9 @@ public class FirstPicture extends GameState {
 
     @Override
     public void mouseReleased(int x, int y) {
-        if(exitButton.isReleased()){
-                gsm.setState(GameStateManager.LEVEL1_STATE);
-            }
+//        if(exitButton.isReleased()){
+//                gsm.setState(GameStateManager.LEVEL1_STATE);
+//            }
     }
 
     @Override

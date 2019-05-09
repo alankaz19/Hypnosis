@@ -8,6 +8,7 @@ package gamestate;
 import gameobject.GameObject;
 import gameobject.ObjectID;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import resourcemanage.ImageResource;
 import scene.Texture;
@@ -57,6 +58,7 @@ public class NumberLock extends GameState {
         }
     }
     
+    private int keyPressed;
     public static NumberLock NUMBER_LOCK;
     private BufferedImage fakeBackground;
     private BufferedImage lockFrame;
@@ -126,10 +128,17 @@ public class NumberLock extends GameState {
 
     @Override
     public void keyPressed(int k) {
+        keyPressed = k;
+        if(keyPressed == KeyEvent.VK_ESCAPE){
+            gsm.setState(GameStateManager.LEVEL1_STATE);
+        }
     }
 
     @Override
     public void keyReleased(int k) {
+        if(k == keyPressed){
+            keyPressed = -1;
+        }
     }
 
     @Override
@@ -158,6 +167,10 @@ public class NumberLock extends GameState {
         if(x > 798 && x < 798+64*3 && y > 470 && y < 470 + 64 * 2){
             slots[2].down.setClicked(true);
             System.out.println("clicked");
+        }
+        
+        if(this.continueButton.isClicked()){
+            gsm.newState(GameStateManager.TRANSITION_2);
         }
     }
 

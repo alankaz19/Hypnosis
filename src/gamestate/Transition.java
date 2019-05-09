@@ -23,6 +23,7 @@ public class Transition extends GameState{
         double xVel = Math.random() * 150 + 50 ;
         double length;
         int colorNumber = 3;
+        
 
         public void setLength(double length) {
             this.length = length;
@@ -60,6 +61,7 @@ public class Transition extends GameState{
     public static Transition TRANSITION;
     private Line[] lines;
     private Message msg;
+    private int timer;
     
     public  Transition getInstance(){
         if(TRANSITION == null){
@@ -75,13 +77,14 @@ public class Transition extends GameState{
     
     @Override
     public void init() {
+        timer = 0;
         lines  = new Line[1000];
         for (int i = 0; i < lines.length; i++) {
             lines[i] = new Line();
         }
         msg = new Message();
-        msg.setFont(Fonts.getHorrorFont(50));
-        
+        msg.setFont(Fonts.getHorrorFont(70));
+        msg.setLongWord();
     }
     
     @Override
@@ -91,13 +94,16 @@ public class Transition extends GameState{
         }
         event();
         msg.shake();
-        
+        timer++;
     }
 
     @Override
     public void event() {
         if(!msg.isShow()){
-            msg.showMsg(Game.WIDTH / 2 - 140 , Game.HEIGHT /2 - 60,"妳今天吃青菜了嗎？？", 2000, Color.red);
+            msg.showMsg(Game.WIDTH / 2 - 330 , Game.HEIGHT /2 - 140,"妳  知  道  你  是  誰  嗎  ？？", 2000, Color.red);
+        }
+        if(timer >= 180){
+            gsm.newState(GameStateManager.LEVEL1_STATE);
         }
     }
 

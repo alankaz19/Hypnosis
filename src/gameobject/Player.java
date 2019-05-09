@@ -30,7 +30,7 @@ public class Player extends GameObject {
         this.dir = 1;
         this.playerWalk = new Animation(movementSpeed, tex.player[1], tex.player[2], tex.player[3], tex.player[4], tex.player[5],
                 tex.player[6],tex.player[7],tex.player[8],tex.player[9]);
-        this.playerIdle = new Animation(18, tex.player[10], tex.player[11], tex.player[12], tex.player[13], tex.player[14],
+        this.playerIdle = new Animation(30, tex.player[10], tex.player[11], tex.player[12], tex.player[13], tex.player[14],
                 tex.player[15],tex.player[16],tex.player[17],tex.player[18],tex.player[19],tex.player[20],tex.player[21],tex.player[22],tex.player[23],tex.player[24],tex.player[25]);
         this.playerSit = new Animation(10,tex.player[40]);
         gravity = 1;

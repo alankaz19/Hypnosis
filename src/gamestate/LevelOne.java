@@ -24,6 +24,7 @@ import scene.Texture;
 import uiobject.Fonts;
 
 public class LevelOne extends GameState {
+    //躁點
     private class Noise implements Updater{
         float alpha = 0.2f;
         double x = (Math.random() * Game.WIDTH);
@@ -67,6 +68,12 @@ public class LevelOne extends GameState {
         }
     
     }
+    
+    //放大鏡 碎片
+    private boolean hasMagnifier;
+    private boolean hasJigsaw;
+    
+    
     private final int PLAYER = 0;
     private final int PICTURE1 = 1;
     private final int MSG_POSITION = 0;
@@ -107,12 +114,20 @@ public class LevelOne extends GameState {
         backGround = new BackGround(1);
         cam = new Camera(0, 0, 400);
         playerMsg = " 利用WASD鍵來移動 ···";
-        handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER, 6));
+        handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER, 15));
         handler.addObject(new Bar(500, 320, ObjectID.BAR));
         handler.addObject(new Picture(600, ObjectID.PICTURE){
             @Override
             public void render(Graphics g) {
-               this.renderRotate(g,10);
+                this.renderRotate(g,10);
+                if(this.show){
+                    if(clickable){
+                        g.drawImage(Texture.getInstance().pictureFrame[0], x, y,width,height, null);
+                        this.getShining().renderAnimation(g, x, y, width,height);
+                    }else{
+                        g.drawImage(Texture.getInstance().pictureFrame[0], x, y,width,height, null);
+                    }
+                }
             }
         });
         handler.addObject(new Picture(600 + 600, ObjectID.PICTURE));
@@ -143,33 +158,6 @@ public class LevelOne extends GameState {
         this.fadeIn(g);
         backGround.render(g);
         
-        
-        
-        //paintUtil
-//        for (int i = 1; i < handler.getObject().size(); i++) {
-//            if (handler.getObject().get(PLAYER).LevelOneCheckCollision(handler.getObject().get(i))) {
-//                //show hint for the first paint only
-//                if (handler.getObject().get(1).getID() == ObjectID.PICTURE) {
-//                    
-//                    g.translate(cam.getX(), cam.getY());
-//                    PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(1).x, handler.getObject().get(i).y, 128, 178), 6);
-//                    g.translate(-cam.getX(), -cam.getY());
-//                }
-//                //show hint only after scene is shown
-//                if(sceneshowed){
-//                    if (handler.getObject().get(i).getID() == ObjectID.PICTURE) {
-//                        g.translate(cam.getX(), cam.getY());
-//                        PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(i).x, handler.getObject().get(i).y, 128, 178), 6);
-//                        g.translate(-cam.getX(), -cam.getY());
-//                    }
-//                    if (handler.getObject().get(i).getID() == ObjectID.DOOR) {
-//                        g.translate(cam.getX(), cam.getY());
-//                        PaintUtil.paintFocus((Graphics2D) g, new Rectangle(handler.getObject().get(i).x, handler.getObject().get(i).y, 200, 300), 6);
-//                        g.translate(-cam.getX(), -cam.getY());
-//                    }
-//                }
-//            }
-//        }
         g.translate(cam.getX(), cam.getY()); //begin of cam
         handler.render(g);
         handler.getObject().get(PLAYER).renderMsg(g); // message following character head
@@ -270,29 +258,41 @@ public class LevelOne extends GameState {
             handler.getObject().get(1).setClickable(false);
             handler.getObject().get(2).setClicked(true);
         }
+        
+        //第一幅畫
         if (handler.getObject().get(2).getIsCollision()) {
-            gsm.newState(GameStateManager.TRANSITION);
+            gsm.newState(GameStateManager.FIRST_PICTURE);
         }
         
+        //第二幅畫
+        if (handler.getObject().get(3).getIsCollision()) {
+            gsm.newState(GameStateManager.CLICK_GAME);
+        }
         
         //櫃子
-        if (handler.getObject().get(3).getIsCollision()) {
+        if (handler.getObject().get(4).getIsCollision()) {
+            this.hasMagnifier = true;
         }
         //
         
         //第三幅畫
-        if (handler.getObject().get(4).getIsCollision()) {
-            gsm.newState(GameStateManager.SCRATCH_GAME);
+        if (handler.getObject().get(5).getIsCollision()) {
+            if(this.hasMagnifier == true){
+                this.hasJigsaw = true;
+                gsm.newState(GameStateManager.SCRATCH_GAME);
+            }
         }
         
         //第四幅畫
-        if (handler.getObject().get(5).getIsCollision()) {
-            gsm.newState(GameStateManager.PUZZLE_GAME);
+        if (handler.getObject().get(6).getIsCollision()) {
+            if(this.hasJigsaw == true){
+                gsm.newState(GameStateManager.PUZZLE_GAME);
+            }
         }
         
         //門
-        if (handler.getObject().get(6).getIsCollision()) {
-            gsm.newState(GameStateManager.EASTER_EGG);
+        if (handler.getObject().get(7).getIsCollision()) {
+            gsm.newState(GameStateManager.NUMBER_LOCK);
         }
 
     }

@@ -60,12 +60,10 @@ public class Npc extends GameObject {
             width = 40;
             height = 40;
         }
-
         @Override
         public void tick() {
 
         }
-
         @Override
         public void render(Graphics g) {
             g.drawImage(img,x,y,40,40,null);

@@ -85,8 +85,8 @@ public class Intro extends GameState{
             }
         };
         handler.addObject(new Player((Game.WIDTH * 45 / 100 ), (Game.HEIGHT * 50 / 100), ObjectID.INTROPLAYER,5));
-        handler.addObject(new Player((Game.WIDTH * 68 / 100 ), (Game.HEIGHT * 50 / 100), ObjectID.INTROPLAYER,5));
-        handler.getObject().get(1).setDirection(0);
+        handler.addObject(new Player((Game.WIDTH * 66 / 100 ), (Game.HEIGHT * 50 / 100), ObjectID.SHRINK,5));
+        //handler.getObject().get(1).setDirection(0);
     }
 
     @Override

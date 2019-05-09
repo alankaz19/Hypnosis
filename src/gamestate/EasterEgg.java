@@ -188,6 +188,9 @@ public class EasterEgg extends GameState {
                 }
             }
         }
+        if(player.isDead()){
+            gsm.setState(GameStateManager.LEVEL1_STATE);
+        }
         //END
         doppelganger.checkBorder();
         if(!doppelganger.npcExhausted() && !player.playerDead()){

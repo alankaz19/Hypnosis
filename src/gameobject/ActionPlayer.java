@@ -28,6 +28,10 @@ public class ActionPlayer extends GameObject {
         this.lifeC = lifeC;
     }
 
+    public boolean isDead() {
+        return dead;
+    }
+
     public ActionPlayer(int x, int y, ObjectID id, int movementSpeed) {
         super(x, y,id);
         this.width = 256;

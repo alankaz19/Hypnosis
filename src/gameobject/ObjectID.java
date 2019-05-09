@@ -13,6 +13,7 @@ public enum ObjectID {
     PLAYER(),
     INTROPLAYER(),
     HEART(),
+    SHRINK(),
     
     SOFA(),
     

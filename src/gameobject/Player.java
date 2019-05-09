@@ -5,6 +5,7 @@
  */
 package gameobject;
 
+import resourcemanage.ImageResource;
 import scene.Texture;
 import game.Game;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class Player extends GameObject {
     private Animation playerWalk;
     private Animation playerIdle;
     private Animation playerSit;
+    private Animation shrinkSit;
     private int gravity;
     private final int MAX = 20;
 
@@ -33,6 +35,7 @@ public class Player extends GameObject {
         this.playerIdle = new Animation(30, tex.player[10], tex.player[11], tex.player[12], tex.player[13], tex.player[14],
                 tex.player[15],tex.player[16],tex.player[17],tex.player[18],tex.player[19],tex.player[20],tex.player[21],tex.player[22],tex.player[23],tex.player[24],tex.player[25]);
         this.playerSit = new Animation(10,tex.player[40]);
+        this.shrinkSit = new Animation(10, ImageResource.getInstance().getImage("/Art/Character/doc.png"));
         gravity = 1;
 		this.collisionWidth = 110;
         this.collisionHeight = 260;
@@ -75,6 +78,9 @@ public class Player extends GameObject {
        if(this.id == ObjectID.INTROPLAYER){
            playerSit.runAnimation();
        }
+       if(this.id == ObjectID.SHRINK){
+           shrinkSit.runAnimation();
+       }
        this.collisionX = this.x + 85;
        this.collisionY = this.y + 25;
        playerWalk.runAnimation();
@@ -83,7 +89,10 @@ public class Player extends GameObject {
 
     @Override   
     public void render(Graphics g) {
-        if(this.id == ObjectID.INTROPLAYER){
+        if(this.id == ObjectID.SHRINK){
+            shrinkSit.renderAnimation(g,x,y,width,height);
+        }
+        else if(this.id == ObjectID.INTROPLAYER){
             if(this.dir == 1){
                 playerSit.renderAnimation(g,x + width, y, -width, height);
             }

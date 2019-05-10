@@ -47,4 +47,15 @@ public abstract class GameState {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
     }
+    public void fadeOut(Graphics g){
+        if(this.alpha > 0.05f) {
+            this.alpha -= 0.001f;
+        }
+        else if(this.alpha < 0.1f) {
+            this.alpha = 0f;
+        }
+
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+    }
 }

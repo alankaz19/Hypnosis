@@ -178,6 +178,7 @@ public class MiniPuzzleGame extends GameState {
         for( int i = 0; i < 9; i ++){
             pieces[i].render(g);
         }
+        currentPiece.render(g);
         if(!gameBoard.finished){
             PaintUtil.paintFocus((Graphics2D) g, new Rectangle(currentPiece.x, currentPiece.y,100,100),6);
         }else{

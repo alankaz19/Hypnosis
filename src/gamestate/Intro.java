@@ -36,9 +36,10 @@ public class Intro extends GameState{
     private int keyPressed;
     private ArrayList<String> playerScript;
     private ArrayList<String> npcScript;
-    private int msgC, npcC, time;  //script line;
+    private int msgC, npcC;  //script line;
+    private volatile int time;
     private BufferedReader playerScriptReader, npcScriptReader;
-    private boolean sceneFinished;
+    private volatile  boolean sceneFinished;
     private AudioClip bgm;
 
 

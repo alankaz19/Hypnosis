@@ -77,6 +77,7 @@ public class ActionPlayer extends GameObject {
 
     @Override
     public void tick() {
+        if(this.getID() != ObjectID.ENDSCENE)
         checkBorder();
         x += xVel;
         y += yVel;

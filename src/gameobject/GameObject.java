@@ -285,17 +285,18 @@ public abstract class GameObject implements Updater{
     
     public void showMsg(String msg,int Duration,Color color,int MsgPosition,Font font){
         this.msg = new Message();
+        this.color = color;
         this.word = msg;
         this.msg.setFont(font);
         this.msgFrame = Duration;
         this.msgPosition = MsgPosition;
-        this.msgFrameCount =0;
+        this.msgFrameCount = 0;
     }
     
     public void renderMsg(Graphics g){
         if(msgFrameCount < msgFrame){
-            g.drawImage(Texture.getInstance().ui[0], x + msgPosition, y + height / 2 - Texture.getInstance().ui[0].getHeight() -130, null);//先畫對話框
-            this.msg.showMsg( x+20 + msgPosition,  y + height / 2 -20 / 2 - 245, word, msgFrame, color);
+            g.drawImage(Texture.getInstance().ui[0], x + 100 + msgPosition, y -100, null);//先畫對話框
+            this.msg.showMsg( x + 120 + msgPosition,  y - 100, word, msgFrame, color);
             msg.render(g);
             msgFrameCount++;
         }

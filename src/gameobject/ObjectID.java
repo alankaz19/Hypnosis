@@ -14,6 +14,7 @@ public enum ObjectID {
     INTROPLAYER(),
     HEART(),
     SHRINK(),
+    ENDSCENE(),
     
     SOFA(),
     

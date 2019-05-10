@@ -46,7 +46,7 @@ public class Npc extends GameObject {
         this.gravity = 1;
         this.falling = false;
         this.isCollision = false;
-        showMsg("Start Message", 650, Color.red, 0, Fonts.getHorrorFont(30));
+        showMsg("HEYOOO", 650, Color.red, -60, Fonts.getHorrorFont(30));
         heart = new ArrayList<>();
         for(int i = 0; i < getLifeC()*40; i+= 40){
             heart.add(new Heart((Game.WIDTH/2 + 420) + i,20,ObjectID.HEART));

@@ -39,7 +39,7 @@ public class MiniClickGame extends GameState {
         private float alpha;
         public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
-            img = Texture.getInstance().paint[4];
+            img = Texture.getInstance().paint[3];
             cleared = false;
             this.width = 300;
             this.height = 400;
@@ -106,7 +106,7 @@ public class MiniClickGame extends GameState {
         exit = Texture.getInstance().ui[1];
         mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
-        hint = new HintBox();
+        hint = new HintBox(3);
         isDone = false;
         fakeBackground = Texture.getInstance().background[7];
     }
@@ -129,7 +129,7 @@ public class MiniClickGame extends GameState {
         g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);
         mask.render(g);
-        hint.showMsg(100, 200, 2000, "提示或劇情");
+        hint.showMsg(100, 200, 2000, "");
         hint.render(g);
     //        exitButton.render();
     }

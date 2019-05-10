@@ -98,7 +98,7 @@ public class MiniScratchOffGame extends GameState{
 
         @Override
         public void render(Graphics g) {
-            g.setClip(new Ellipse2D.Float(mouseX,mouseY, 125,125));
+            g.setClip(new Ellipse2D.Float(mouseX - 62 ,mouseY - 62, 125,125));
             g.drawImage(img, x,y,316,452,null);
         }
 
@@ -124,7 +124,7 @@ public class MiniScratchOffGame extends GameState{
     
     @Override
     public void init() {
-        hint = new HintBox();
+        hint = new HintBox(4);
         exit = Texture.getInstance().ui[1];
         this.fakeBackground = Texture.getInstance().background[7];
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
@@ -146,7 +146,7 @@ public class MiniScratchOffGame extends GameState{
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
         g.drawImage(exit,1000,440,100,100,null);
-        hint.showMsg(100, 200, 2, "提示或劇情");
+        hint.showMsg(100, 200, 2, "");
         hint.render(g);
         frame.render(g);
         mask.render(g);

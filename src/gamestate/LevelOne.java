@@ -11,17 +11,15 @@ import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import resourcemanage.ImageResource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import resourcemanage.SoundResource;
 import scene.Camera;
-import scene.PaintUtil;
 import scene.Texture;
-import uiobject.Fonts;
+import uiobject.HintBox;
 
 public class LevelOne extends GameState {
     //躁點
@@ -71,7 +69,10 @@ public class LevelOne extends GameState {
     
     //放大鏡 碎片
     private boolean hasMagnifier;
+    private boolean MagnifierHintShowed;
     private boolean hasJigsaw;
+    private boolean JigsawHintShowed;
+    private int hintTimer;
     
     
     private final int PLAYER = 0;
@@ -85,6 +86,8 @@ public class LevelOne extends GameState {
     private String playerMsg;
     boolean sceneshowed;
     private AudioClip bgm;
+    private HintBox magnifierHint;
+    private HintBox jigsawHint;
     
 
     public static LevelOne LevelOne;
@@ -105,35 +108,39 @@ public class LevelOne extends GameState {
     @Override
     public void init() {
         noise  = new Noise[5];
+        magnifierHint = new HintBox(0);
+        hintTimer = 0;
+        jigsawHint = new HintBox(1);
         for (int i = 0; i < noise.length; i++) {
             noise[i] = new Noise();
         }
         bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level1.wav");
         sceneshowed = false;
+        hintTimer = 0;
         handler = new Handler();
         backGround = new BackGround(1);
         cam = new Camera(0, 0, 400);
         playerMsg = " 利用WASD鍵來移動 ···";
         handler.addObject(new Player(0, Game.HEIGHT / 2, ObjectID.PLAYER, 15));
         handler.addObject(new Bar(500, 320, ObjectID.BAR));
-        handler.addObject(new Picture(600, ObjectID.PICTURE){
+        handler.addObject(new Picture(600, 0, ObjectID.PICTURE){
             @Override
             public void render(Graphics g) {
                 this.renderRotate(g,10);
                 if(this.show){
                     if(clickable){
-                        g.drawImage(Texture.getInstance().pictureFrame[0], x, y,width,height, null);
+                        g.drawImage(Texture.getInstance().paintThumbnail[0], x, y,width,height, null);
                         this.getShining().renderAnimation(g, x, y, width,height);
                     }else{
-                        g.drawImage(Texture.getInstance().pictureFrame[0], x, y,width,height, null);
+                        g.drawImage(Texture.getInstance().paintThumbnail[0], x, y,width,height, null);
                     }
                 }
             }
         });
-        handler.addObject(new Picture(600 + 600, ObjectID.PICTURE));
-        handler.addObject(new Closet(600 + 1000, 442, ObjectID.PICTURE));
-        handler.addObject(new Picture(600 + 1380, ObjectID.PICTURE));
-        handler.addObject(new Picture(600 + 1980, ObjectID.PICTURE));
+        handler.addObject(new Picture(600 + 600 ,1 , ObjectID.PICTURE));
+        handler.addObject(new Closet(1600 ,442 ,ObjectID.PICTURE));
+        handler.addObject(new Picture(600 + 1380 ,2 , ObjectID.PICTURE));
+        handler.addObject(new Picture(600 + 1980 ,3 , ObjectID.PICTURE));
         handler.addObject(new Door(800 + 2160, ObjectID.DOOR));
         handler.addObject(new Sofa(-100,400, ObjectID.DOOR));
     }
@@ -156,16 +163,32 @@ public class LevelOne extends GameState {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
+        
         backGround.render(g);
+        
+        
+        
         
         g.translate(cam.getX(), cam.getY()); //begin of cam
         handler.render(g);
         handler.getObject().get(PLAYER).renderMsg(g); // message following character head
         g.translate(-cam.getX(), -cam.getY());//end of cam
+        g.drawImage(Texture.getInstance().background[10], 0, 0,Game.WIDTH,Game.HEIGHT, null);
+        
+        if(hasMagnifier){
+            hintTimer++;
+            if(!magnifierHint.isShowed() && hintTimer < 200){
+                magnifierHint.render(g);
+            }else if(hintTimer > 120){
+                magnifierHint.setShowed(true);
+                magnifierHint.fadeOut(g);
+            }
+        }
         for (Noise noise : noise) {
             noise.render(g);
         }
-        g.drawImage(Texture.getInstance().background[10], 0, 0, null);
+        
+        
     }
 
     @Override
@@ -265,29 +288,29 @@ public class LevelOne extends GameState {
         }
         
         //第二幅畫
-        if (handler.getObject().get(3).getIsCollision()) {
+        if (handler.getObject().get(3).getIsCollision() && handler.getObject().get(3).isShow()) {
             gsm.newState(GameStateManager.CLICK_GAME);
+            
         }
         
         //櫃子
         if (handler.getObject().get(4).getIsCollision()) {
-            this.hasMagnifier = true;
+            System.out.println("closet clicked");
+            hasMagnifier = true;
         }
         //
         
+        
         //第三幅畫
-        if (handler.getObject().get(5).getIsCollision()) {
-            if(this.hasMagnifier == true){
-                this.hasJigsaw = true;
-                gsm.newState(GameStateManager.SCRATCH_GAME);
-            }
+        if (handler.getObject().get(5).getIsCollision() && handler.getObject().get(5).isShow() && hasMagnifier) {
+            this.hasJigsaw = true;
+            gsm.newState(GameStateManager.SCRATCH_GAME);
         }
         
         //第四幅畫
-        if (handler.getObject().get(6).getIsCollision()) {
-            if(this.hasJigsaw == true){
+        if (handler.getObject().get(6).getIsCollision() && handler.getObject().get(6).isShow() && hasJigsaw) {
                 gsm.newState(GameStateManager.PUZZLE_GAME);
-            }
+                
         }
         
         //門

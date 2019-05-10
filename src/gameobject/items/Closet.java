@@ -41,7 +41,6 @@ public class Closet extends GameObject{
         this.collisionY = this.y + 10;
         if(this.getIsCollision()){
             this.setClickable(true);
-            System.out.println("tuched");
             this.shining.runAnimation();
         }else{
             this.setClickable(false);
@@ -53,7 +52,6 @@ public class Closet extends GameObject{
     public void render(Graphics g) {
         g.drawImage(tex.closet[0],x, y, width, height,null);
         if(clickable){
-            System.out.println("clickable");
             this.shining.renderAnimation(g, x, y, width, height);
         }
 //        g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框

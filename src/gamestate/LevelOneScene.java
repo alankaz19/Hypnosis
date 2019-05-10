@@ -5,6 +5,7 @@
  */
 package gamestate;
 
+import game.Game;
 import game.Handler;
 import gameobject.GameObject;
 import gameobject.ObjectID;
@@ -14,6 +15,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import resourcemanage.ImageResource;
 import scene.Texture;
 
 /**
@@ -34,12 +36,10 @@ public class LevelOneScene extends GameState{
         BufferedImage img;
         protected float alpha;
 
-       
-        
         public Paint(int x, int y, ObjectID id,BufferedImage img,float alpha) {
             super(x, y, id);
             this.img = img;
-            this.width = 80;
+            this.width = 120;
             this.height = 120;
             this.alpha = alpha;
         }    
@@ -83,6 +83,8 @@ public class LevelOneScene extends GameState{
         handler = new Handler();
         //background = Texture.getInstance().background[8];
         timeC = 0;
+        
+        //背景
         handler.addObject(new Paint(0 ,0 ,ObjectID.PICTURE ,Texture.getInstance().background[8], 0){
             
             @Override
@@ -108,10 +110,12 @@ public class LevelOneScene extends GameState{
         });
         handler.getObject().get(0).setWidth(1280);
         handler.getObject().get(0).setHeight(720);
-        handler.addObject(new Paint(120 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
-        handler.addObject(new Paint(440 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
-        handler.addObject(new Paint(760 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
-        handler.addObject(new Paint(1080 ,300 ,ObjectID.PICTURE ,Texture.getInstance().paint[5], 0));
+        //
+        
+        handler.addObject(new Paint(120 ,280 ,ObjectID.PICTURE ,Texture.getInstance().paintThumbnail[0], 0));
+        handler.addObject(new Paint(440 ,280 ,ObjectID.PICTURE ,Texture.getInstance().paintThumbnail[1], 0));
+        handler.addObject(new Paint(760 ,280 ,ObjectID.PICTURE ,Texture.getInstance().paintThumbnail[2], 0));
+        handler.addObject(new Paint(1080 ,280 ,ObjectID.PICTURE ,Texture.getInstance().paintThumbnail[3], 0));
         handler.getObject().get(0).setShow(true);
     }
 
@@ -141,12 +145,22 @@ public class LevelOneScene extends GameState{
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
+//        g.drawImage(Texture.getInstance().background[8], 0, 0,Game.WIDTH,Game.HEIGHT, null);
+        
+        //第一幅畫 沙發 櫃子
         handler.getObject().get(0).render(g);
+        g.drawImage(Texture.getInstance().closet[0], 600, 400,121,121, null);
+        
+        //暗角
+        g.drawImage(Texture.getInstance().background[10], 0, 0,Game.WIDTH,Game.HEIGHT, null);
+        
+        //畫
         for (int i = 0; i < handler.getObject().size() - 1; i++) {
             if(handler.getObject().get(i).isShow()){
                 handler.getObject().get(i + 1).render(g);
             }
         }
+        
     }
 
     @Override

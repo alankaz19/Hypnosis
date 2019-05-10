@@ -23,6 +23,7 @@ public class Texture {
     SpriteSheet closetSheet;
     SpriteSheet pictureFrameSheet;
     SpriteSheet barSheet;
+    SpriteSheet paintSheet;
     private BufferedImage player_sheet;
     private BufferedImage npc_Sheet;
     private BufferedImage arrow_Button_Sheet;
@@ -32,14 +33,17 @@ public class Texture {
     private BufferedImage closet_Sheet;
     private BufferedImage picture_Frame_Sheet;
     private BufferedImage bar_Sheet;
+    private BufferedImage paint_Sheet;
 
     public BufferedImage[] background = new BufferedImage[11];
     public BufferedImage[] player = new BufferedImage[50];
     public BufferedImage[] playParkour;
     public BufferedImage[] npc = new BufferedImage[4];
     public BufferedImage[] paint = new BufferedImage[7];
+    public BufferedImage[] paintThumbnail = new BufferedImage[6];
+    public BufferedImage[] item = new BufferedImage[2];
     public BufferedImage[] ui = new BufferedImage[10];
-    public BufferedImage[] hint = new BufferedImage[10];
+    public BufferedImage[] hint = new BufferedImage[6];
     public BufferedImage[] cursor = new BufferedImage[2];
     public BufferedImage[] floor = new BufferedImage[2];
     public BufferedImage[] arrowButton = new BufferedImage[4];
@@ -79,6 +83,8 @@ public class Texture {
         pictureFrameSheet = new SpriteSheet(picture_Frame_Sheet);
         bar_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/barSheet.png");
         barSheet = new SpriteSheet(bar_Sheet);
+        paint_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/paintSheet.png");
+        paintSheet = new SpriteSheet(paint_Sheet);
         
         getTextures();
     }
@@ -164,7 +170,8 @@ public class Texture {
         background[7] = ImageResource.getInstance().getImage("/Art/Background/fakeBackground.png");
         background[8] = ImageResource.getInstance().getImage("/Art/Background/magicBackground.png");
         background[9] = ImageResource.getInstance().getImage("/Art/Background/room.png");
-        background[10] = ImageResource.getInstance().getImage("/Art/Background/noise.png");
+        background[10] = ImageResource.getInstance().getImage("/Art/Background/vignette.png");
+        
         
         paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture1.png");
         paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture2.png");
@@ -173,13 +180,29 @@ public class Texture {
         paint[4] = ImageResource.getInstance().getImage("/Art/Game Material//picture/picture3Base.png");
         paint[5] = ImageResource.getInstance().getImage("/Art/Game Material/frame.png");
         paint[6] = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
-
+        
+        
+        //掛畫縮圖
+        paintThumbnail[0] = paintSheet.grabImage(1, 1, 200, 200);//第一幅
+        paintThumbnail[1] = paintSheet.grabImage(2, 1, 200, 200);//第二幅
+        paintThumbnail[2] = paintSheet.grabImage(3, 1, 200, 200);//第三幅
+        paintThumbnail[3] = paintSheet.grabImage(4, 1, 200, 200);//第四幅
+        
+        //放大鏡跟紙張圖示
+        item[0] = ImageResource.getInstance().getImage("/Art/Game Material/paper.png");
+        item[1] = ImageResource.getInstance().getImage("/Art/Game Material/magnifier.png");
+        
+        
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
         ui[1] = ImageResource.getInstance().getImage("/Art/Game Material/Exit.png");
         ui[2] = ImageResource.getInstance().getImage("/Art/UI/dialogBox.png");
         
         hint[0] = ImageResource.getInstance().getImage("/Art/Hint/hint1.png");
-        hint[1] = ImageResource.getInstance().getImage("/Art/Hint/picture1Hint.png");
+        hint[1] = ImageResource.getInstance().getImage("/Art/Hint/hint2.png");
+        hint[2] = ImageResource.getInstance().getImage("/Art/Hint/picture1Hint.png");
+        hint[3] = ImageResource.getInstance().getImage("/Art/Hint/picture2Hint.png");
+        hint[4] = ImageResource.getInstance().getImage("/Art/Hint/picture3Hint.png");
+        hint[5] = ImageResource.getInstance().getImage("/Art/Hint/picture4Hint.png");
 
         floor[0] = ImageResource.getInstance().getImage("/Art/Game Material/floor.png");
         

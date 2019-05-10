@@ -24,6 +24,7 @@ public class Picture extends GameObject {
     private Animation Shining;
     private double rotateDegrees;
     private double DurationCount;
+    private int number;
     
     //旋轉變大的屬性
     private int heightForPicture1 = 50;
@@ -34,7 +35,7 @@ public class Picture extends GameObject {
     private int frameCountForWidth = 0;
     
 
-    public Picture(int x,ObjectID id) {
+    public Picture(int x,int number,ObjectID id) {
         super(x, 222,id);
         this.width = 220;
         this.height = 220;
@@ -42,6 +43,7 @@ public class Picture extends GameObject {
         this.DurationCount = 0;
         this.collisionWidth = 140;
         this.collisionHeight = 190;
+        this.number = number;
         this.Shining = new Animation(10, tex.pictureFrame[1], tex.pictureFrame[2], tex.pictureFrame[3], tex.pictureFrame[4], tex.pictureFrame[5], tex.pictureFrame[6], tex.pictureFrame[5], tex.pictureFrame[4], tex.pictureFrame[3], tex.pictureFrame[2], tex.pictureFrame[1]);
 
     }
@@ -53,7 +55,6 @@ public class Picture extends GameObject {
         
         if(this.getIsCollision()){
             this.setClickable(true);
-            System.out.println("tuched");
             Shining.runAnimation();
         }else{
             this.setClickable(false);
@@ -66,12 +67,12 @@ public class Picture extends GameObject {
     public void render(Graphics g) {
         if(this.show){
             if(clickable){
-                g.drawImage(tex.pictureFrame[0], x, y,width,height, null);
+                g.drawImage(tex.paintThumbnail[number], x, y,width,height, null);
                 this.Shining.renderAnimation(g, x, y, width,height);
             }else{
-                g.drawImage(tex.pictureFrame[0], x, y,width,height, null);
+                g.drawImage(tex.paintThumbnail[number], x, y,width,height, null);
             }
-//            g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
+            g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
         }
         
     }
@@ -88,9 +89,9 @@ public class Picture extends GameObject {
             }
             frameCountForHeight++;
             frameCountForWidth++;
-            g.drawImage(rotate(Texture.getInstance().pictureFrame[0], 30.0), x , y, width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
+            g.drawImage(rotate(Texture.getInstance().paintThumbnail[number], 30.0), x , y, width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
         }
-            g.drawImage(rotate(Texture.getInstance().pictureFrame[0], 30.0,x,y,null,true), x, y, width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
+            g.drawImage(rotate(Texture.getInstance().paintThumbnail[number], 30.0,x,y,null,true), x, y, width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
     }
     
     @Override

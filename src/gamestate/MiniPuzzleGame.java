@@ -3,19 +3,18 @@ package gamestate;
 import gameobject.GameObject;
 import gameobject.ObjectID;
 import resourcemanage.ImageResource;
-import scene.BackGround;
 import scene.PaintUtil;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import scene.Texture;
 import uiobject.HintBox;
+import uiobject.Button;
 
 
 public class MiniPuzzleGame extends GameState {
-    private static final BufferedImage ORIGINAL = ImageResource.getInstance().getImage("/Art/Game Material/SliderTest.png");
-    private BufferedImage check;
-    private BufferedImage exit;
+    private static final BufferedImage ORIGINAL = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/jigsawSheet.png");
+    private Button exit;
 
     private BufferedImage fakeBackground;
     private BufferedImage frame;
@@ -84,7 +83,7 @@ public class MiniPuzzleGame extends GameState {
         boolean finished;
         public Board(int x, int y, ObjectID id, Pieces[] pieces) {
             super(x, y, id);
-            img = ImageResource.getInstance().getImage("/Art/Game Material/puzzleBoard.png");
+            img = Texture.getInstance().paint[6];
             this.pieces = pieces;
             finished = false;
         }
@@ -97,7 +96,7 @@ public class MiniPuzzleGame extends GameState {
 
         @Override
         public void render(Graphics g) {
-            g.drawImage(img,x,y,300,300,null);
+            g.drawImage(img,x-10,y-140,316,450,null);
 
         }
 
@@ -133,9 +132,9 @@ public class MiniPuzzleGame extends GameState {
         fakeBackground = Texture.getInstance().background[7];
         frame = Texture.getInstance().paint[5];
         pieces = new Pieces[9];
-        exit = Texture.getInstance().ui[1];
+        exit = new Button(1025,562,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
         hint = new HintBox(5);
-        int x = 200,y = 200, r = 0, c = 0, count = 1;
+        int x = 200 - 40,y = 200, r = 0, c = 0, count = 1;
         for(int i = 0; i < 9; i++){
             if(count % 3 == 1){
                 c = 0;
@@ -150,12 +149,12 @@ public class MiniPuzzleGame extends GameState {
             x += 120;
             if(count % 3 == 0){
                 r++;
-                x = 200;
+                x = 200 -40;
                 y += 120;
             }
             count++;
         }
-        gameBoard = new Board(700,240,ObjectID.BOARD, pieces);
+        gameBoard = new Board(700 - 80,280,ObjectID.BOARD, pieces);
         currentPiece = pieces[0];
     }
 
@@ -166,14 +165,18 @@ public class MiniPuzzleGame extends GameState {
 
     @Override
     public void event() {
-
+        if (checkBoard() && mouseX >= exit.getX() && mouseX <= exit.getX() + exit.getWidth() && mouseY >= exit.getY() && mouseY <= exit.getY() + exit.getHeight()) {
+            exit.setHovered(true);
+        }else{
+            exit.setHovered(false);
+        }
     }
 
     @Override
     public void render(Graphics g) {
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
-        g.drawImage(frame, 635, 80, null);
+        g.drawImage(frame, 635 -80, 80, null);
         gameBoard.render(g);
         for( int i = 0; i < 9; i ++){
             pieces[i].render(g);
@@ -182,10 +185,9 @@ public class MiniPuzzleGame extends GameState {
         if(!gameBoard.finished){
             PaintUtil.paintFocus((Graphics2D) g, new Rectangle(currentPiece.x, currentPiece.y,100,100),6);
         }else{
-            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(gameBoard.getX(), gameBoard.getY(),300,300),6);
-            g.drawImage(exit,1000,440,100,100,null);
-            hint.showMsg(100, 200, 2000, "");
+//            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(gameBoard.getX(), gameBoard.getY(),300,300),6);
             hint.render(g);
+            exit.render(g);
         }
 
 
@@ -214,7 +216,7 @@ public class MiniPuzzleGame extends GameState {
                 currentPiece = pieces[i];
             }
         }
-        if (checkBoard() && x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {
+        if (checkBoard() && x >= exit.getX() && x <= exit.getX() + exit.getWidth() && y >= exit.getY() && y <= exit.getY() + exit.getHeight()) {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }
@@ -285,7 +287,7 @@ public class MiniPuzzleGame extends GameState {
 
     @Override
     public void mouseMoved(int x, int y) {
-
+        this.setMousePos(x, y);
     }
 
     //distance between two puzzles

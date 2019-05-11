@@ -22,6 +22,7 @@ import scene.Texture;
 public class Picture extends GameObject {
     Texture tex = Texture.getInstance();
     private Animation Shining;
+    private BufferedImage picture;
     private double rotateDegrees;
     private double DurationCount;
     private int number;
@@ -43,7 +44,7 @@ public class Picture extends GameObject {
         this.DurationCount = 0;
         this.collisionWidth = 140;
         this.collisionHeight = 190;
-        this.number = number;
+        this.picture = Texture.getInstance().paintThumbnail[number];
         this.Shining = new Animation(10, tex.pictureFrame[1], tex.pictureFrame[2], tex.pictureFrame[3], tex.pictureFrame[4], tex.pictureFrame[5], tex.pictureFrame[6], tex.pictureFrame[5], tex.pictureFrame[4], tex.pictureFrame[3], tex.pictureFrame[2], tex.pictureFrame[1]);
 
     }
@@ -67,12 +68,12 @@ public class Picture extends GameObject {
     public void render(Graphics g) {
         if(this.show){
             if(clickable){
-                g.drawImage(tex.paintThumbnail[number], x, y,width,height, null);
+                g.drawImage(picture, x, y,width,height, null);
                 this.Shining.renderAnimation(g, x, y, width,height);
             }else{
-                g.drawImage(tex.paintThumbnail[number], x, y,width,height, null);
+                g.drawImage(picture, x, y,width,height, null);
             }
-            g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
+//            g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框
         }
         
     }
@@ -92,6 +93,10 @@ public class Picture extends GameObject {
             g.drawImage(rotate(Texture.getInstance().paintThumbnail[number], 30.0), x , y, width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
         }
             g.drawImage(rotate(Texture.getInstance().paintThumbnail[number], 30.0,x,y,null,true), x, y, width - widthForPicture1 + changeValueForWidth ,height - heightForPicture1 + changeValueForHeight, null);
+    }
+    
+    public void setState(int pictureNumber){
+        this.picture = Texture.getInstance().paintThumbnail[pictureNumber];
     }
     
     @Override

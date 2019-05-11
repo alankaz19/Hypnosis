@@ -221,6 +221,7 @@ public class EasterEgg extends GameState {
         for (Snow snow1 : snow) {
             snow1.render(g);
         }
+        g.drawImage(Texture.getInstance().background[12], 0, 0,1280,720, null);
 
         //debug
 //        Graphics2D g2d = (Graphics2D) g;

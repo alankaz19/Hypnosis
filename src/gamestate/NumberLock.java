@@ -63,7 +63,7 @@ public class NumberLock extends GameState {
     private BufferedImage fakeBackground;
     private BufferedImage lockFrame;
     private boolean isDone;
-    private Button continueButton;
+    private Button exit;
     private Slot[] slots;
     
 
@@ -88,10 +88,7 @@ public class NumberLock extends GameState {
         slots[0] = new Slot(230,180,ObjectID.SLOT);
         slots[1] = new Slot(472,180,ObjectID.SLOT);
         slots[2] = new Slot(710,180,ObjectID.SLOT);
-        continueButton = new Button(1000, 400,64,64,Texture.getInstance().arrowButton[2],Texture.getInstance().arrowButton[3],5);
-        
-        
-        
+        exit = new Button(1025,523,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
     }
 
     @Override
@@ -99,22 +96,25 @@ public class NumberLock extends GameState {
         for (Slot slot : slots) {
             slot.tick();
         }
-        continueButton.tick();
+        exit.tick();
         event();
     }
 
     @Override
     public void event() {
-        if(slots[0].getCurrentNumber() == 5 && slots[1].getCurrentNumber() == 5 && slots[2].getCurrentNumber() == 5){
+        if(slots[0].getCurrentNumber() == 7 && slots[1].getCurrentNumber() == 2 && slots[2].getCurrentNumber() == 5){
             this.isDone = true;
         }
-        if(this.isDone){
-            continueButton.setTouchable(true);
+        if (this.mouseX >= exit.getX()&& this.mouseX <= exit.getX() + exit.getWidth() && this.mouseY >= exit.getY() && this.mouseY <= exit.getY() + exit.getHeight()) {
+            exit.setHovered(true);
+        }else{
+            exit.setHovered(false);
         }
     }
 
     @Override
     public void render(Graphics g) {
+        this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
         g.drawImage(lockFrame, 250, 200,256*3,96*3, null);
         
@@ -122,7 +122,7 @@ public class NumberLock extends GameState {
             slot.render(g);
         }
         if(this.isDone){
-            continueButton.render(g);
+            exit.render(g);
         }
     }
 
@@ -145,31 +145,25 @@ public class NumberLock extends GameState {
     public void mousePressed(int x, int y) {
         if(x > 318 && x < 318+64*3 && y > 116 && y < 116 + 64 * 2){
             slots[0].up.setClicked(true);
-            System.out.println("clicked");
         }
         if(x > 548 && x < 548+64*3 && y > 116 && y < 116 + 64 * 2){
             slots[1].up.setClicked(true);
-            System.out.println("clicked");
         }
         if(x > 798 && x < 798+64*3 && y > 116 && y < 116 + 64 * 2){
             slots[2].up.setClicked(true);
-            System.out.println("clicked");
         }
        
         if(x > 318 && x < 318+64*3 && y > 470 && y < 470 + 64 * 2){
             slots[0].down.setClicked(true);
-            System.out.println("clicked");
         }
         if(x > 548 && x < 548+64*3 && y > 470 && y < 470 + 64 * 2){
             slots[1].down.setClicked(true);
-            System.out.println("clicked");
         }
         if(x > 798 && x < 798+64*3 && y > 470 && y < 470 + 64 * 2){
             slots[2].down.setClicked(true);
-            System.out.println("clicked");
         }
         
-        if(this.continueButton.isClicked()){
+        if(exit.isHovered()){
             gsm.newState(GameStateManager.TRANSITION_2);
         }
     }
@@ -188,6 +182,7 @@ public class NumberLock extends GameState {
 
     @Override
     public void mouseMoved(int x, int y) {
+        this.setMousePos(x, y);
     }
 
 }

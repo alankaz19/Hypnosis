@@ -21,15 +21,19 @@ import uiobject.HintBox;
  * @author alank
  */
 public class FirstPicture extends GameState {
+    
     public static FirstPicture FIRST_PICTURE;
+    
+    //SHOW TRANSITION
+    private boolean trainsitionShowed;
+    private int timer;
+    
+    private BufferedImage fakeBackground;
     private Cursor cursor;
     private Frame frame;
     private Mask mask;
     private HintBox hint;
-    private Button exitButton;
-    private BufferedImage exit;
-    private boolean hintShowed;
-    private BufferedImage fakeBackground;
+    private Button exit;
     private int keyPressed;
     
     private class Mask extends GameObject {
@@ -86,18 +90,19 @@ public class FirstPicture extends GameState {
 
     @Override
     public void init() {
+        fakeBackground = Texture.getInstance().background[7];
         // mask 加上畫框寬度
-        exit = Texture.getInstance().ui[1];
         mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
         hint = new HintBox(2);
-//        hint.showMsg(Game.WIDTH /2 + 100, 200, 500, "eoeoeooeoeoeoeeo");
-        fakeBackground = Texture.getInstance().background[7];
+        exit = new Button(955,523,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
         cursor = new Cursor();
+        timer = 0;
     }
 
     @Override
     public void tick() {
+        timer++;
         mask.tick();
         event();
     }
@@ -105,17 +110,25 @@ public class FirstPicture extends GameState {
     @Override
     public void event() {
         cursor.setPosition(mouseX, mouseY);
+        if (mouseX >= exit.getX() && mouseX <= exit.getX() + exit.getWidth() && mouseY >= exit.getY() && mouseY <= exit.getY() + exit.getHeight()) {
+            exit.setHovered(true);
+        }else{
+            exit.setHovered(false);
+        }
+        if(timer >= 100 && !trainsitionShowed){
+            gsm.newState(GameStateManager.TRANSITION);
+            trainsitionShowed = true;
+        }
     }
 
     @Override
     public void render(Graphics g) {
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
-        g.drawImage(exit,1000,440,100,100,null);
+        exit.render(g);
         frame.render(g);
         mask.render(g);
         hint.render(g);
-//        exitButton.render(g);
     }
 
 
@@ -136,13 +149,9 @@ public class FirstPicture extends GameState {
 
     @Override
     public void mousePressed(int x, int y) {
-        //點擊畫框變亮 
-        if(!hintShowed){
-            this.hintShowed = true;
+        if (x >= exit.getX() && x <= exit.getX() + exit.getWidth() && y >= exit.getY() && y <= exit.getY() + exit.getHeight()) {
+            gsm.setState(GameStateManager.LEVEL1_STATE);
         }
-//        if(exitButton.isHovered()){
-//            exitButton.isClicked();
-//        }
     }
     
     @Override
@@ -151,15 +160,12 @@ public class FirstPicture extends GameState {
 
     @Override
     public void mouseReleased(int x, int y) {
-//        if(exitButton.isReleased()){
-//                gsm.setState(GameStateManager.LEVEL1_STATE);
-//            }
+        
     }
 
     @Override
     public void mouseMoved(int x, int y) {
-        this.mouseX = x;
-        this.mouseY = y;
+        this.setMousePos(x, y);
     }
 }
 

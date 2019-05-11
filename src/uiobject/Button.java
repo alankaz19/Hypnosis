@@ -34,6 +34,14 @@ public class Button extends UIObject{
         frame =0;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+    
     public void setTouchable(boolean touchable) {
         this.touchable = touchable;
     }
@@ -74,14 +82,19 @@ public class Button extends UIObject{
         if(this.Clicked){
             frame++;
             if(frame < 10){
-            g.drawImage(imgs[0], x, y, this.width * scale, this.height * scale, null);
-            frame = 0;    
+                g.drawImage(imgs[0], x, y, this.width * scale, this.height * scale, null);
+                frame = 0;    
             }
-            
         }
         if(this.released){
             g.drawImage(imgs[1], x, y, this.width * scale, this.height * scale, null);
-            }
+        }
+        
+        if(this.Hovered){
+            g.drawImage(imgs[0], x, y, this.width * scale, this.height * scale, null);
+        }else{
+            g.drawImage(imgs[1], x, y, this.width * scale, this.height * scale, null);
         }
     }
+}
     

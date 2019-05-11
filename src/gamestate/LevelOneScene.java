@@ -9,13 +9,13 @@ import game.Game;
 import game.Handler;
 import gameobject.GameObject;
 import gameobject.ObjectID;
+import gameobject.items.Light;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import resourcemanage.ImageResource;
 import scene.Texture;
 
 /**
@@ -25,6 +25,7 @@ import scene.Texture;
 public class LevelOneScene extends GameState{
     public static LevelOneScene LEVEL1_SCENE;
     Handler handler;
+    Handler lightHandler;
     int keyPressed;
 
     int timeC;
@@ -81,6 +82,7 @@ public class LevelOneScene extends GameState{
     @Override
     public void init() {
         handler = new Handler();
+        lightHandler = new Handler();
         //background = Texture.getInstance().background[8];
         timeC = 0;
         
@@ -110,18 +112,25 @@ public class LevelOneScene extends GameState{
         });
         handler.getObject().get(0).setWidth(1280);
         handler.getObject().get(0).setHeight(720);
-        //
+        //結束背景設定
         
         handler.addObject(new Paint(120 ,280 ,ObjectID.PICTURE ,Texture.getInstance().paintThumbnail[0], 0));
         handler.addObject(new Paint(440 ,280 ,ObjectID.PICTURE ,Texture.getInstance().paintThumbnail[1], 0));
         handler.addObject(new Paint(760 ,280 ,ObjectID.PICTURE ,Texture.getInstance().paintThumbnail[2], 0));
         handler.addObject(new Paint(1080 ,280 ,ObjectID.PICTURE ,Texture.getInstance().paintThumbnail[3], 0));
         handler.getObject().get(0).setShow(true);
+        
+        //add lights
+        lightHandler.addObject(new Light(121 ,200, ObjectID.LIGHT));
+        lightHandler.addObject(new Light(441 ,200, ObjectID.LIGHT));
+        lightHandler.addObject(new Light(761 ,200, ObjectID.LIGHT));
+        lightHandler.addObject(new Light(1081 ,200, ObjectID.LIGHT));
     }
 
     @Override
     public void tick() {
         handler.getObject().get(0).tick();
+        lightHandler.tick();
         event();
     }
 
@@ -145,21 +154,26 @@ public class LevelOneScene extends GameState{
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
-//        g.drawImage(Texture.getInstance().background[8], 0, 0,Game.WIDTH,Game.HEIGHT, null);
+        
         
         //第一幅畫 沙發 櫃子
         handler.getObject().get(0).render(g);
-        g.drawImage(Texture.getInstance().closet[0], 600, 400,121,121, null);
+        g.drawImage(Texture.getInstance().closet[0], 900, 400,121,121, null);
         
         //暗角
         g.drawImage(Texture.getInstance().background[10], 0, 0,Game.WIDTH,Game.HEIGHT, null);
+        
+        //lights
+        lightHandler.render(g);
         
         //畫
         for (int i = 0; i < handler.getObject().size() - 1; i++) {
             if(handler.getObject().get(i).isShow()){
                 handler.getObject().get(i + 1).render(g);
             }
+            
         }
+        
         
     }
 

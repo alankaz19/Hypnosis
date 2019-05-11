@@ -2,13 +2,18 @@ package gamestate;
 import scene.Texture;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import uiobject.Button;
 
 public class Option extends GameState {
-    private BufferedImage img;
+    private BufferedImage base;
+    private Button resume;
+    private Button help;
+    private Button home;
+    
 
     protected Option(GameStateManager gsm) {
         super(gsm);
-        this.img = Texture.getInstance().background[2];
+        this.base = Texture.getInstance().ui[2];
     }
 
     @Override
@@ -18,24 +23,31 @@ public class Option extends GameState {
 
     @Override
     public void init() {
-        
+        resume = new Button(805,225,200,100,Texture.getInstance().button[7],Texture.getInstance().button[6],1);
+        help = new Button(805,325,200,100,Texture.getInstance().button[3],Texture.getInstance().button[2],1);
+        home = new Button(805,425,200,100,Texture.getInstance().button[5],Texture.getInstance().button[4],1);
     }
 
     @Override
     public void tick() {
-
+        event();
     }
 
     @Override
     public void event() {
-
+        setHovered(resume);
+        setHovered(help);
+        setHovered(home);
     }
 
     @Override
     public void render(Graphics g) {
         this.fadeIn(g);
-        g.drawImage(img,408,84, 883,695, 378,64,913,695,null);
-
+        g.drawImage(base,700,80,400,600,null);
+        g.drawImage(Texture.getInstance().background[11], 0, 0,1280,720, null);
+        resume.render(g);
+        help.render(g);
+        home.render(g);
     }
 
     @Override
@@ -50,27 +62,39 @@ public class Option extends GameState {
     @Override
     public void mousePressed(int x, int y) {
         //返回遊戲
-        if(x >= 512 && x <= 822 && y >= 365 && y <= 410){
+        if(resume.isHovered()){
             gsm.setState(gsm.getPrevState());
         }
+        //遊戲說明
+        if(help.isHovered()){
+            
+        }
+        
         //返回主選單
-        if(x >= 512 && x <= 822 && y >= 640 && y <= 685){
+        if(home.isHovered()){
             gsm.setState(GameStateManager.MENU_STATE);
         }
     }
 
     @Override
     public void mouseDragged(int x, int y) {
-
     }
 
     @Override
     public void mouseReleased(int x, int y) {
-
     }
 
     @Override
     public void mouseMoved(int x, int y) {
-
+        this.setMousePos(x, y);
     }
+    
+    private void setHovered(Button button) {
+        if (this.mouseX >= button.getX() && this.mouseX <= button.getX() + button.getWidth() && this.mouseY >= button.getY() + 25 && this.mouseY <= button.getY() + button.getHeight() - 20) {
+            button.setHovered(true);
+        }else{
+            button.setHovered(false);
+        }
+    }
+    
 }

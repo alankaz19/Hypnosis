@@ -65,7 +65,7 @@ public abstract class GameState {
     
     public void fadeOut(Graphics g){
         if(this.alpha > 0.05f) {
-            this.alpha -= 0.001f;
+            this.alpha -= 0.005f;
         }
         else if(this.alpha < 0.1f) {
             this.alpha = 0f;

@@ -41,12 +41,12 @@ public class Npc extends GameObject {
         this.npcFloat = new Animation(movement, tex.npc[0], tex.npc[1], tex.npc[2]);
         this.npcDown = new Animation(movement, tex.npc[3]);
         this.diving = true;
-        this.lifeC = 5;
-        this.diveCoolDown = 600;
+        this.lifeC = 4;
+        this.diveCoolDown = 300;
         this.gravity = 1;
         this.falling = false;
         this.isCollision = false;
-        showMsg("HEYOOO", 650, Color.red, -60, Fonts.getHorrorFont(30));
+        showMsg("HEYOOO", 550, Color.red, -60, Fonts.getHorrorFont(30));
         heart = new ArrayList<>();
         for(int i = 0; i < getLifeC()*40; i+= 40){
             heart.add(new Heart((Game.WIDTH/2 + 420) + i,20,ObjectID.HEART));
@@ -132,7 +132,7 @@ public class Npc extends GameObject {
             if(xVel >= maxSpeed){
                 xVel = maxSpeed;
                 diving = true;
-                heart.remove(heart.size()-1);
+                showMsg("LETsGOO", 550, Color.red, -60, Fonts.getHorrorFont(30));
             }
         }
         else if(x + width >= Game.WIDTH - 20){
@@ -147,7 +147,7 @@ public class Npc extends GameObject {
             if( xVel <= -maxSpeed){
                 xVel = -maxSpeed;
                 diving = true;
-                heart.remove(heart.size()-1);
+                showMsg("CHARGE", 550, Color.red, -60, Fonts.getHorrorFont(30));
             }
         }
         else if(x <= 20){
@@ -157,7 +157,6 @@ public class Npc extends GameObject {
                 diveCoolDown = 100;
             }
         }
-
     }
 
     @Override
@@ -193,8 +192,12 @@ public class Npc extends GameObject {
             heart.render(g);
         }
         renderMsg(g);
-
     }
+
+    public ArrayList<Heart> getHeart() {
+        return heart;
+    }
+
     @Override
     public ObjectID getID() {
         return null;

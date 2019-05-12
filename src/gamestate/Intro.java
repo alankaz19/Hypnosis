@@ -21,6 +21,7 @@ import resourcemanage.SoundResource;
 import scene.BackGround;
 import scene.Texture;
 import uiobject.Fonts;
+import uiobject.HintBox;
 
 /**
  *
@@ -41,6 +42,7 @@ public class Intro extends GameState{
     private BufferedReader playerScriptReader, npcScriptReader;
     private volatile  boolean sceneFinished;
     private AudioClip bgm;
+    private HintBox file;
 
 
     public static Intro INTRO;
@@ -64,6 +66,7 @@ public class Intro extends GameState{
         playerScript = new ArrayList<>();
         npcScript = new ArrayList<>();
         sceneFinished = false;
+        file = new HintBox(6,50,0,500,700);
         //read script
         try {
             playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"), StandardCharsets.UTF_16));
@@ -87,7 +90,6 @@ public class Intro extends GameState{
         };
         handler.addObject(new Player((Game.WIDTH * 45 / 100 ), (Game.HEIGHT * 50 / 100), ObjectID.INTROPLAYER,5));
         handler.addObject(new Player((Game.WIDTH * 66 / 100 ), (Game.HEIGHT * 50 / 100), ObjectID.SHRINK,5));
-        //handler.getObject().get(1).setDirection(0);
     }
 
     @Override
@@ -101,14 +103,15 @@ public class Intro extends GameState{
 
     @Override
     public void render(Graphics g) {
-        this.fadeIn(g);
+        this.fadeIn(g ,0.007f);
         background.render(g);
         
         handler.render(g);
 
-        handler.getObject().get(0).renderMsg(g);
-        handler.getObject().get(1).renderMsg(g);
-        g.drawImage(Texture.getInstance().item[3], 100, 0, 500, 708, null);
+        handler.getObject().get(PLAYER).renderMsg(g);
+        handler.getObject().get(HYPNOTIST).renderMsg(g);
+        
+        file.fadeIn(g ,0.007f);
     }
 
     @Override
@@ -118,7 +121,7 @@ public class Intro extends GameState{
         if(time == 150 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(1).showMsg(npcScript.get(npcC), 800, Color.BLACK,0,Fonts.getBitFont(20));// npc message
+                handler.getObject().get(HYPNOTIST).showMsg(npcScript.get(npcC), 800, Color.BLACK,0,Fonts.getBitFont(20));// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;
@@ -129,7 +132,7 @@ public class Intro extends GameState{
         if(time == 150 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
             System.out.println("player Line " + msgC);
             if(!playerScript.get(msgC).equals(""))
-            handler.getObject().get(0).showMsg(playerScript.get(msgC), 800, Color.BLACK,0,Fonts.getBitFont(20)); //player message
+            handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 800, Color.BLACK,0,Fonts.getBitFont(20)); //player message
             if(msgC < playerScript.size()){
                 msgC ++;
                 System.out.println(msgC);

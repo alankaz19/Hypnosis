@@ -27,6 +27,7 @@ public class Texture {
     SpriteSheet jigsawSheet;
     SpriteSheet buttonSheet;
     SpriteSheet lightSheet;
+    SpriteSheet eyeSheet;
     private BufferedImage player_sheet;
     private BufferedImage npc_Sheet;
     private BufferedImage arrow_Button_Sheet;
@@ -40,6 +41,7 @@ public class Texture {
     private BufferedImage jigsaw_Sheet;
     private BufferedImage button_Sheet;
     private BufferedImage light_Sheet;
+    private BufferedImage eye_Sheet;
 
     public BufferedImage[] background = new BufferedImage[13];
     public BufferedImage[] player = new BufferedImage[50];
@@ -49,7 +51,7 @@ public class Texture {
     public BufferedImage[] paintThumbnail = new BufferedImage[7];
     public BufferedImage[] item = new BufferedImage[4];
     public BufferedImage[] ui = new BufferedImage[10];
-    public BufferedImage[] hint = new BufferedImage[6];
+    public BufferedImage[] hint = new BufferedImage[7];
     public BufferedImage[] cursor = new BufferedImage[2];
     public BufferedImage[] floor = new BufferedImage[2];
     public BufferedImage[] arrowButton = new BufferedImage[4];
@@ -62,6 +64,7 @@ public class Texture {
     public BufferedImage[] button = new BufferedImage[10];
     public BufferedImage[] jigsaw = new BufferedImage[9];
     public BufferedImage[] light = new BufferedImage[4];
+    public BufferedImage[] eyes = new BufferedImage[6];
 
     //texture loader
     private static Texture tex;
@@ -100,6 +103,8 @@ public class Texture {
         buttonSheet = new SpriteSheet(button_Sheet);
         light_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/lightSheet.png");
         lightSheet = new SpriteSheet(light_Sheet);
+        eye_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/eyeSheet.png");
+        eyeSheet = new SpriteSheet(eye_Sheet);
         
         getTextures();
     }
@@ -238,6 +243,7 @@ public class Texture {
         hint[3] = ImageResource.getInstance().getImage("/Art/Hint/picture2Hint.png");
         hint[4] = ImageResource.getInstance().getImage("/Art/Hint/picture3Hint.png");
         hint[5] = ImageResource.getInstance().getImage("/Art/Hint/picture4Hint.png");
+        hint[6] = ImageResource.getInstance().getImage("/Art/Game Material/file.png");
 
         floor[0] = ImageResource.getInstance().getImage("/Art/Game Material/floor.png");
         
@@ -279,6 +285,13 @@ public class Texture {
         light[1] = lightSheet.grabImage(2, 1, 200, 200);
         light[2] = lightSheet.grabImage(3, 1, 200, 200);
         light[3] = lightSheet.grabImage(4, 1, 200, 200);
+        
+        eyes[0] = eyeSheet.grabImage(1, 1, 30, 30);
+        eyes[1] = eyeSheet.grabImage(2, 1, 30, 30);
+        eyes[2] = eyeSheet.grabImage(3, 1, 30, 30);
+        eyes[3] = eyeSheet.grabImage(4, 1, 30, 30);
+        eyes[4] = eyeSheet.grabImage(5, 1, 30, 30);
+        eyes[5] = eyeSheet.grabImage(6, 1, 30, 30);
         
         //buttons
         button[0] = buttonSheet.grabImage(1, 1, 200, 100);//exit dark

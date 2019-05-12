@@ -18,6 +18,7 @@ import resourcemanage.SoundResource;
 import scene.Camera;
 import scene.Texture;
 import uiobject.HintBox;
+import uiobject.Cursor;
 
 public class LevelOne extends GameState {
     //躁點
@@ -91,6 +92,8 @@ public class LevelOne extends GameState {
     boolean sceneshowed;
     private AudioClip bgm;
     private HintBox magnifierHint;
+    private Cursor eyes;
+    private boolean eyeShow;
     
 
     public static LevelOne LevelOne;
@@ -162,6 +165,9 @@ public class LevelOne extends GameState {
         //道具圖示
         jigsaw = Texture.getInstance().item[0];
         magnifier = Texture.getInstance().item[1];
+        
+        //眼睛游標
+        eyes = new Cursor();
     }
 
     @Override
@@ -173,6 +179,7 @@ public class LevelOne extends GameState {
         backGround.tick();
         handler.tick();
         lightHandler.tick();
+        eyes.tick();
         cam.tick(handler.getObject().get(PLAYER));
     }
 
@@ -188,6 +195,10 @@ public class LevelOne extends GameState {
         handler.render(g);
         lightHandler.render(g);
         g.translate(-cam.getX(), -cam.getY());//end of cam
+        
+        if(eyeShow){
+            eyes.render(g);
+        }
         
         //暗角
         g.drawImage(Texture.getInstance().background[10], 0, 0,Game.WIDTH,Game.HEIGHT, null);
@@ -208,6 +219,7 @@ public class LevelOne extends GameState {
             }
         }
         
+         
         
         for (Noise noise : noise) {
             noise.render(g);
@@ -307,6 +319,10 @@ public class LevelOne extends GameState {
             Picture tempPic = (Picture)handler.getObject().get(6);
             tempPic.setState(4);
         }
+        
+        //眼睛游標
+        this.showEyes();
+        
     }
 
     @Override
@@ -397,5 +413,32 @@ public class LevelOne extends GameState {
     public void mouseMoved(int x, int y) {
         this.mouseX = x;
         this.mouseY = y;
+        this.eyes.setPosition(x, y);
+    }
+    
+    private void showEyes(){
+        eyeShow = false;
+        if(handler.getObject().get(1).getIsCollision() && !handler.getObject().get(1).isClicked()){
+            eyeShow = true;
+        }
+        for (int i = 2; i < handler.getObject().size(); i++) {
+            if (handler.getObject().get(PLAYER).LevelOneCheckCollision(handler.getObject().get(i))) {
+                if(handler.getObject().get(i).isShow()){
+                    eyeShow = true;
+                }
+            }
+        }
+        
+        if(handler.getObject().get(5).getIsCollision() && !hasMagnifier){
+            eyeShow = false;
+        }
+        
+        if(handler.getObject().get(6).getIsCollision() && !hasJigsaw){
+            eyeShow = false;
+        }
+        
+         if(handler.getObject().get(4).getIsCollision() && handler.getObject().get(4).isClicked()){
+            eyeShow = false;
+        }
     }
 }

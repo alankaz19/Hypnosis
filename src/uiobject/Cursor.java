@@ -7,6 +7,7 @@ package uiobject;
 
 import gameobject.GameObject;
 import java.awt.Graphics;
+import scene.Animation;
 import scene.Texture;
 
 /**
@@ -14,25 +15,20 @@ import scene.Texture;
  * @author Kai
  */
 public class Cursor extends UIObject{
-    private boolean Checkable;
+    Texture tex = Texture.getInstance();
     private boolean Clickable;
+    private Animation shining;
 
     public Cursor() {
-        this.width = 10;
-        this.height = 10;
+        this.width = 60;
+        this.height = 60;
+        this.shining = new Animation(10 ,tex.eyes[0] ,tex.eyes[1] ,tex.eyes[2] ,tex.eyes[3] ,tex.eyes[4] ,tex.eyes[5] ,tex.eyes[4] ,tex.eyes[3] ,tex.eyes[2] ,tex.eyes[1] ,tex.eyes[0]);
     }
     
 
-    public boolean isCheckable() {
-        return Checkable;
-    }
 
     public boolean isClickable() {
         return Clickable;
-    }
-
-    public void setCheckable(boolean Checkable) {
-        this.Checkable = Checkable;
     }
 
     public void setClickable(boolean Clickable) {
@@ -47,16 +43,12 @@ public class Cursor extends UIObject{
     
     @Override
     public void tick() {
+        this.shining.runAnimation();
     }
 
     @Override
     public void render(Graphics g) {
-        if(Checkable){
-            g.drawImage(Texture.getInstance().cursor[0], this.x, this.y, null);
-        }
-        if(Clickable){
-            g.drawImage(Texture.getInstance().cursor[1], this.x, this.y, null);
-        }
+            this.shining.renderAnimation(g, x, y, width, height);
     }
 
 }

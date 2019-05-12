@@ -78,22 +78,23 @@ public class Message extends UIObject{
             g.setFont(font);
             g.setColor(color);
             FontMetrics fm = g.getFontMetrics();
-            int sa = fm.getAscent();
             Graphics2D g2d =(Graphics2D)g;
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
             if(this.alpha <= 0.99f && this.alpha >= 0){
-            this.alpha += 0.09f;
+            this.alpha += 0.01f;
             }
             else if(this.alpha >= 0.9f){
                 this.alpha = 1.0f;
             }
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+            
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 
             drawString(g, msg, x,  y);
             msgFrameCount++;
-            if(msgFrameCount == msgFrame){
+            if(msgFrameCount == 500){
                if(this.alpha > 0.99f && this.alpha >= 0){
-                this.alpha -= 0.09f;
+                this.alpha -= 0.005f;
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
                 }
                 else if(this.alpha <= 0.09f){
                     this.alpha = 0;

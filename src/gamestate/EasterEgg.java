@@ -319,6 +319,7 @@ public class EasterEgg extends GameState {
         for (Snow snow1 : snow) {
             snow1.render(g);
         }
+        
         for( NostaligaItem item : itemList){
             item.render(g);
         }

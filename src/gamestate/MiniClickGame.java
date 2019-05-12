@@ -14,6 +14,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import scene.Texture;
+import uiobject.Button;
 import uiobject.HintBox;
 
 /**
@@ -27,9 +28,7 @@ public class MiniClickGame extends GameState {
     private Frame frame;
     private Mask mask;
     private HintBox hint;
-//    private Button exitButton;
-    private BufferedImage exit;
-    private boolean isDone;
+    private Button exit;
     private BufferedImage fakeBackground;
     private int keyPressed;
     
@@ -102,36 +101,39 @@ public class MiniClickGame extends GameState {
 
     @Override
     public void init() {
+        fakeBackground = Texture.getInstance().background[7];
         // mask 加上畫框寬度
-        exit = Texture.getInstance().ui[1];
         mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
         frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
         hint = new HintBox(3);
-        isDone = false;
-        fakeBackground = Texture.getInstance().background[7];
+        exit = new Button(955,523,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
     }
 
     @Override
     public void tick() {
         mask.tick();
-
+        event();
     }
 
     @Override
     public void event() {
+        if (mouseX >= exit.getX() && mouseX <= exit.getX() + exit.getWidth() && mouseY >= exit.getY() && mouseY <= exit.getY() + exit.getHeight()) {
+            exit.setHovered(true);
+        }else{
+            exit.setHovered(false);
+        }
     }
 
     @Override
     public void render(Graphics g) {
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
-        if(mask.cleared)
-        g.drawImage(exit,1000,440,100,100,null);
         frame.render(g);
+        if(mask.cleared){
+            exit.render(g);
+        }
         mask.render(g);
-        hint.showMsg(100, 200, 2000, "");
         hint.render(g);
-    //        exitButton.render();
     }
 
 
@@ -154,15 +156,15 @@ public class MiniClickGame extends GameState {
     public void mousePressed(int x, int y) {
         //點擊畫框變亮 
         if(x > mask.x && x < mask.x + mask.getWidth() && y > mask.y && y < mask.y + mask.getHeight()){
-            if(mask.alpha - 0.05 < 0){
+            if(mask.alpha - 0.05 < 0.09){
                 mask.alpha = 0;
                 mask.cleared = true;
                 return;
             }
-            mask.alpha -= 0.09f;
+            mask.alpha -= 0.11f;
         }
         
-        if (x >= 1000 && x <= 1240 && y >= 440 && y <= 540) {
+        if (exit.isHovered()) {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }
@@ -177,6 +179,6 @@ public class MiniClickGame extends GameState {
 
     @Override
     public void mouseMoved(int x, int y) {
-
+        this.setMousePos(x, y);
     }
 }

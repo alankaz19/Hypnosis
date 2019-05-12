@@ -17,7 +17,7 @@ public enum ObjectID {
     ENDSCENE(),
     
     SOFA(),
-    
+    LIGHT(),
     FRAME(),
     
     PICTURE(),
@@ -40,4 +40,5 @@ public enum ObjectID {
     BAR(),
     SLOT(),
     
+    MAGNIFIER()
 }

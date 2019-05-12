@@ -108,7 +108,7 @@ public class Intro extends GameState{
 
         handler.getObject().get(0).renderMsg(g);
         handler.getObject().get(1).renderMsg(g);
-
+        g.drawImage(Texture.getInstance().item[3], 100, 0, 500, 708, null);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class Intro extends GameState{
 
         if(time >= 50 && sceneFinished){ //move one to next stage
             bgm.stop();
-            gsm.newState(GameStateManager.TRANSITION);
+            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
         }
     }
 

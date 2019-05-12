@@ -82,7 +82,7 @@ public class Transition2 extends GameState{
             lines[i] = new Line();
         }
         msg = new Message();
-        msg.setFont(Fonts.getCrazyFont(65));
+        msg.setFont(Fonts.getCrazyFont(70));
         msg.setLongWord();
     }
     
@@ -92,6 +92,7 @@ public class Transition2 extends GameState{
             line.tick();
         }
         event();
+        timer++;
         msg.shake();
         
     }
@@ -99,9 +100,9 @@ public class Transition2 extends GameState{
     @Override
     public void event() {
         if(!msg.isShow()){
-            msg.showMsg(Game.WIDTH / 2 - 330 , Game.HEIGHT /2 - 120,"終  於  見  到  妳  了  。", 2500, Color.red);
+            msg.showMsg(Game.WIDTH / 2 - 410 , Game.HEIGHT /2 - 120,"終  於  見  到  面  了  。", 2500, Color.red);
         }
-        if(timer >= 180){
+        if(timer >= 170){
             gsm.newState(GameStateManager.EASTER_EGG);
         }
     }

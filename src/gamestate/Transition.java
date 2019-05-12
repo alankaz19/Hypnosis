@@ -7,8 +7,10 @@ package gamestate;
 
 import game.Game;
 import game.Updater;
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import uiobject.Fonts;
 import uiobject.Message;
 
@@ -100,10 +102,10 @@ public class Transition extends GameState{
     @Override
     public void event() {
         if(!msg.isShow()){
-            msg.showMsg(Game.WIDTH / 2 - 330 , Game.HEIGHT /2 - 140,"妳  知  道  你  是  誰  嗎  ？？", 2000, Color.red);
+            msg.showMsg(Game.WIDTH / 2 - 400 , Game.HEIGHT /2 - 140,"妳  知  道  你  是  誰  嗎  ？？", 2000, Color.red);
         }
-        if(timer >= 180){
-            gsm.newState(GameStateManager.LEVEL1_STATE);
+        if(timer >= 150){
+            gsm.setState(GameStateManager.FIRST_PICTURE);
         }
     }
 
@@ -117,6 +119,12 @@ public class Transition extends GameState{
             line.render(g);
         }
         msg.render(g);
+        Graphics2D g2d =(Graphics2D)g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+        
+        if(timer >= 30){
+            this.fadeOut(g);
+        }
     }
 
     @Override

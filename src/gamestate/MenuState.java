@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import game.Game;
 import resourcemanage.SoundResource;
 import scene.Texture;
+import uiobject.Button;
 
 /**
  *
@@ -20,8 +21,9 @@ import scene.Texture;
  */
 
 public class MenuState extends GameState {
-    private BufferedImage img;
+    private BufferedImage background;
     private AudioClip intro;
+    private Button start;
 
     public static MenuState menuState;
 
@@ -38,24 +40,28 @@ public class MenuState extends GameState {
         intro.play();
         init();
         
-        img = Texture.getInstance().background[0];
+        background = Texture.getInstance().background[0];
         //intro.loop();
     }
 
     @Override
     public void init() {
-        
+        start = new Button(245,465,200,100,Texture.getInstance().button[9],Texture.getInstance().button[8],1);
         intro = SoundResource.getInstance().getClip("/Art/Sound Effect/IntroMusic.wav");
     }
 
     @Override
     public void tick() {
-
+        event();
     }
 
     @Override
     public void event() {
-
+        if (this.mouseX >= start.getX() && this.mouseX <= start.getX() + start.getWidth() && this.mouseY >= start.getY() && this.mouseY <= start.getY() + start.getHeight()) {
+            start.setHovered(true);
+        }else{
+            start.setHovered(false);
+        }
     }
 
     @Override
@@ -63,7 +69,8 @@ public class MenuState extends GameState {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
-        g.drawImage(img,0,0, Game.WIDTH, Game.HEIGHT,null);
+        g.drawImage(background,0,0, Game.WIDTH, Game.HEIGHT,null);
+        start.render(g);
     }
 
     @Override
@@ -86,7 +93,7 @@ public class MenuState extends GameState {
     @Override
     public void mousePressed(int x, int y) {
         //開始遊戲
-        if(x >= 295 && x <= 434 && y >= 456 && y <= 500){
+        if(start.isHovered()){
             gsm.newState(GameStateManager.INTRO);
         }
 
@@ -103,7 +110,7 @@ public class MenuState extends GameState {
 
     @Override
     public void mouseMoved(int x, int y) {
-
+        this.setMousePos(x, y);
     }
 
 }

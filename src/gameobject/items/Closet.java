@@ -51,7 +51,7 @@ public class Closet extends GameObject{
     @Override   
     public void render(Graphics g) {
         g.drawImage(tex.closet[0],x, y, width, height,null);
-        if(clickable){
+        if(clickable && !clicked){
             this.shining.renderAnimation(g, x, y, width, height);
         }
 //        g.drawRect(this.collisionX, this.collisionY, this.collisionWidth, this.collisionHeight);//畫判斷框

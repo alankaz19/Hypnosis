@@ -117,7 +117,7 @@ public class MiniClickGame extends GameState {
 
     @Override
     public void event() {
-        if (mouseX >= exit.getX() && mouseX <= exit.getX() + exit.getWidth() && mouseY >= exit.getY() && mouseY <= exit.getY() + exit.getHeight()) {
+        if (mask.cleared && mouseX >= exit.getX() && mouseX <= exit.getX() + exit.getWidth() && mouseY >= exit.getY() && mouseY <= exit.getY() + exit.getHeight()) {
             exit.setHovered(true);
         }else{
             exit.setHovered(false);

@@ -69,7 +69,7 @@ public class HypnosisTransition extends GameState {
     public static HypnosisTransition HYPNOSIS_TRANSITION;
     private Message msg;
     private int timer;
-    private final int TIME = 120;
+    private final int TIME = 190;
     private Noise[] noise;
     
     public  HypnosisTransition getInstance(){
@@ -88,7 +88,7 @@ public class HypnosisTransition extends GameState {
     public void init() {
         timer = 0;
         msg = new Message();
-        msg.setFont(Fonts.getHorrorFont(80));
+        msg.setFont(Fonts.getHorrorFont(40));
         msg.setLongWord();
         noise  = new Noise[5];
         for (int i = 0; i < noise.length; i++) {
@@ -109,7 +109,7 @@ public class HypnosisTransition extends GameState {
     @Override
     public void event() {
         if(!msg.isShow()){
-            msg.showMsg(Game.WIDTH / 2 - 280 , Game.HEIGHT /2 - 140,"3  .  .  2  .  .  1  .  .", 2000, Color.white);
+            msg.showMsg(Game.WIDTH / 2 - 160 , Game.HEIGHT /2 - 45,"3  ·  ·  2  ·  ·  1  ·  ·", 2000, Color.white);
         }
         if(timer >= TIME){
             gsm.newState(GameStateManager.LEVEL1_STATE);

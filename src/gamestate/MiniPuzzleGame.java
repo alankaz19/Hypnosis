@@ -216,7 +216,7 @@ public class MiniPuzzleGame extends GameState {
                 currentPiece = pieces[i];
             }
         }
-        if (checkBoard() && x >= exit.getX() && x <= exit.getX() + exit.getWidth() && y >= exit.getY() && y <= exit.getY() + exit.getHeight()) {
+        if (checkBoard() && exit.isHovered()) {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }

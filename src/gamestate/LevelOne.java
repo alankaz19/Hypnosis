@@ -23,7 +23,7 @@ import uiobject.Cursor;
 public class LevelOne extends GameState {
     //躁點
     private class Noise implements Updater{
-        float alpha = 0.2f;
+        float alpha = 0.18f;
         double x = (Math.random() * Game.WIDTH);
         double y = (Math.random() * Game.HEIGHT);
         double yVel = 10;
@@ -59,7 +59,7 @@ public class LevelOne extends GameState {
                     g.setColor(java.awt.Color.red);
                     break;
                 case 4:
-                    g.setColor(java.awt.Color.white);
+//                    g.setColor(java.awt.Color.white);
                     break;
             }
             
@@ -150,7 +150,7 @@ public class LevelOne extends GameState {
             }
         });
         handler.addObject(new Picture(600 + 650 ,1 , ObjectID.PICTURE));
-        handler.addObject(new Closet(2150 ,442 ,ObjectID.PICTURE));
+        handler.addObject(new Closet(2220 ,442 ,ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 1300 ,2 , ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 1950 ,3 , ObjectID.PICTURE));
         handler.addObject(new Door(800 + 2160, ObjectID.DOOR));
@@ -201,7 +201,6 @@ public class LevelOne extends GameState {
         }
         
         //暗角
-        g.drawImage(Texture.getInstance().background[10], 0, 0,Game.WIDTH,Game.HEIGHT, null);
         g.drawImage(Texture.getInstance().background[10], 0, 0,Game.WIDTH,Game.HEIGHT, null);
         
         //道具與提示
@@ -378,7 +377,10 @@ public class LevelOne extends GameState {
         
         
         //第三幅畫
-        if (handler.getObject().get(5).getIsCollision() && handler.getObject().get(5).isShow() && hasMagnifier && !paint3Done) {
+        if(handler.getObject().get(5).getIsCollision() && handler.getObject().get(5).isShow() && !hasMagnifier && !paint3Done){
+            gsm.newState(GameStateManager.THIRD_PICTURE);
+        }
+        else if (handler.getObject().get(5).getIsCollision() && handler.getObject().get(5).isShow() && hasMagnifier && !paint3Done) {
             gsm.newState(GameStateManager.SCRATCH_GAME);
             this.hasJigsaw = true;
             this.paint3Done = true;
@@ -387,7 +389,10 @@ public class LevelOne extends GameState {
         }
         
         //第四幅畫
-        if (handler.getObject().get(6).getIsCollision() && handler.getObject().get(6).isShow() && hasJigsaw && !paint4Done) {
+        if(handler.getObject().get(6).getIsCollision() && handler.getObject().get(5).isShow() && !hasJigsaw && !paint3Done){
+            gsm.newState(GameStateManager.FORTH_PICTURE);
+        }
+        else if (handler.getObject().get(6).getIsCollision() && handler.getObject().get(6).isShow() && hasJigsaw && !paint4Done) {
             gsm.newState(GameStateManager.PUZZLE_GAME);
             this.paint4Done = true;
         }else if(handler.getObject().get(6).getIsCollision() && handler.getObject().get(6).isShow() && hasMagnifier && paint4Done){
@@ -429,13 +434,6 @@ public class LevelOne extends GameState {
             }
         }
         
-        if(handler.getObject().get(5).getIsCollision() && !hasMagnifier){
-            eyeShow = false;
-        }
-        
-        if(handler.getObject().get(6).getIsCollision() && !hasJigsaw){
-            eyeShow = false;
-        }
         
          if(handler.getObject().get(4).getIsCollision() && handler.getObject().get(4).isClicked()){
             eyeShow = false;

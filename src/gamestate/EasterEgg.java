@@ -17,12 +17,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import scene.Animation;
 
 public class EasterEgg extends GameState {
     private final int BACKGROUND2 = 3;
     private final int FARMOUNTAIN = 4;
     private final int NEARMOUNTAINS = 5;
-    private final int ROAD = 6;
     private Keys key;
     private BufferedImage background2, restart;
     private ParallaxBackGround farMountain;
@@ -54,18 +54,21 @@ public class EasterEgg extends GameState {
         return EasterEgg;
     }
     private class NostaligaItem extends GameObject{
+        Texture tex = Texture.getInstance();
         private BufferedImage img;
+        private Animation shining;
         private boolean falling, collectable;
         private int gravity;
 
         public NostaligaItem(int x, int y, ObjectID id, BufferedImage img) {
             super(x, y, id);
             this.img = img;
-            width = 30;
-            height = 30;
+            width = 60;
+            height = 60;
             gravity = 1;
             collectable = false;
             falling = true;
+            shining = new Animation(8,tex.hearts[0] ,tex.hearts[1] ,tex.hearts[2] ,tex.hearts[3] ,tex.hearts[4] ,tex.hearts[5] ,tex.hearts[4] ,tex.hearts[3] ,tex.hearts[2] ,tex.hearts[1] ,tex.hearts[0]);
         }
 
         @Override
@@ -91,11 +94,12 @@ public class EasterEgg extends GameState {
                     yVel = 5;
                 }
             }
+            this.shining.runAnimation();
         }
 
         @Override
         public void render(Graphics g) {
-            g.drawImage(img,x,y,width,height,null);
+            this.shining.renderAnimation(g, x, y, width, height);
         }
 
         public Rectangle getBound(){
@@ -153,14 +157,14 @@ public class EasterEgg extends GameState {
         }
         //script
         npcLine = new ArrayList<>();
-        try {
-            npcScript = new BufferedReader(new FileReader(""));
-            while(npcScript.ready()){
-                npcLine.add(npcScript.readLine());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            npcScript = new BufferedReader(new FileReader(""));
+//            while(npcScript.ready()){
+//                npcLine.add(npcScript.readLine());
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         //inputMethod
         key = new Keys();
         //background
@@ -284,7 +288,6 @@ public class EasterEgg extends GameState {
                 if(player.isFalling()){
                     player.setyVel(-24);
                     player.setJumping(true);
-                    //player.showMsg("654654654", 1000, Color.red, 0,Fonts.getHorrorFont(30));
                 }
             }
         }

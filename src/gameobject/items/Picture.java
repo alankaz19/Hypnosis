@@ -81,11 +81,11 @@ public class Picture extends GameObject {
     public void renderRotate(Graphics g,int MaxFrame){
         if(this.clicked){
             if(heightForPicture1 > changeValueForHeight && frameCountForHeight == MaxFrame){
-                changeValueForHeight +=1;
+                changeValueForHeight +=2;
                 frameCountForHeight = 5;
             }
             if(widthForPicture1 > changeValueForWidth && frameCountForWidth == MaxFrame){
-                changeValueForWidth +=1;
+                changeValueForWidth +=3;
                 frameCountForWidth = 0;
             }
             frameCountForHeight++;
@@ -140,7 +140,7 @@ public class Picture extends GameObject {
     public BufferedImage rotate(BufferedImage source, double degrees){
         this.rotateDegrees = degrees;
         if(DurationCount < rotateDegrees){
-            DurationCount += 0.125;
+            DurationCount += 0.20;
             return rotate(source, degrees, -1, -1, null, true);
         }else{
             this.show = true;

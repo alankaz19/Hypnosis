@@ -43,9 +43,9 @@ public class Transition extends GameState{
     
         @Override
         public void render(Graphics g){
-            switch((int)(Math.random() * colorNumber)){
+            switch((int)(Math.random() * 4)){
                 case 1:
-                    g.setColor(java.awt.Color.blue);
+                    g.setColor(java.awt.Color.MAGENTA);
                     break;
                 case 2:
                     g.setColor(java.awt.Color.red);
@@ -85,7 +85,7 @@ public class Transition extends GameState{
             lines[i] = new Line();
         }
         msg = new Message();
-        msg.setFont(Fonts.getHorrorFont(70));
+        msg.setFont(Fonts.getHorrorFont(40));
         msg.setLongWord();
     }
     
@@ -102,7 +102,7 @@ public class Transition extends GameState{
     @Override
     public void event() {
         if(!msg.isShow()){
-            msg.showMsg(Game.WIDTH / 2 - 400 , Game.HEIGHT /2 - 140,"妳  知  道  你  是  誰  嗎  ？？", 2000, Color.red);
+            msg.showMsg(Game.WIDTH / 2 - 270 , Game.HEIGHT /2 - 45,"你   知   道   你   是   誰   嗎  ‧ ‧ ‧ ", 2000, Color.red);
         }
         if(timer >= 150){
             gsm.setState(GameStateManager.FIRST_PICTURE);

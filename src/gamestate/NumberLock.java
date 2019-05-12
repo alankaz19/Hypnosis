@@ -143,24 +143,26 @@ public class NumberLock extends GameState {
 
     @Override
     public void mousePressed(int x, int y) {
-        if(x > 318 && x < 318+64*3 && y > 116 && y < 116 + 64 * 2){
+        if(!isDone){
+            if(x > 318 && x < 318+64*3 && y > 116 && y < 116 + 64 * 2){
             slots[0].up.setClicked(true);
-        }
-        if(x > 548 && x < 548+64*3 && y > 116 && y < 116 + 64 * 2){
-            slots[1].up.setClicked(true);
-        }
-        if(x > 798 && x < 798+64*3 && y > 116 && y < 116 + 64 * 2){
-            slots[2].up.setClicked(true);
-        }
-       
-        if(x > 318 && x < 318+64*3 && y > 470 && y < 470 + 64 * 2){
-            slots[0].down.setClicked(true);
-        }
-        if(x > 548 && x < 548+64*3 && y > 470 && y < 470 + 64 * 2){
-            slots[1].down.setClicked(true);
-        }
-        if(x > 798 && x < 798+64*3 && y > 470 && y < 470 + 64 * 2){
-            slots[2].down.setClicked(true);
+            }
+            if(x > 548 && x < 548+64*3 && y > 116 && y < 116 + 64 * 2){
+                slots[1].up.setClicked(true);
+            }
+            if(x > 798 && x < 798+64*3 && y > 116 && y < 116 + 64 * 2){
+                slots[2].up.setClicked(true);
+            }
+
+            if(x > 318 && x < 318+64*3 && y > 470 && y < 470 + 64 * 2){
+                slots[0].down.setClicked(true);
+            }
+            if(x > 548 && x < 548+64*3 && y > 470 && y < 470 + 64 * 2){
+                slots[1].down.setClicked(true);
+            }
+            if(x > 798 && x < 798+64*3 && y > 470 && y < 470 + 64 * 2){
+                slots[2].down.setClicked(true);
+            }
         }
         
         if(exit.isHovered()){

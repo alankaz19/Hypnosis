@@ -13,6 +13,7 @@ import gameobject.Player;
 import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -31,9 +32,7 @@ import uiobject.Button;
 public class LevelThree extends GameState{
     
     private final int PLAYER = 0;
-    private final int HYPNOTIST = 1;
-    private final int BACKGROUND = 9;
-    private BackGround background;
+    private final int NPC = 1;
     private Handler handler;
     private int keyPressed;
     private ArrayList<String> playerScript;
@@ -43,8 +42,12 @@ public class LevelThree extends GameState{
     private BufferedReader playerScriptReader, npcScriptReader;
     private volatile  boolean sceneFinished;
     private AudioClip bgm;
-    private HintBox file;
-    private Button next;
+    private BufferedImage background;
+    
+    private int velocity;
+    private int velocity2;
+    private int timer;
+    private int timer2;
 
 
     public static LevelThree LEVEL_THREE;
@@ -68,6 +71,7 @@ public class LevelThree extends GameState{
         playerScript = new ArrayList<>();
         npcScript = new ArrayList<>();
         sceneFinished = false;
+        background = Texture.getInstance().background[13];
         //read script
         try {
             playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene3.txt"), StandardCharsets.UTF_16));
@@ -83,23 +87,17 @@ public class LevelThree extends GameState{
             e.printStackTrace();
         }
         //end
-        bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level3"
-                + "Level3.wav");
+        bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level3.wav");
         bgm.loop();
-        background = new BackGround(BACKGROUND){
-            public void render(Graphics g) {
-                g.drawImage(Texture.getInstance().background[BACKGROUND],0,0,Game.WIDTH, Game.HEIGHT, null);
-            }
-        };
-        handler.addObject(new Player(((Game.WIDTH / 5) * 2 ), (Game.HEIGHT * 50 / 100), ObjectID.INTROPLAYER,5));
-        handler.addObject(new Player(((Game.WIDTH / 5) * 4  ), (Game.HEIGHT * 50 / 100), ObjectID.SHRINK,5));
+        
+        handler.addObject(new Player((((Game.WIDTH / 5) * 1) - 64), (Game.HEIGHT * 50 / 110), ObjectID.ENDGAMEPLAYER,5));
+        handler.addObject(new Player((((Game.WIDTH / 5) * 3) + 64), (Game.HEIGHT * 50 / 110), ObjectID.ENDGAMENPC,5));
     }
 
     @Override
     public void tick() {
         event();
         handler.tick();
-        background.tick();
         
     }
 
@@ -107,18 +105,16 @@ public class LevelThree extends GameState{
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g ,0.007f);
-        background.render(g);
-        
+        g.drawImage(background, 0 , 0, 1280, 720, null);
         handler.render(g);
-        file.fadeIn(g ,0.007f);
-
+            
+        g.drawImage(Texture.getInstance().background[12], 0 , 0, 1280, 720, null);
         handler.getObject().get(PLAYER).renderMsg(g);
-        handler.getObject().get(HYPNOTIST).renderMsg(g);
+        handler.getObject().get(NPC).renderMsg(g);
         
-        if(this.sceneFinished){
-            next.render(g);
-        }
         
     }
 
@@ -131,7 +127,7 @@ public class LevelThree extends GameState{
         if(time == 140 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(HYPNOTIST).showMsg(npcScript.get(npcC), 1200, Color.BLACK,0,Fonts.getBitFont(18));// npc message
+                handler.getObject().get(NPC).showMsg(npcScript.get(npcC), 1200, Color.BLACK,-70,Fonts.getBitFont(18));// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;
@@ -141,8 +137,11 @@ public class LevelThree extends GameState{
         //System.out.println(playerScript.size());
         if(time == 140 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
             System.out.println("player Line " + msgC);
-            if(!playerScript.get(msgC).equals(""))
-            handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 1200, Color.BLACK,0,Fonts.getBitFont(18)); //player message
+            if(!playerScript.get(msgC).equals("")){
+                handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 1200, Color.BLACK,-70,Fonts.getBitFont(18)); //player message
+            }
+           
+            
             if(msgC < playerScript.size()){
                 msgC ++;
                 System.out.println(msgC);
@@ -151,7 +150,32 @@ public class LevelThree extends GameState{
             
         
         }
-
+        
+       
+            
+            if(msgC == 4){
+                timer++;
+                timer2++;
+                if(timer < 20 ) {
+                    velocity2++;
+                    if(velocity2 > 10){
+                        velocity2 = 0;
+                    }
+                    handler.getObject().get(PLAYER).setX(handler.getObject().get(PLAYER).getX() - velocity2);
+                    System.out.println(handler.getObject().get(PLAYER).getX());
+                    timer2 = 0;
+                }
+                if(timer < 100 && timer > 20) {
+                    velocity = 5;
+                    
+                    handler.getObject().get(PLAYER).setX(handler.getObject().get(PLAYER).getX() + velocity);
+                    System.out.println(handler.getObject().get(PLAYER).getX());
+                    timer = 0;
+                }
+            }else{
+                velocity = 0;
+            }
+        
         if(npcC == npcScript.size() && msgC == playerScript.size()){  //finished with animated scene
             sceneFinished = true;
         }
@@ -162,12 +186,6 @@ public class LevelThree extends GameState{
         }
         //finished talking event
         
-        //button event
-        if (sceneFinished && mouseX >= next.getX() && mouseX <= next.getX() + next.getWidth() && mouseY >= next.getY() && mouseY <= next.getY() + next.getHeight()) {
-            next.setHovered(true);
-        }else{
-            next.setHovered(false);
-        }
     }
 
     @Override
@@ -192,9 +210,6 @@ public class LevelThree extends GameState{
     @Override
     public void mousePressed(int x, int y) {
 //        gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
-        if(next.isHovered()){
-            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
-        }
     }
 
     @Override

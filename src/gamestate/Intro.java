@@ -130,7 +130,7 @@ public class Intro extends GameState{
         if(time == 140 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(HYPNOTIST).showMsg(npcScript.get(npcC), 1200, Color.BLACK,0,Fonts.getBitFont(18));// npc message
+                handler.getObject().get(HYPNOTIST).showMsg(npcScript.get(npcC), 1200, Color.BLACK, 0, Fonts.getBitFont(18));// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;
@@ -141,7 +141,7 @@ public class Intro extends GameState{
         if(time == 140 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
             System.out.println("player Line " + msgC);
             if(!playerScript.get(msgC).equals(""))
-            handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 1200, Color.BLACK,0,Fonts.getBitFont(18)); //player message
+            handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 1200, Color.BLACK, -20, Fonts.getBitFont(18)); //player message
             if(msgC < playerScript.size()){
                 msgC ++;
                 System.out.println(msgC);

@@ -8,6 +8,7 @@ package gamestate;
 import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -121,6 +122,8 @@ public class FirstPicture extends GameState {
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
         exit.render(g);
@@ -148,10 +151,10 @@ public class FirstPicture extends GameState {
     @Override
     public void mousePressed(int x, int y) {
         if (!trainsitionShowed && exit.isHovered()) {
-            gsm.newState(GameStateManager.TRANSITION);
             trainsitionShowed = true;
+            gsm.newState(GameStateManager.TRANSITION);
         }
-        if (trainsitionShowed && exit.isHovered()) {
+        else if (trainsitionShowed && exit.isHovered()) {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }

@@ -7,6 +7,7 @@ package gamestate;
 
 import gameobject.GameObject;
 import gameobject.ObjectID;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -122,6 +123,8 @@ public class NumberLock extends GameState {
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
         g.drawImage(lockFrame, 250, 200,256*3,96*3, null);

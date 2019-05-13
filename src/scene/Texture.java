@@ -45,10 +45,10 @@ public class Texture {
     private BufferedImage eye_Sheet;
     private BufferedImage heart_Sheet;
 
-    public BufferedImage[] background = new BufferedImage[13];
+    public BufferedImage[] background = new BufferedImage[14];
     public BufferedImage[] player = new BufferedImage[50];
     public BufferedImage[] playParkour;
-    public BufferedImage[] npc = new BufferedImage[4];
+    public BufferedImage[] npc = new BufferedImage[20];
     public BufferedImage[] paint = new BufferedImage[8];
     public BufferedImage[] paintThumbnail = new BufferedImage[7];
     public BufferedImage[] item = new BufferedImage[4];
@@ -164,6 +164,22 @@ public class Texture {
         npc[1] = npcSheet.grabImage(8, 6, 48, 48);
         npc[2] = npcSheet.grabImage(9, 6, 48, 48);
         npc[3] = npcSheet.grabImage(21, 6, 48, 48);//npc dead
+        npc[4] = npcSheet.grabImage(1, 1, 48, 48);//Idle
+        npc[5] = npcSheet.grabImage(2, 1, 48, 48);
+        npc[6] = npcSheet.grabImage(3, 1, 48, 48);
+        npc[7] = npcSheet.grabImage(4, 1, 48, 48);
+        npc[8] = npcSheet.grabImage(5, 1, 48, 48);
+        npc[9] = npcSheet.grabImage(6, 1, 48, 48);
+        npc[10] = npcSheet.grabImage(7, 1, 48, 48);
+        npc[11] = npcSheet.grabImage(8, 1, 48, 48);
+        npc[12] = npcSheet.grabImage(9, 1, 48, 48);
+        npc[13] = npcSheet.grabImage(10, 1, 48, 48);
+        npc[14] = npcSheet.grabImage(11, 1, 48, 48);
+        npc[15] = npcSheet.grabImage(12, 1, 48, 48);
+        npc[16] = npcSheet.grabImage(13, 1, 48, 48);
+        npc[17] = npcSheet.grabImage(14, 1, 48, 48);
+        npc[18] = npcSheet.grabImage(15, 1, 48, 48);
+        npc[19] = npcSheet.grabImage(16, 1, 48, 48);
         
         //arrowButton
         arrowButton[0] = arrowButtonSheet.grabImage(1, 1, 64, 64);
@@ -198,6 +214,7 @@ public class Texture {
         background[10] = ImageResource.getInstance().getImage("/Art/Background/vignette.png");
         background[11] = ImageResource.getInstance().getImage("/Art/Background/noise.png");
         background[12] = ImageResource.getInstance().getImage("/Art/Background/vignette2.png");
+        background[13] = ImageResource.getInstance().getImage("/Art/Background/endGameBG.png");
         
         //大張圖畫與相框
         paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture1.png");

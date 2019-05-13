@@ -15,6 +15,8 @@ public enum ObjectID {
     HEART(),
     SHRINK(),
     ENDSCENE(),
+    ENDGAMEPLAYER(),
+    ENDGAMENPC(),
     
     SOFA(),
     LIGHT(),

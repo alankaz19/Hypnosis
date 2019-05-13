@@ -150,7 +150,7 @@ public class LevelOne extends GameState {
             }
         });
         handler.addObject(new Picture(600 + 650 ,1 , ObjectID.PICTURE));
-        handler.addObject(new Closet(2220 ,442 ,ObjectID.PICTURE));
+        handler.addObject(new Closet(2230 ,442 ,ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 1300 ,2 , ObjectID.PICTURE));
         handler.addObject(new Picture(600 + 1950 ,3 , ObjectID.PICTURE));
         handler.addObject(new Door(800 + 2160, ObjectID.DOOR));

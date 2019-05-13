@@ -9,6 +9,7 @@ import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -182,6 +183,8 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
         g.drawImage(fakeBackground, 0, 0, null);
         hint.render(g);

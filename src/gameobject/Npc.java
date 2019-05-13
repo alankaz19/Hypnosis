@@ -14,6 +14,7 @@ import uiobject.Fonts;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import uiobject.Message;
 
 /**
  *
@@ -24,6 +25,8 @@ public class Npc extends GameObject {
     private Animation npcFloat;
     private Animation npcDown;
     private ActionPlayer player;
+    private Message msg;
+    private BufferedImage chatBubble;
     private int speed;
     private int maxSpeed;
     private int diveCoolDown;
@@ -46,7 +49,12 @@ public class Npc extends GameObject {
         this.gravity = 1;
         this.falling = false;
         this.isCollision = false;
-        showMsg("高雄發大財", 550, Color.red, -60, Fonts.getHorrorFont(30));
+        //對話相關
+        this.chatBubble = Texture.getInstance().ui[3];
+        this.msg = new Message();
+        this.msg.setFont(Fonts.getCrazyFont(30));
+        this.msg.showMsg(x, y, "HEYOOO", 300,  Color.red);
+        //
         heart = new ArrayList<>();
         for(int i = 0; i < getLifeC()*50; i+= 50){
             heart.add(new Heart((Game.WIDTH/2 + 370) + i,10,ObjectID.HEART));
@@ -93,6 +101,9 @@ public class Npc extends GameObject {
         for (Heart heart : heart) {
             heart.tick();
         }
+//        msg.setPosition(x, y);
+        msg.shake(x, y - 80);
+
     }
     public boolean checkBorder() {
         this.xDest = x + xVel;
@@ -132,7 +143,7 @@ public class Npc extends GameObject {
             if(xVel >= maxSpeed){
                 xVel = maxSpeed;
                 diving = true;
-                showMsg("LETsGOO", 550, Color.red, -60, Fonts.getHorrorFont(30));
+                msg.showMsg(x, y, "LETsGOO", 300, Color.red);
             }
         }
         else if(x + width >= Game.WIDTH - 20){
@@ -147,7 +158,7 @@ public class Npc extends GameObject {
             if( xVel <= -maxSpeed){
                 xVel = -maxSpeed;
                 diving = true;
-                showMsg("CHARGE", 550, Color.red, -60, Fonts.getHorrorFont(30));
+                msg.showMsg(x, y, "CHARGE", 300, Color.red);
             }
         }
         else if(x <= 20){
@@ -191,7 +202,23 @@ public class Npc extends GameObject {
         for(Heart heart : heart){
             heart.render(g);
         }
-        renderMsg(g);
+//        renderMsg(g);
+        if(this.dir == 1){
+            g.drawImage(chatBubble, x - 50, y -70,175, 70, null);
+        }
+        if(this.dir == 0){
+            g.drawImage(chatBubble, x , y -70,175, 70, null);
+        }
+
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+        if(this.alpha <= 0.99f && this.alpha >= 0){
+        this.alpha += 0.005f;
+        }
+        else if(this.alpha >= 0.9f){
+            this.alpha = 1.0f;
+        }
+        msg.render(g);
     }
 
     public ArrayList<Heart> getHeart() {

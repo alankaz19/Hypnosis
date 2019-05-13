@@ -173,7 +173,7 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void event() {
-        if (this.mouseX >= exit.getX()&& this.mouseX <= exit.getX() + exit.getWidth() && this.mouseY >= exit.getY() && this.mouseY <= exit.getY() + exit.getHeight()) {
+        if (jigsawClicked && this.mouseX >= exit.getX()&& this.mouseX <= exit.getX() + exit.getWidth() && this.mouseY >= exit.getY() && this.mouseY <= exit.getY() + exit.getHeight()) {
             exit.setHovered(true);
         }else{
             exit.setHovered(false);

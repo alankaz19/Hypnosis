@@ -30,7 +30,6 @@ public class Message extends UIObject{
     private int bubbleWidth = 11;
 
     public Message() {
-        this.alpha = 0;
         
     }
     
@@ -44,6 +43,7 @@ public class Message extends UIObject{
         this.msgFrame = Duration;
         this.msgFrameCount = 0;
         this.show = true;
+        this.alpha = 0;
     }
     
     private void drawString(Graphics g, String text, int x, int y) {
@@ -55,7 +55,7 @@ public class Message extends UIObject{
                 g.drawString(line, x, y += g.getFontMetrics().getHeight());
             }
             else if(text.length() <= bubbleWidth){
-                g.drawString(text, x, y += g.getFontMetrics().getHeight() * 2);
+                g.drawString(text, x, y += 45);
                 break;
             }
             else if(text.length() - i <= bubbleWidth){
@@ -68,35 +68,46 @@ public class Message extends UIObject{
 
     @Override
     public void tick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+    
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 
     @Override
     public void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D)g;
         if(msgFrameCount < msgFrame){
             Font font = this.font;
             g.setFont(font);
             g.setColor(color);
-//            Graphics2D g2d =(Graphics2D)g;
-//            if(this.alpha <= 0.99f && this.alpha >= 0){
-//            this.alpha += 0.01f;
-//            }
-//            else if(this.alpha >= 0.9f){
-//                this.alpha = 1.0f;
-//            }
-//            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
-//            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
             drawString(g, msg, x,  y);
-//            msgFrameCount++;
-//            if(msgFrameCount == msgFrame){
-//               if(this.alpha > 0.99f && this.alpha >= 0){
-//                this.alpha -= 0.01f;
-//                }
-//                else if(this.alpha <= 0.09f){
-//                    this.alpha = 0;
-//                }
-//            }
+            msgFrameCount++;
+        }
+    }
+    
+    public void fadeIn(Graphics g) {
+        if(this.alpha <= 0.99f && this.alpha >= 0){
+        this.alpha += 0.005f;
+        }
+        else if(this.alpha >= 0.9f){
+            this.alpha = 1.0f;
+        }
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+        
+    }
+    
+    public void fadeOut(Graphics g) {
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+        if(this.alpha > 0.99f && this.alpha >= 0){
+            this.alpha -= 0.01f;
+        }else if(this.alpha <= 0.09f){
+            this.alpha = 0;
         }
     }
     
@@ -115,5 +126,9 @@ public class Message extends UIObject{
     public void shake(){
         this.x =  xtemp + (int)(Math.random()* 5) - 5 ;
         this.y =  ytemp + (int)(Math.random()* 5) - 5 ;
+    }
+    public void shake(int x, int y){
+        this.x =  x +  (int)(Math.random()* 5) - 5 ;
+        this.y =  y +  (int)(Math.random()* 5) - 5 ;
     }
 }

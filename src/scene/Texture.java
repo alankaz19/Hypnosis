@@ -28,6 +28,7 @@ public class Texture {
     SpriteSheet buttonSheet;
     SpriteSheet lightSheet;
     SpriteSheet eyeSheet;
+    SpriteSheet heartSheet;
     private BufferedImage player_sheet;
     private BufferedImage npc_Sheet;
     private BufferedImage arrow_Button_Sheet;
@@ -42,6 +43,7 @@ public class Texture {
     private BufferedImage button_Sheet;
     private BufferedImage light_Sheet;
     private BufferedImage eye_Sheet;
+    private BufferedImage heart_Sheet;
 
     public BufferedImage[] background = new BufferedImage[13];
     public BufferedImage[] player = new BufferedImage[50];
@@ -51,7 +53,7 @@ public class Texture {
     public BufferedImage[] paintThumbnail = new BufferedImage[7];
     public BufferedImage[] item = new BufferedImage[4];
     public BufferedImage[] ui = new BufferedImage[10];
-    public BufferedImage[] hint = new BufferedImage[7];
+    public BufferedImage[] hint = new BufferedImage[8];
     public BufferedImage[] cursor = new BufferedImage[2];
     public BufferedImage[] floor = new BufferedImage[2];
     public BufferedImage[] arrowButton = new BufferedImage[4];
@@ -61,10 +63,11 @@ public class Texture {
     public BufferedImage[] pictureFrame = new BufferedImage[7];
     public BufferedImage[] barUp = new BufferedImage[7];
     public BufferedImage[] barDown = new BufferedImage[1];
-    public BufferedImage[] button = new BufferedImage[10];
+    public BufferedImage[] button = new BufferedImage[12];
     public BufferedImage[] jigsaw = new BufferedImage[9];
     public BufferedImage[] light = new BufferedImage[4];
     public BufferedImage[] eyes = new BufferedImage[6];
+    public BufferedImage[] hearts = new BufferedImage[6];
 
     //texture loader
     private static Texture tex;
@@ -105,6 +108,8 @@ public class Texture {
         lightSheet = new SpriteSheet(light_Sheet);
         eye_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/eyeSheet.png");
         eyeSheet = new SpriteSheet(eye_Sheet);
+        heart_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/heartSheet.png");
+        heartSheet = new SpriteSheet(heart_Sheet);
         
         getTextures();
     }
@@ -234,6 +239,7 @@ public class Texture {
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
         ui[1] = ImageResource.getInstance().getImage("/Art/UI/dialogBox.png");
         ui[2] = ImageResource.getInstance().getImage("/Art/UI/option.png");
+        ui[3] = ImageResource.getInstance().getImage("/Art/UI/enemyBubble.png");
         
         
         //提示畫面
@@ -244,6 +250,7 @@ public class Texture {
         hint[4] = ImageResource.getInstance().getImage("/Art/Hint/picture3Hint.png");
         hint[5] = ImageResource.getInstance().getImage("/Art/Hint/picture4Hint.png");
         hint[6] = ImageResource.getInstance().getImage("/Art/Game Material/file.png");
+        hint[7] = ImageResource.getInstance().getImage("/Art/Hint/picture4Hint2.png");
 
         floor[0] = ImageResource.getInstance().getImage("/Art/Game Material/floor.png");
         
@@ -293,6 +300,14 @@ public class Texture {
         eyes[4] = eyeSheet.grabImage(5, 1, 30, 30);
         eyes[5] = eyeSheet.grabImage(6, 1, 30, 30);
         
+        hearts[0] = heartSheet.grabImage(1, 1, 100, 100);
+        hearts[1] = heartSheet.grabImage(2, 1, 100, 100);
+        hearts[2] = heartSheet.grabImage(3, 1, 100, 100);
+        hearts[3] = heartSheet.grabImage(4, 1, 100, 100);
+        hearts[4] = heartSheet.grabImage(5, 1, 100, 100);
+        hearts[5] = heartSheet.grabImage(6, 1, 100, 100);
+        
+        
         //buttons
         button[0] = buttonSheet.grabImage(1, 1, 200, 100);//exit dark
         button[1] = buttonSheet.grabImage(2, 1, 200, 100);//exit light
@@ -304,6 +319,8 @@ public class Texture {
         button[7] = buttonSheet.grabImage(2, 4, 200, 100);//resume light
         button[8] = buttonSheet.grabImage(1, 5, 200, 100);//start dark
         button[9] = buttonSheet.grabImage(2, 5, 200, 100);//start light
+        button[10] = buttonSheet.grabImage(1, 6, 200, 100);//continue dark
+        button[11] = buttonSheet.grabImage(2, 6, 200, 100);//continue light
     }
     
 }

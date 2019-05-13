@@ -82,7 +82,7 @@ public class Transition2 extends GameState{
             lines[i] = new Line();
         }
         msg = new Message();
-        msg.setFont(Fonts.getCrazyFont(70));
+        msg.setFont(Fonts.getHorrorFont(40));
         msg.setLongWord();
     }
     
@@ -100,7 +100,7 @@ public class Transition2 extends GameState{
     @Override
     public void event() {
         if(!msg.isShow()){
-            msg.showMsg(Game.WIDTH / 2 - 410 , Game.HEIGHT /2 - 120,"終  於  見  到  面  了  。", 2500, Color.red);
+            msg.showMsg(Game.WIDTH / 2 - 210 , Game.HEIGHT /2 - 45, "終  於  見  到  面  了  。", 2500, Color.red);
         }
         if(timer >= 170){
             gsm.newState(GameStateManager.EASTER_EGG);

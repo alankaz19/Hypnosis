@@ -42,6 +42,8 @@ public class GameStateManager {
     protected static final int NUMBER_LOCK = 13;
     protected static final int FIRST_PICTURE = 14;
     protected static final int HYPNOSIS_TRANSITION = 15;
+    protected static final int THIRD_PICTURE = 16;
+    protected static final int FORTH_PICTURE = 17;
 
     public static GameStateManager gsm;
     
@@ -54,7 +56,7 @@ public class GameStateManager {
     }
 
     public GameStateManager() {
-        gameStates = new GameState[16];
+        gameStates = new GameState[18];
         currentState = MENU_STATE;
         loadState(currentState);
     }
@@ -147,6 +149,12 @@ public class GameStateManager {
         }
         if(state == HYPNOSIS_TRANSITION){
             gameStates[state] = new HypnosisTransition(this);
+        }
+        if(state == THIRD_PICTURE){
+            gameStates[state] = new ThirdPicture(this);
+        }
+        if(state == FORTH_PICTURE){
+            gameStates[state] = new ForthPicture(this);
         }
     }
 

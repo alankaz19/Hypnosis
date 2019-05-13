@@ -23,7 +23,7 @@ public class Light extends GameObject{
         super(x,110,id);
         this.width = 200;
         this.height = 200;
-        Shining = new Animation(10, tex.light[0], tex.light[1], tex.light[2], tex.light[3], tex.light[2], tex.light[1], tex.light[0]);
+        Shining = new Animation(17, tex.light[0], tex.light[1], tex.light[2], tex.light[3], tex.light[2], tex.light[1], tex.light[0]);
     }
     
     public Light(int x,int y, ObjectID id) {

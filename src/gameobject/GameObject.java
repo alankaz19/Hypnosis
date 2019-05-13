@@ -291,12 +291,22 @@ public abstract class GameObject implements Updater{
         this.msgFrame = Duration;
         this.msgPosition = MsgPosition;
         this.msgFrameCount = 0;
+        this.alpha = 0;
     }
     
     public void renderMsg(Graphics g){
+        
         if(msgFrameCount < msgFrame){
+            if(this.alpha <= 0.99f && this.alpha >= 0){
+            this.alpha += 0.005f;
+            }
+            else if(this.alpha >= 0.9f){
+                this.alpha = 1.0f;
+            }
+            Graphics2D g2d = (Graphics2D)g;
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
             g.drawImage(Texture.getInstance().ui[0], x + 100 + msgPosition, y -100, null);//先畫對話框
-            this.msg.showMsg( x + 120 + msgPosition,  y - 100, word, msgFrame, color);
+            this.msg.showMsg( x + 127 + msgPosition,  y - 85, word, msgFrame, color);
             msg.render(g);
             msgFrameCount++;
         }

@@ -97,12 +97,10 @@ public class FirstPicture extends GameState {
         hint = new HintBox(2);
         exit = new Button(955,523,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
         cursor = new Cursor();
-        timer = 0;
     }
 
     @Override
     public void tick() {
-        timer++;
         mask.tick();
         event();
     }
@@ -115,10 +113,10 @@ public class FirstPicture extends GameState {
         }else{
             exit.setHovered(false);
         }
-        if(timer >= 100 && !trainsitionShowed){
-            gsm.newState(GameStateManager.TRANSITION);
-            trainsitionShowed = true;
-        }
+//        if(timer >= 170 && !trainsitionShowed){
+//            gsm.newState(GameStateManager.TRANSITION);
+//            trainsitionShowed = true;
+//        }
     }
 
     @Override
@@ -149,7 +147,11 @@ public class FirstPicture extends GameState {
 
     @Override
     public void mousePressed(int x, int y) {
-        if (x >= exit.getX() && x <= exit.getX() + exit.getWidth() && y >= exit.getY() && y <= exit.getY() + exit.getHeight()) {
+        if (!trainsitionShowed && exit.isHovered()) {
+            gsm.newState(GameStateManager.TRANSITION);
+            trainsitionShowed = true;
+        }
+        if (trainsitionShowed && exit.isHovered()) {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }

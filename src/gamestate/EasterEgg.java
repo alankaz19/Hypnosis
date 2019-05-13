@@ -7,7 +7,6 @@ import resourcemanage.ImageResource;
 import resourcemanage.SoundResource;
 import scene.ParallaxBackGround;
 import scene.Texture;
-import uiobject.Fonts;
 
 import java.applet.AudioClip;
 import java.awt.*;
@@ -18,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import scene.Animation;
 
 public class EasterEgg extends GameState {
     private final int BACKGROUND2 = 3;
@@ -38,6 +38,7 @@ public class EasterEgg extends GameState {
 
     public static EasterEgg EasterEgg;
 
+
     protected EasterEgg(GameStateManager gsm) {
         super(gsm);
         init();
@@ -52,18 +53,21 @@ public class EasterEgg extends GameState {
         return EasterEgg;
     }
     private class NostaligaItem extends GameObject{
+        Texture tex = Texture.getInstance();
         private BufferedImage img;
+        private Animation shining;
         private boolean falling, collectable;
         private int gravity;
 
         public NostaligaItem(int x, int y, ObjectID id, BufferedImage img) {
             super(x, y, id);
             this.img = img;
-            width = 30;
-            height = 30;
+            width = 60;
+            height = 60;
             gravity = 1;
             collectable = false;
             falling = true;
+            shining = new Animation(8,tex.hearts[0] ,tex.hearts[1] ,tex.hearts[2] ,tex.hearts[3] ,tex.hearts[4] ,tex.hearts[5] ,tex.hearts[4] ,tex.hearts[3] ,tex.hearts[2] ,tex.hearts[1] ,tex.hearts[0]);
         }
 
         @Override
@@ -89,11 +93,12 @@ public class EasterEgg extends GameState {
                     yVel = 5;
                 }
             }
+            this.shining.runAnimation();
         }
 
         @Override
         public void render(Graphics g) {
-            g.drawImage(img,x,y,width,height,null);
+            this.shining.renderAnimation(g, x, y, width, height);
         }
 
         public Rectangle getBound(){

@@ -22,6 +22,7 @@ import scene.BackGround;
 import scene.Texture;
 import uiobject.Fonts;
 import uiobject.HintBox;
+import uiobject.Button;
 
 /**
  *
@@ -43,6 +44,7 @@ public class Intro extends GameState{
     private volatile  boolean sceneFinished;
     private AudioClip bgm;
     private HintBox file;
+    private Button next;
 
 
     public static Intro INTRO;
@@ -66,7 +68,8 @@ public class Intro extends GameState{
         playerScript = new ArrayList<>();
         npcScript = new ArrayList<>();
         sceneFinished = false;
-        file = new HintBox(6,50,0,500,700);
+        file = new HintBox(6,100,20,450,680);
+        next = new Button(985,600,200,100,Texture.getInstance().button[11],Texture.getInstance().button[10],1);
         //read script
         try {
             playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"), StandardCharsets.UTF_16));
@@ -77,6 +80,7 @@ public class Intro extends GameState{
             while(npcScriptReader.ready()){
                 npcScript.add(npcScriptReader.readLine());
             }
+            playerScriptReader.close();
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
@@ -97,6 +101,7 @@ public class Intro extends GameState{
         event();
         handler.tick();
         background.tick();
+        
     }
 
     
@@ -107,21 +112,25 @@ public class Intro extends GameState{
         background.render(g);
         
         handler.render(g);
+        file.fadeIn(g ,0.007f);
 
         handler.getObject().get(PLAYER).renderMsg(g);
         handler.getObject().get(HYPNOTIST).renderMsg(g);
         
-        file.fadeIn(g ,0.007f);
+        if(this.sceneFinished){
+            next.render(g);
+        }
+        
     }
 
     @Override
     public void event(){
         time++;
         //System.out.println(npcScript.size());
-        if(time == 150 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
+        if(time == 140 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(HYPNOTIST).showMsg(npcScript.get(npcC), 800, Color.BLACK,0,Fonts.getBitFont(20));// npc message
+                handler.getObject().get(HYPNOTIST).showMsg(npcScript.get(npcC), 1200, Color.BLACK,0,Fonts.getBitFont(18));// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;
@@ -129,10 +138,10 @@ public class Intro extends GameState{
             }
         }
         //System.out.println(playerScript.size());
-        if(time == 150 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
+        if(time == 140 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
             System.out.println("player Line " + msgC);
             if(!playerScript.get(msgC).equals(""))
-            handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 800, Color.BLACK,0,Fonts.getBitFont(20)); //player message
+            handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 1200, Color.BLACK,0,Fonts.getBitFont(18)); //player message
             if(msgC < playerScript.size()){
                 msgC ++;
                 System.out.println(msgC);
@@ -144,9 +153,16 @@ public class Intro extends GameState{
             sceneFinished = true;
         }
 
-        if(time >= 50 && sceneFinished){ //move one to next stage
-            bgm.stop();
-            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+//        if(time >= 130 && sceneFinished){ //move one to next stage
+//            bgm.stop();
+//            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+//        }
+        
+        //button event
+        if (sceneFinished && mouseX >= next.getX() && mouseX <= next.getX() + next.getWidth() && mouseY >= next.getY() && mouseY <= next.getY() + next.getHeight()) {
+            next.setHovered(true);
+        }else{
+            next.setHovered(false);
         }
     }
 
@@ -171,7 +187,10 @@ public class Intro extends GameState{
 
     @Override
     public void mousePressed(int x, int y) {
-
+//        gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+        if(next.isHovered()){
+            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+        }
     }
 
     @Override
@@ -186,7 +205,7 @@ public class Intro extends GameState{
 
     @Override
     public void mouseMoved(int x, int y) {
-
+        this.setMousePos(x, y);
     }
 }
 

@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import resourcemanage.ImageResource;
+import scene.AudioManager;
 import scene.Texture;
 import uiobject.Button;
 
@@ -156,22 +157,28 @@ public class NumberLock extends GameState {
     public void mousePressed(int x, int y) {
         if(!isDone){
             if(x > 318 && x < 318+64*3 && y > 116 && y < 116 + 64 * 2){
-            slots[0].up.setClicked(true);
+                AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_LOCK_CLICK].play();
+                slots[0].up.setClicked(true);
             }
             if(x > 548 && x < 548+64*3 && y > 116 && y < 116 + 64 * 2){
+                AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_LOCK_CLICK].play();
                 slots[1].up.setClicked(true);
             }
             if(x > 798 && x < 798+64*3 && y > 116 && y < 116 + 64 * 2){
+                AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_LOCK_CLICK].play();
                 slots[2].up.setClicked(true);
             }
 
             if(x > 318 && x < 318+64*3 && y > 470 && y < 470 + 64 * 2){
+                AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_LOCK_CLICK].play();
                 slots[0].down.setClicked(true);
             }
             if(x > 548 && x < 548+64*3 && y > 470 && y < 470 + 64 * 2){
+                AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_LOCK_CLICK].play();
                 slots[1].down.setClicked(true);
             }
             if(x > 798 && x < 798+64*3 && y > 470 && y < 470 + 64 * 2){
+                AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_LOCK_CLICK].play();
                 slots[2].down.setClicked(true);
             }
         }
@@ -180,6 +187,8 @@ public class NumberLock extends GameState {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
         if(next.isHovered()){
+            AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_BACKGROUND].stop();
+            AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_LOCK_DOOR].play();
             gsm.newState(GameStateManager.TRANSITION_2);
         }
     }

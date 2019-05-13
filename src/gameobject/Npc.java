@@ -229,4 +229,8 @@ public class Npc extends GameObject {
     public ObjectID getID() {
         return null;
     }
+
+    public Message getMsg() {
+        return msg;
+    }
 }

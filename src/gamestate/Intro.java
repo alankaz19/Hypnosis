@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import resourcemanage.SoundResource;
+import scene.AudioManager;
 import scene.BackGround;
 import scene.Texture;
 import uiobject.Fonts;
@@ -187,7 +188,7 @@ public class Intro extends GameState{
 
     @Override
     public void mousePressed(int x, int y) {
-//        gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_CLICK].play();
         if(next.isHovered()){
             gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
         }

@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import game.Game;
 import resourcemanage.SoundResource;
+import scene.AudioManager;
 import scene.Texture;
 import uiobject.Button;
 
@@ -77,15 +78,13 @@ public class MenuState extends GameState {
     public void keyPressed(int k) {
         if(k == KeyEvent.VK_1){
             intro.stop();
-            gsm.newState(GameStateManager.LEVEL1_STATE);
+            gsm.newState(GameStateManager.LEVEL2_STATE);
         }
         if(k == KeyEvent.VK_2){
             intro.stop();
             gsm.newState(GameStateManager.EASTER_EGG);
         }
-
     }
-
     @Override
     public void keyReleased(int k) {
     }
@@ -93,8 +92,10 @@ public class MenuState extends GameState {
     @Override
     public void mousePressed(int x, int y) {
         //開始遊戲
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_CLICK].play();
+
         if(start.isHovered()){
-            gsm.newState(GameStateManager.EASTER_EGG);
+            gsm.newState(GameStateManager.LEVEL1_STATE);
         }
 
     }

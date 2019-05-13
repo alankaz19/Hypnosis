@@ -5,6 +5,7 @@ import game.Updater;
 import gameobject.*;
 import resourcemanage.ImageResource;
 import resourcemanage.SoundResource;
+import scene.AudioManager;
 import scene.ParallaxBackGround;
 import scene.Texture;
 
@@ -18,6 +19,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import scene.Animation;
+import uiobject.Fonts;
 
 public class EasterEgg extends GameState {
     private final int BACKGROUND2 = 3;
@@ -34,7 +36,7 @@ public class EasterEgg extends GameState {
     private ArrayList<NostaligaItem> itemList;
     private ActionPlayer player;
     private Npc doppelganger;
-    private int keyPressed, npcDowntime;
+    private int keyPressed, npcDowntime, regenTime;
 
     public static EasterEgg EasterEgg;
 
@@ -42,7 +44,7 @@ public class EasterEgg extends GameState {
     protected EasterEgg(GameStateManager gsm) {
         super(gsm);
         init();
-        bgm.loop();
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].loop();
     }
 
     @Override
@@ -149,15 +151,14 @@ public class EasterEgg extends GameState {
 
     @Override
     public void init() {
-        npcDowntime = 0;
+        npcDowntime = 0; regenTime = 0;
         snow  = new Snow[200];
-        bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level2.wav");
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].loop();
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }
         //HUD
         heartHUD = ImageResource.getInstance().getImage("/Art/Game Material/heartHUD.png");
-
         //inputMethod
         key = new Keys();
         //background
@@ -267,8 +268,13 @@ public class EasterEgg extends GameState {
         if(itemList.isEmpty() && !doppelganger.npcExhausted()){
             doppelganger.getHeart().remove(doppelganger.getHeart().size() - 1);
             if(!doppelganger.npcExhausted()){ // Will not drop items after npc dead
-                int random = (int)(Math.random()*(Game.WIDTH - 60));
-                itemList.add(new NostaligaItem(random,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
+                int randomLeft = (int)(Math.random()*Game.WIDTH/2);
+                int randomRight = Game.WIDTH/2 + (int)((Math.random()*(Game.WIDTH - Game.WIDTH/2 - 50))); // minus 50 so the heart wont spawn at 1280
+                if(player.getX() <= Game.WIDTH/2){
+                    itemList.add(new NostaligaItem(randomRight,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
+                }else{
+                    itemList.add(new NostaligaItem(randomLeft,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
+                }
 
             }
         }
@@ -291,7 +297,7 @@ public class EasterEgg extends GameState {
         }else if(doppelganger.npcExhausted()){
             npcDowntime ++;
             if(npcDowntime == 10){
-                doppelganger.showMsg("I am dead",500, Color.black, -60, Fonts.getHorrorFont(30));
+                doppelganger.getMsg().showMsg(doppelganger.x, doppelganger.y, "OH SNAP!", 300, Color.red);
             }
             if(npcDowntime == 400){
                 //gsm.newState(GameStateManager.MENU_STATE);

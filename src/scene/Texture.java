@@ -45,7 +45,7 @@ public class Texture {
     private BufferedImage eye_Sheet;
     private BufferedImage heart_Sheet;
 
-    public BufferedImage[] background = new BufferedImage[13];
+    public BufferedImage[] background = new BufferedImage[15];
     public BufferedImage[] player = new BufferedImage[50];
     public BufferedImage[] playParkour;
     public BufferedImage[] npc = new BufferedImage[4];
@@ -198,7 +198,8 @@ public class Texture {
         background[10] = ImageResource.getInstance().getImage("/Art/Background/vignette.png");
         background[11] = ImageResource.getInstance().getImage("/Art/Background/noise.png");
         background[12] = ImageResource.getInstance().getImage("/Art/Background/vignette2.png");
-        
+        background[13] = ImageResource.getInstance().getImage("/Art/Background/endGame.png");
+
         //大張圖畫與相框
         paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture1.png");
         paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture2.png");

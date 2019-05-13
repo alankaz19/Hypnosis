@@ -77,4 +77,5 @@ public class SoundResource {
         res = tempClip;
         paths = tempString;
     }
+
 }

@@ -9,6 +9,8 @@ import game.Game;
 import game.Updater;
 import java.awt.Color;
 import java.awt.Graphics;
+
+import scene.AudioManager;
 import uiobject.Fonts;
 import uiobject.Message;
 
@@ -78,6 +80,7 @@ public class Transition2 extends GameState{
     public void init() {
         timer = 0;
         lines  = new Line[1000];
+        AudioManager.getInstance().getPlayList()[AudioManager.NOISE].play();
         for (int i = 0; i < lines.length; i++) {
             lines[i] = new Line();
         }

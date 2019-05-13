@@ -10,6 +10,8 @@ import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
+import scene.AudioManager;
 import scene.BackGround;
 
 import java.awt.event.KeyEvent;
@@ -29,7 +31,6 @@ public class LevelOne extends GameState {
         double yVel = 10;
         double length;
         int colorNumber = 3;
-
         public void setLength(double length) {
             this.length = length;
         }
@@ -90,7 +91,6 @@ public class LevelOne extends GameState {
     private int keyPressed;
     private Camera cam;
     boolean sceneshowed;
-    private AudioClip bgm;
     private HintBox magnifierHint;
     private Cursor eyes;
     private boolean eyeShow;
@@ -107,7 +107,7 @@ public class LevelOne extends GameState {
 
     public LevelOne(GameStateManager gsm) {
         super(gsm);
-        bgm.loop();
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_BACKGROUND].loop();
         init();
     }
 
@@ -126,7 +126,6 @@ public class LevelOne extends GameState {
         }
         
         backGround = new BackGround(1);
-        bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level1.wav");
         sceneshowed = false;
         handler = new Handler();
         lightHandler = new Handler();
@@ -331,7 +330,6 @@ public class LevelOne extends GameState {
             gsm.newState(GameStateManager.OPTION_STATE);
         }
         if (k == KeyEvent.VK_ENTER) {
-            bgm.stop();
             gsm.setState(GameStateManager.MENU_STATE);
         }
     }
@@ -345,6 +343,8 @@ public class LevelOne extends GameState {
 
     @Override
     public void mousePressed(int x, int y) {
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_CLICK].play();
+
         //拉霸 第一幅畫旋轉後轉場
         if (handler.getObject().get(1).getIsCollision()) {
             handler.getObject().get(1).setClicked(true);

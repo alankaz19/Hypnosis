@@ -26,17 +26,15 @@ public class LevelTwo extends GameState {
     private final int ROAD = 6;
     
     private BackGround background2;
+    private BufferedImage endScene;
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
     private ParallaxBackGround road;
     private ActionPlayer player;
-    private Npc doppelganger;
-    private ArrayList<Obstacle> obstacleList;
     private int keyPressed;
     private Camera cam;
     private Snow[] snow;
     private int timeC, spawnT, camPos, lifeCount;
-    private AudioClip bgm;
 
     public static LevelTwo LevelTwo;
     
@@ -85,6 +83,7 @@ public class LevelTwo extends GameState {
         spawnT = 0;
         camPos = 400;
         lifeCount = 5;
+        endScene = Texture.getInstance().background[13];
         snow  = new Snow[200];
 //        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
         for (int i = 0; i < snow.length; i++) {
@@ -104,18 +103,11 @@ public class LevelTwo extends GameState {
         road.setVector(-4, 0);
 
         //player
-        player = (new ActionPlayer(0, Game.HEIGHT-170, ObjectID.PLAYER,5));
+        player = (new ActionPlayer(0, Game.HEIGHT-170, ObjectID.ENDSCENE,5));
         player.setxVel(1);
-        player.setyVel(1);
         player.setHeight(128);
-        player.setWidth(64);
-        //npc
-        doppelganger = new Npc(-400,Game.HEIGHT /2 +30 ,ObjectID.OBSTACLE,3, player);
-        doppelganger.setxVel(1);
-        //obstacle
-        obstacleList = new ArrayList<>();
-        obstacleList.add(new Obstacle(1000,Game.HEIGHT-80, ObjectID.OBSTACLE,"/Art/Game Material/obstacle.png")); //y must be at /2 of character
-
+        player.setWidth(128);
+        player.setFalling(false);
         cam = new Camera(0, 0,camPos);
     }
 
@@ -127,8 +119,6 @@ public class LevelTwo extends GameState {
             snow1.tick();
         }
         player.tick();
-        doppelganger.tick();
-        obstacleList.get(0).tick();
         background2.tick();
         nearMountain.tick();
         farMountain.tick();
@@ -140,7 +130,7 @@ public class LevelTwo extends GameState {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
         background2.render(g);
@@ -150,16 +140,12 @@ public class LevelTwo extends GameState {
         
         g.translate(cam.getX(), cam.getY()); //begin of cam
         player.render(g);
-        doppelganger.render(g);
-
-        obstacleList.get(0).render(g);
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Helvetica", Font.BOLD, 50));
-        g.drawString("Life Count : " + lifeCount,player.getX()+ 400,50);
         g.translate(-cam.getX(), -cam.getY());//end of cam
         for (Snow snow1 : snow) {
             snow1.render(g);
         }
+        g.drawImage(endScene, 0,0,null);
 
 
     }
@@ -168,52 +154,6 @@ public class LevelTwo extends GameState {
     public void event(){
         timeC++;
 
-        //NPC CHARGE
-        if(timeC++ >=300 && (doppelganger.getX() <=doppelganger.getX() + 1000)){
-            if(doppelganger.getxVel() <= 7){
-                doppelganger.setxVel(doppelganger.getxVel()+1);
-            }
-        }
-        //END
-
-        //CollisionCheck
-        if(((player.checkCollision(obstacleList.get(0))) || player.checkCollision(doppelganger)) && !player.getIsCollision()){
-            player.setIsCollision(true);
-            if(lifeCount > 0)
-            lifeCount --;
-            System.out.println("COLLAPSE");
-        }
-
-        //NPC RESPAWN
-        if(doppelganger.getX() >= player.getX()+ 1000){
-            doppelganger.setxVel(1);
-            spawnT ++;
-            if(spawnT > 100){
-                doppelganger.setX(player.getX()-400);
-                timeC = 0;
-                spawnT = 0;
-            }
-        }
-        //END
-
-        if(obstacleList.get(0).getX() <= player.getX() - 400){
-            obstacleList.remove(0);
-        }
-        if(obstacleList.isEmpty()){
-            obstacleList.add(new Obstacle(player.getX()+ 1000,Game.HEIGHT-80, ObjectID.DOOR,"/Art/Game Material/obstacle.png"));
-            player.setIsCollision(false);
-        }
-
-        //Player Jump
-        if(keyPressed == KeyEvent.VK_SPACE && player.getyVel() != 30 && !player.isJumping()){
-            player.setyVel(-27);
-            player.setJumping(true);
-        }else if(player.getY() < Game.HEIGHT-170){  //change in player class as well
-            player.setyVel(player.getyVel() + 2);
-
-        }else{
-            player.setJumping(false);
-        }
         //END
 
     }

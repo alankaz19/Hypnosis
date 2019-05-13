@@ -11,13 +11,12 @@ import gameobject.Player;
 import java.awt.*;
 import gameobject.items.Obstacle;
 import resourcemanage.SoundResource;
-import scene.BackGround;
+import scene.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import scene.Camera;
-import scene.ParallaxBackGround;
-import scene.Texture;
+
 public class LevelTwo extends GameState {
 
     private final int BACKGROUND2 = 3;
@@ -162,6 +161,9 @@ public class LevelTwo extends GameState {
         keyPressed = k;
         if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
+        }
+        if(keyPressed == KeyEvent.VK_ENTER){
+            gsm.newState(GameStateManager.MENU_STATE);
         }
     }
 

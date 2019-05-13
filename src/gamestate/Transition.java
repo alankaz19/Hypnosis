@@ -90,6 +90,7 @@ public class Transition extends GameState{
         msg = new Message();
         msg.setFont(Fonts.getHorrorFont(40));
         msg.setLongWord();
+//        AudioManager.getInstance().getPlayList()[AudioManager.NOISE].play();
     }
     
     @Override

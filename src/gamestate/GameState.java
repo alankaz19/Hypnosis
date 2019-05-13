@@ -20,7 +20,7 @@ public abstract class GameState {
     protected int mouseX;
     protected int mouseY;
     
-    protected GameState(GameStateManager gsm){  
+    protected GameState(GameStateManager gsm){
         this.alpha = 0;
         this.gsm = gsm;
         init();

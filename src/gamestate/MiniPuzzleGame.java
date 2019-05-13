@@ -155,7 +155,7 @@ public class MiniPuzzleGame extends GameState {
             count++;
         }
         gameBoard = new Board(700 - 80,280,ObjectID.BOARD, pieces);
-        currentPiece = pieces[0];
+        //currentPiece = pieces[0];
     }
 
     @Override
@@ -183,14 +183,17 @@ public class MiniPuzzleGame extends GameState {
         for( int i = 0; i < 9; i ++){
             pieces[i].render(g);
         }
-        currentPiece.render(g);
-        if(!gameBoard.finished){
-            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(currentPiece.x, currentPiece.y,100,100),6);
-        }else{
+        if(currentPiece != null){
+            currentPiece.render(g);
+            if(!gameBoard.finished){
+                PaintUtil.paintFocus((Graphics2D) g, new Rectangle(currentPiece.x, currentPiece.y,100,100),6);
+            }else{
 //            PaintUtil.paintFocus((Graphics2D) g, new Rectangle(gameBoard.getX(), gameBoard.getY(),300,300),6);
-            hint.render(g);
-            exit.render(g);
+                hint.render(g);
+                exit.render(g);
+            }
         }
+
     }
 
 
@@ -198,12 +201,6 @@ public class MiniPuzzleGame extends GameState {
     public void keyPressed(int k) {
         keyPressed = k;
         getClosest(keyPressed);
-        if(keyPressed == KeyEvent.VK_ESCAPE){
-            gsm.setState(GameStateManager.LEVEL1_STATE);
-        }
-        if(keyPressed == KeyEvent.VK_ENTER){
-            reset();
-        }
     }
     @Override
     public void keyReleased(int k) {

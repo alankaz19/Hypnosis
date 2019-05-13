@@ -4,7 +4,6 @@ import game.Game;
 import game.Updater;
 import gameobject.*;
 import resourcemanage.ImageResource;
-import resourcemanage.SoundResource;
 import scene.AudioManager;
 import scene.ParallaxBackGround;
 import scene.Texture;
@@ -13,30 +12,24 @@ import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import scene.Animation;
-import uiobject.Fonts;
 
 public class EasterEgg extends GameState {
     private final int BACKGROUND2 = 3;
     private final int FARMOUNTAIN = 4;
     private final int NEARMOUNTAINS = 5;
-    private final int ROAD = 6;
     private Keys key;
     private BufferedImage background2, restart, heartHUD;
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
     private Snow[] snow;
-    private AudioClip bgm;
+    private AudioClip collect;
     private ArrayList<Floor> floor;
     private ArrayList<NostaligaItem> itemList;
     private ActionPlayer player;
     private Npc doppelganger;
-    private int keyPressed, npcDowntime, regenTime;
+    private int keyPressed, npcDowntime;
 
     public static EasterEgg EasterEgg;
 
@@ -44,7 +37,6 @@ public class EasterEgg extends GameState {
     protected EasterEgg(GameStateManager gsm) {
         super(gsm);
         init();
-        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].loop();
     }
 
     @Override
@@ -151,12 +143,12 @@ public class EasterEgg extends GameState {
 
     @Override
     public void init() {
-        npcDowntime = 0; regenTime = 0;
+        npcDowntime = 0;
         snow  = new Snow[200];
-        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].loop();
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].loop();
         //HUD
         heartHUD = ImageResource.getInstance().getImage("/Art/Game Material/heartHUD.png");
         //inputMethod
@@ -166,7 +158,7 @@ public class EasterEgg extends GameState {
         restart = ImageResource.getInstance().getImage("/Art/backGround/restart.png");
         farMountain = new ParallaxBackGround(Texture.getInstance().background[FARMOUNTAIN],1);
         nearMountain = new ParallaxBackGround(Texture.getInstance().background[NEARMOUNTAINS],1);
-        floor = new ArrayList<>();
+        collect = AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_COLLECT];
         //player
         player = new ActionPlayer(276,450,ObjectID.PLAYER,5);
         player.setHeight(player.getHeight()/2);
@@ -174,6 +166,7 @@ public class EasterEgg extends GameState {
         //enemy
         doppelganger = new Npc(0,50,ObjectID.OBSTACLE,3, player);
         //steps
+        floor = new ArrayList<>();
         floor.add(new Floor(276,450,ObjectID.OBSTACLE));
         floor.add(new Floor(576,300,ObjectID.OBSTACLE));
         floor.add(new Floor(896,450,ObjectID.OBSTACLE));
@@ -228,7 +221,7 @@ public class EasterEgg extends GameState {
                 player.setX(floor.get(i).getX() + floor.get(i).getWidth() - 23);
             }
             //NPC COLLISION with FLOOR
-            if(doppelganger.npcExhausted() &&doppelganger.getBound().intersects(floor.get(i).getBound())){
+            if(doppelganger.npcExhausted() && doppelganger.getBot().intersects(floor.get(i).getBound())){
                 doppelganger.setY(floor.get(i).getY() - doppelganger.getHeight()+ 15);
                 doppelganger.setyVel(0);
                 doppelganger.setFalling(false);
@@ -238,7 +231,6 @@ public class EasterEgg extends GameState {
                     player.setyVel(-24);
                     player.setJumping(true);
                     //player.showMsg("654654654", 1000, Color.red, 0,Fonts.getHorrorFont(30));
-
                 }
             }
 
@@ -258,9 +250,11 @@ public class EasterEgg extends GameState {
                     }
                 }
                 if(player.getBound().intersects(itemList.get(i).getBound())){
-                    if(itemList.get(i).isCollectable())
-                    itemList.remove(i);
-                    break;
+                    if(itemList.get(i).isCollectable()){
+                        collect.play();
+                        itemList.remove(i);
+                        break;
+                    }
                 }
             }
         }
@@ -275,7 +269,6 @@ public class EasterEgg extends GameState {
                 }else{
                     itemList.add(new NostaligaItem(randomLeft,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
                 }
-
             }
         }
 
@@ -343,7 +336,7 @@ public class EasterEgg extends GameState {
 //        for(int i = 0; i< itemList.size(); i++){
 //            g2d.draw(itemList.get(i).getBound());
 //        }
-//        g2d.draw(doppelganger.getBound());
+//        g2d.draw(doppelganger.getBot());
 //        g2d.draw(player.getBound());
 //        g2d.draw(player.getTop());
 //        g2d.draw(player.getBot());
@@ -394,21 +387,20 @@ public class EasterEgg extends GameState {
     }
 
     private class Keys {
+        static final int NUM_KEYS = 16;
 
-        public static final int NUM_KEYS = 16;
-
-        public boolean[] keyState = new boolean[NUM_KEYS];
-        public boolean[] prevKeyState = new boolean[NUM_KEYS];
+        boolean[] keyState = new boolean[NUM_KEYS];
+        boolean[] prevKeyState = new boolean[NUM_KEYS];
 
 
-        public  final int LEFT = 0;
-        public  final int RIGHT = 1;
-        public  final int ENTER = 2;
-        public  final int ESCAPE = 3;
-        public  final int ONE = 4;
-        public  final int TWO = 5;
-        public  final int SPACE = 6;
-        public  final int UP = 6;
+        final int LEFT = 0;
+        final int RIGHT = 1;
+        final int ENTER = 2;
+        final int ESCAPE = 3;
+        final int ONE = 4;
+        final int TWO = 5;
+        final int SPACE = 6;
+        final int UP = 6;
 
 
         public  void keySet(int i, boolean b) {

@@ -64,6 +64,7 @@ public class NumberLock extends GameState {
     private BufferedImage lockFrame;
     private boolean isDone;
     private Button exit;
+    private Button next;
     private Slot[] slots;
     
 
@@ -89,6 +90,7 @@ public class NumberLock extends GameState {
         slots[1] = new Slot(472,180,ObjectID.SLOT);
         slots[2] = new Slot(710,180,ObjectID.SLOT);
         exit = new Button(1025,523,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
+        next = new Button(1025,523,200,100,Texture.getInstance().button[11],Texture.getInstance().button[10],1);
     }
 
     @Override
@@ -105,10 +107,16 @@ public class NumberLock extends GameState {
         if(slots[0].getCurrentNumber() == 7 && slots[1].getCurrentNumber() == 2 && slots[2].getCurrentNumber() == 5){
             this.isDone = true;
         }
-        if (this.mouseX >= exit.getX()&& this.mouseX <= exit.getX() + exit.getWidth() && this.mouseY >= exit.getY() && this.mouseY <= exit.getY() + exit.getHeight()) {
+        if (!isDone && this.mouseX >= exit.getX()&& this.mouseX <= exit.getX() + exit.getWidth() && this.mouseY >= exit.getY() && this.mouseY <= exit.getY() + exit.getHeight()) {
             exit.setHovered(true);
         }else{
             exit.setHovered(false);
+        }
+        
+        if (isDone && this.mouseX >= next.getX()&& this.mouseX <= next.getX() + next.getWidth() && this.mouseY >= next.getY() && this.mouseY <= next.getY() + next.getHeight()) {
+            next.setHovered(true);
+        }else{
+            next.setHovered(false);
         }
     }
 
@@ -121,8 +129,11 @@ public class NumberLock extends GameState {
         for (Slot slot : slots) {
             slot.render(g);
         }
-        if(this.isDone){
+        if(!isDone){
             exit.render(g);
+        }
+        if(isDone){
+            next.render(g);
         }
     }
 
@@ -166,6 +177,9 @@ public class NumberLock extends GameState {
         }
         
         if(exit.isHovered()){
+            gsm.setState(GameStateManager.LEVEL1_STATE);
+        }
+        if(next.isHovered()){
             gsm.newState(GameStateManager.TRANSITION_2);
         }
     }

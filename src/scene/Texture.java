@@ -63,7 +63,7 @@ public class Texture {
     public BufferedImage[] pictureFrame = new BufferedImage[7];
     public BufferedImage[] barUp = new BufferedImage[7];
     public BufferedImage[] barDown = new BufferedImage[1];
-    public BufferedImage[] button = new BufferedImage[10];
+    public BufferedImage[] button = new BufferedImage[12];
     public BufferedImage[] jigsaw = new BufferedImage[9];
     public BufferedImage[] light = new BufferedImage[4];
     public BufferedImage[] eyes = new BufferedImage[6];
@@ -319,6 +319,8 @@ public class Texture {
         button[7] = buttonSheet.grabImage(2, 4, 200, 100);//resume light
         button[8] = buttonSheet.grabImage(1, 5, 200, 100);//start dark
         button[9] = buttonSheet.grabImage(2, 5, 200, 100);//start light
+        button[10] = buttonSheet.grabImage(1, 6, 200, 100);//continue dark
+        button[11] = buttonSheet.grabImage(2, 6, 200, 100);//continue light
     }
     
 }

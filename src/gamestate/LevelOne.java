@@ -309,10 +309,10 @@ public class LevelOne extends GameState {
             tempPic.setState(5);
         }
         
-        if(paint3Done) {
-            Picture tempPic = (Picture)handler.getObject().get(5);
-            tempPic.setState(6);
-        }
+//        if(paint3Done) {
+//            Picture tempPic = (Picture)handler.getObject().get(5);
+//            tempPic.setState(6);
+//        }
         
         if(paint4Done) {
             Picture tempPic = (Picture)handler.getObject().get(6);

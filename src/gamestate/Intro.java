@@ -22,6 +22,7 @@ import scene.BackGround;
 import scene.Texture;
 import uiobject.Fonts;
 import uiobject.HintBox;
+import uiobject.Button;
 
 /**
  *
@@ -43,7 +44,7 @@ public class Intro extends GameState{
     private volatile  boolean sceneFinished;
     private AudioClip bgm;
     private HintBox file;
-    private int count;
+    private Button next;
 
 
     public static Intro INTRO;
@@ -68,6 +69,7 @@ public class Intro extends GameState{
         npcScript = new ArrayList<>();
         sceneFinished = false;
         file = new HintBox(6,100,20,450,680);
+        next = new Button(985,600,200,100,Texture.getInstance().button[11],Texture.getInstance().button[10],1);
         //read script
         try {
             playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"), StandardCharsets.UTF_16));
@@ -99,6 +101,7 @@ public class Intro extends GameState{
         event();
         handler.tick();
         background.tick();
+        
     }
 
     
@@ -113,6 +116,10 @@ public class Intro extends GameState{
 
         handler.getObject().get(PLAYER).renderMsg(g);
         handler.getObject().get(HYPNOTIST).renderMsg(g);
+        
+        if(this.sceneFinished){
+            next.render(g);
+        }
         
     }
 
@@ -146,9 +153,16 @@ public class Intro extends GameState{
             sceneFinished = true;
         }
 
-        if(time >= 130 && sceneFinished){ //move one to next stage
-            bgm.stop();
-            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+//        if(time >= 130 && sceneFinished){ //move one to next stage
+//            bgm.stop();
+//            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+//        }
+        
+        //button event
+        if (sceneFinished && mouseX >= next.getX() && mouseX <= next.getX() + next.getWidth() && mouseY >= next.getY() && mouseY <= next.getY() + next.getHeight()) {
+            next.setHovered(true);
+        }else{
+            next.setHovered(false);
         }
     }
 
@@ -173,7 +187,10 @@ public class Intro extends GameState{
 
     @Override
     public void mousePressed(int x, int y) {
-        gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+//        gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+        if(next.isHovered()){
+            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+        }
     }
 
     @Override
@@ -188,7 +205,7 @@ public class Intro extends GameState{
 
     @Override
     public void mouseMoved(int x, int y) {
-
+        this.setMousePos(x, y);
     }
 }
 

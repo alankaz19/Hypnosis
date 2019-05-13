@@ -105,7 +105,7 @@ public class Transition extends GameState{
             msg.showMsg(Game.WIDTH / 2 - 270 , Game.HEIGHT /2 - 45,"你   知   道   你   是   誰   嗎  ‧ ‧ ‧ ", 2000, Color.red);
         }
         if(timer >= 150){
-            gsm.setState(GameStateManager.FIRST_PICTURE);
+            gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }
 

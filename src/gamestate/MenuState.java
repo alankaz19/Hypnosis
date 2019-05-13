@@ -94,7 +94,7 @@ public class MenuState extends GameState {
     public void mousePressed(int x, int y) {
         //開始遊戲
         if(start.isHovered()){
-            gsm.newState(GameStateManager.INTRO);
+            gsm.newState(GameStateManager.EASTER_EGG);
         }
 
     }

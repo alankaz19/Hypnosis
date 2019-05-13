@@ -5,6 +5,7 @@ import game.Updater;
 import gameobject.*;
 import resourcemanage.ImageResource;
 import resourcemanage.SoundResource;
+import scene.AudioManager;
 import scene.ParallaxBackGround;
 import scene.Texture;
 
@@ -18,13 +19,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import scene.Animation;
+import uiobject.Fonts;
 
 public class EasterEgg extends GameState {
     private final int BACKGROUND2 = 3;
     private final int FARMOUNTAIN = 4;
     private final int NEARMOUNTAINS = 5;
+    private final int ROAD = 6;
     private Keys key;
-    private BufferedImage background2, restart;
+    private BufferedImage background2, restart, heartHUD;
     private ParallaxBackGround farMountain;
     private ParallaxBackGround nearMountain;
     private Snow[] snow;
@@ -33,9 +36,7 @@ public class EasterEgg extends GameState {
     private ArrayList<NostaligaItem> itemList;
     private ActionPlayer player;
     private Npc doppelganger;
-    private int keyPressed;
-    private BufferedReader npcScript;
-    private ArrayList<String> npcLine;
+    private int keyPressed, npcDowntime, regenTime;
 
     public static EasterEgg EasterEgg;
 
@@ -43,7 +44,7 @@ public class EasterEgg extends GameState {
     protected EasterEgg(GameStateManager gsm) {
         super(gsm);
         init();
-        bgm.loop();
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].loop();
     }
 
     @Override
@@ -150,21 +151,14 @@ public class EasterEgg extends GameState {
 
     @Override
     public void init() {
+        npcDowntime = 0; regenTime = 0;
         snow  = new Snow[200];
-        bgm = SoundResource.getInstance().getClip("/Art/Sound Effect/Level2.wav");
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].loop();
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }
-        //script
-        npcLine = new ArrayList<>();
-//        try {
-//            npcScript = new BufferedReader(new FileReader(""));
-//            while(npcScript.ready()){
-//                npcLine.add(npcScript.readLine());
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        //HUD
+        heartHUD = ImageResource.getInstance().getImage("/Art/Game Material/heartHUD.png");
         //inputMethod
         key = new Keys();
         //background
@@ -188,8 +182,7 @@ public class EasterEgg extends GameState {
         }
         //item
         itemList = new ArrayList<>();
-        itemList.add(new NostaligaItem((int)(Math.random()*Game.WIDTH/2),0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
-        itemList.add(new NostaligaItem(Game.WIDTH/2 + (int)((Math.random()*(Game.WIDTH - Game.WIDTH/2 - 50))),0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
+        itemList.add(new NostaligaItem(30,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
     }
     @Override
     public void tick() {
@@ -203,7 +196,7 @@ public class EasterEgg extends GameState {
         for (Snow snow1 : snow) {
             snow1.tick();
         }
-        for( NostaligaItem item : itemList){
+        for (NostaligaItem item : itemList){
             item.tick();
         }
     }
@@ -240,6 +233,14 @@ public class EasterEgg extends GameState {
                 doppelganger.setyVel(0);
                 doppelganger.setFalling(false);
             }
+            if(!player.playerDead() && player.getBot().intersects(floor.get(i).getBound())){
+                if((key.keyState[key.SPACE] && !player.isJumping())||(key.keyState[key.UP] && !player.isJumping())){
+                    player.setyVel(-24);
+                    player.setJumping(true);
+                    //player.showMsg("654654654", 1000, Color.red, 0,Fonts.getHorrorFont(30));
+
+                }
+            }
 
         }
         //Player/Enemy/Item COLLISION
@@ -269,9 +270,12 @@ public class EasterEgg extends GameState {
             if(!doppelganger.npcExhausted()){ // Will not drop items after npc dead
                 int randomLeft = (int)(Math.random()*Game.WIDTH/2);
                 int randomRight = Game.WIDTH/2 + (int)((Math.random()*(Game.WIDTH - Game.WIDTH/2 - 50))); // minus 50 so the heart wont spawn at 1280
-                System.out.println(randomLeft +" "+ randomRight);
-                itemList.add(new NostaligaItem(randomRight,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
-                itemList.add(new NostaligaItem(randomLeft,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
+                if(player.getX() <= Game.WIDTH/2){
+                    itemList.add(new NostaligaItem(randomRight,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
+                }else{
+                    itemList.add(new NostaligaItem(randomLeft,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
+                }
+
             }
         }
 
@@ -284,17 +288,20 @@ public class EasterEgg extends GameState {
             }else{
                 player.setxVel(0);
             }
-            if((key.keyState[key.SPACE] && !player.isJumping())||(key.keyState[key.UP] && !player.isJumping())){
-                if(player.isFalling()){
-                    player.setyVel(-24);
-                    player.setJumping(true);
-                }
-            }
+
         }
         //END
         doppelganger.checkBorder();
         if(!doppelganger.npcExhausted() && !player.playerDead()){
             doppelganger.dive();
+        }else if(doppelganger.npcExhausted()){
+            npcDowntime ++;
+            if(npcDowntime == 10){
+                doppelganger.getMsg().showMsg(doppelganger.x, doppelganger.y, "OH SNAP!", 300, Color.red);
+            }
+            if(npcDowntime == 400){
+                gsm.newState(GameStateManager.LEVEL3_STATE);
+            }
         }
     }
     @Override
@@ -302,7 +309,7 @@ public class EasterEgg extends GameState {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1280, 720);
         if(player.isDead() && this.alpha == 0){
-            g.setColor(Color.red);
+            g.setColor(Color.black);
             g.drawImage(restart,0,0,null);
         }
         if(player.isDead()){
@@ -313,6 +320,7 @@ public class EasterEgg extends GameState {
         g.drawImage(background2, 0, 0, Game.WIDTH, Game.HEIGHT, null);
         farMountain.render(g);
         nearMountain.render(g);
+        g.drawImage(heartHUD, Game.WIDTH/2+370, 10, null);
         doppelganger.render(g);
         player.render(g);
 
@@ -326,7 +334,6 @@ public class EasterEgg extends GameState {
         for( NostaligaItem item : itemList){
             item.render(g);
         }
-
         //debug
 //        Graphics2D g2d = (Graphics2D) g;
 //        g2d.setColor(Color.GREEN);

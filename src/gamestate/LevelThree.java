@@ -71,7 +71,7 @@ public class LevelThree extends GameState{
         playerScript = new ArrayList<>();
         npcScript = new ArrayList<>();
         sceneFinished = false;
-        background = Texture.getInstance().background[13];
+        background = Texture.getInstance().background[14];
         //read script
         try {
             playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene3.txt"), StandardCharsets.UTF_16));
@@ -110,8 +110,8 @@ public class LevelThree extends GameState{
         this.fadeIn(g ,0.007f);
         g.drawImage(background, 0 , 0, 1280, 720, null);
         handler.render(g);
-            
         g.drawImage(Texture.getInstance().background[12], 0 , 0, 1280, 720, null);
+            
         handler.getObject().get(PLAYER).renderMsg(g);
         handler.getObject().get(NPC).renderMsg(g);
         
@@ -127,7 +127,7 @@ public class LevelThree extends GameState{
         if(time == 140 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(NPC).showMsg(npcScript.get(npcC), 1200, Color.BLACK,-70,Fonts.getBitFont(18));// npc message
+                handler.getObject().get(NPC).showMsg(npcScript.get(npcC), 580, Color.BLACK,-70,Fonts.getBitFont(18));// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;
@@ -138,7 +138,7 @@ public class LevelThree extends GameState{
         if(time == 140 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
             System.out.println("player Line " + msgC);
             if(!playerScript.get(msgC).equals("")){
-                handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 1200, Color.BLACK,-70,Fonts.getBitFont(18)); //player message
+                handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 580, Color.BLACK,-70,Fonts.getBitFont(18)); //player message
             }
            
             
@@ -153,22 +153,22 @@ public class LevelThree extends GameState{
         
        
             
-            if(msgC == 4){
+            if(msgC == 6 || msgC == 13 || msgC == 19){
                 timer++;
                 timer2++;
-                if(timer < 20 ) {
-                    velocity2++;
-                    if(velocity2 > 10){
-                        velocity2 = 0;
-                    }
+                if(timer2 > 3 ) {
+                    velocity2 = 1;
                     handler.getObject().get(PLAYER).setX(handler.getObject().get(PLAYER).getX() - velocity2);
+                    handler.getObject().get(NPC).setX(handler.getObject().get(NPC).getX() + velocity2);
+
                     System.out.println(handler.getObject().get(PLAYER).getX());
                     timer2 = 0;
                 }
-                if(timer < 100 && timer > 20) {
-                    velocity = 5;
+                if(timer < 100 ) {
+                    velocity =1;
                     
                     handler.getObject().get(PLAYER).setX(handler.getObject().get(PLAYER).getX() + velocity);
+                    handler.getObject().get(NPC).setX(handler.getObject().get(NPC).getX() - velocity);
                     System.out.println(handler.getObject().get(PLAYER).getX());
                     timer = 0;
                 }
@@ -180,7 +180,7 @@ public class LevelThree extends GameState{
             sceneFinished = true;
         }
 
-        if(time >= 130 && sceneFinished){ //move one to next stage
+        if(time >= 145 && sceneFinished){ //move one to next stage
             bgm.stop();
             gsm.newState(GameStateManager.LEVEL2_STATE);
         }

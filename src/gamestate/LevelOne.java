@@ -107,7 +107,7 @@ public class LevelOne extends GameState {
 
     public LevelOne(GameStateManager gsm) {
         super(gsm);
-//        bgm.loop();
+        bgm.loop();
         init();
     }
 

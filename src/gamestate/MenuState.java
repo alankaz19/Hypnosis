@@ -77,7 +77,7 @@ public class MenuState extends GameState {
     public void keyPressed(int k) {
         if(k == KeyEvent.VK_1){
             intro.stop();
-            gsm.newState(GameStateManager.INTRO);
+            gsm.newState(GameStateManager.LEVEL1_STATE);
         }
         if(k == KeyEvent.VK_2){
             intro.stop();

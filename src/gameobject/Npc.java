@@ -41,15 +41,15 @@ public class Npc extends GameObject {
         this.npcFloat = new Animation(movement, tex.npc[0], tex.npc[1], tex.npc[2]);
         this.npcDown = new Animation(movement, tex.npc[3]);
         this.diving = true;
-        this.lifeC = 4;
+        this.lifeC = 5;
         this.diveCoolDown = 300;
         this.gravity = 1;
         this.falling = false;
         this.isCollision = false;
-        showMsg("HEYOOO", 550, Color.red, -60, Fonts.getHorrorFont(30));
+        showMsg("高雄發大財", 550, Color.red, -60, Fonts.getHorrorFont(30));
         heart = new ArrayList<>();
-        for(int i = 0; i < getLifeC()*40; i+= 40){
-            heart.add(new Heart((Game.WIDTH/2 + 420) + i,20,ObjectID.HEART));
+        for(int i = 0; i < getLifeC()*50; i+= 50){
+            heart.add(new Heart((Game.WIDTH/2 + 370) + i,10,ObjectID.HEART));
         }
     }
     private class Heart extends GameObject{
@@ -57,8 +57,8 @@ public class Npc extends GameObject {
         public Heart(int x, int y, ObjectID id) {
             super(x, y, id);
             this.img = ImageResource.getInstance().getImage("/Art/Game Material/heart.png");
-            width = 40;
-            height = 40;
+            width = 50;
+            height = 50;
         }
         @Override
         public void tick() {
@@ -66,7 +66,7 @@ public class Npc extends GameObject {
         }
         @Override
         public void render(Graphics g) {
-            g.drawImage(img,x,y,40,40,null);
+            g.drawImage(img,x,y,width,height,null);
         }
     }
 
@@ -76,10 +76,10 @@ public class Npc extends GameObject {
         y += yVel;
         if(!npcExhausted()){
             if(y < player.getY()){
-                y += 3;
+                y += 2;
             }
             if (y > player.getY()){
-                y -= 3;
+                y -= 2;
             }
             npcFloat.runAnimation();
         }else{

@@ -215,9 +215,6 @@ public class MiniScratchOffGame extends GameState{
     @Override
     public void keyPressed(int k) {
         keyPressed = k;
-        if(keyPressed == KeyEvent.VK_ESCAPE){
-            gsm.setState(GameStateManager.LEVEL1_STATE);
-        }
 
     }
 

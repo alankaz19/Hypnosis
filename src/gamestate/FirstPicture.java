@@ -151,7 +151,7 @@ public class FirstPicture extends GameState {
             gsm.newState(GameStateManager.TRANSITION);
             trainsitionShowed = true;
         }
-        else if (trainsitionShowed && exit.isHovered()) {
+        if (trainsitionShowed && exit.isHovered()) {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }

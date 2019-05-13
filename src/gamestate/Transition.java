@@ -83,13 +83,13 @@ public class Transition extends GameState{
     public void init() {
         timer = 0;
         lines  = new Line[1000];
-        AudioManager.getInstance().getPlayList()[AudioManager.NOISE].play();
         for (int i = 0; i < lines.length; i++) {
             lines[i] = new Line();
         }
         msg = new Message();
         msg.setFont(Fonts.getHorrorFont(40));
         msg.setLongWord();
+//        AudioManager.getInstance().getPlayList()[AudioManager.NOISE].play();
     }
     
     @Override

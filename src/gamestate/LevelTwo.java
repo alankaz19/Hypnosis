@@ -11,13 +11,12 @@ import gameobject.Player;
 import java.awt.*;
 import gameobject.items.Obstacle;
 import resourcemanage.SoundResource;
-import scene.BackGround;
+import scene.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import scene.Camera;
-import scene.ParallaxBackGround;
-import scene.Texture;
+
 public class LevelTwo extends GameState {
 
     private final int BACKGROUND2 = 3;
@@ -84,6 +83,7 @@ public class LevelTwo extends GameState {
         camPos = 400;
         lifeCount = 5;
         endScene = Texture.getInstance().background[13];
+        AudioManager.getInstance().getPlayList()[AudioManager.END_SCENE_BACKGROUND].loop();
         snow  = new Snow[200];
 //        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
         for (int i = 0; i < snow.length; i++) {
@@ -164,6 +164,9 @@ public class LevelTwo extends GameState {
         keyPressed = k;
         if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
+        }
+        if(keyPressed == KeyEvent.VK_ENTER){
+            gsm.newState(GameStateManager.MENU_STATE);
         }
     }
 

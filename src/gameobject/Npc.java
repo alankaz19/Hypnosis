@@ -31,7 +31,7 @@ public class Npc extends GameObject {
     private int maxSpeed;
     private int diveCoolDown;
     private boolean diving;
-    private int gravity, lifeC;
+    private int gravity, lifeC, lineC;
     private ArrayList<Heart> heart;
 
     public Npc(int x, int y, ObjectID id, int movement, ActionPlayer player) {
@@ -54,6 +54,7 @@ public class Npc extends GameObject {
         this.msg = new Message();
         this.msg.setFont(Fonts.getCrazyFont(30));
         this.msg.showMsg(x, y, "HEYOOO", 300,  Color.red);
+        this.lineC = 0;
         //
         heart = new ArrayList<>();
         for(int i = 0; i < getLifeC()*50; i+= 50){
@@ -143,7 +144,14 @@ public class Npc extends GameObject {
             if(xVel >= maxSpeed){
                 xVel = maxSpeed;
                 diving = true;
-                msg.showMsg(x, y, "LETsGOO", 300, Color.red);
+                lineC++;
+                if(lineC % 2 == 1){
+                    msg.showMsg(x, y, "ONE", 300, Color.red);
+                }else{
+                    msg.showMsg(x, y, "TWO", 300, Color.red);
+                    lineC = 0;
+                }
+
             }
         }
         else if(x + width >= Game.WIDTH - 20){
@@ -158,7 +166,12 @@ public class Npc extends GameObject {
             if( xVel <= -maxSpeed){
                 xVel = -maxSpeed;
                 diving = true;
-                msg.showMsg(x, y, "CHARGE", 300, Color.red);
+                if(lineC % 2 == 1){
+                    msg.showMsg(x, y, "THREE", 300, Color.red);
+                }else{
+                    msg.showMsg(x, y, "FOUR", 300, Color.red);
+                    lineC = 0;
+                }
             }
         }
         else if(x <= 20){
@@ -173,6 +186,10 @@ public class Npc extends GameObject {
     @Override
     public Rectangle getBound(){
         return new Rectangle(x+29,y+10,width-72,height-25);
+    }
+
+    public Rectangle getBot(){
+        return new Rectangle(x+width/4 + 20,y + height/2,width/2 - 30,height/2 - 15);
     }
 
     @Override

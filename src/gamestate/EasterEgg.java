@@ -289,10 +289,7 @@ public class EasterEgg extends GameState {
             doppelganger.dive();
         }else if(doppelganger.npcExhausted()){
             npcDowntime ++;
-            if(npcDowntime == 10){
-                doppelganger.getMsg().showMsg(doppelganger.x, doppelganger.y, "OH SNAP!", 300, Color.red);
-            }
-            if(npcDowntime == 400){
+            if(npcDowntime == 250){
                 gsm.newState(GameStateManager.LEVEL3_STATE);
             }
         }

@@ -95,7 +95,7 @@ public class MenuState extends GameState {
         AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_CLICK].play();
 
         if(start.isHovered()){
-            gsm.newState(GameStateManager.LEVEL2_STATE);
+            gsm.newState(GameStateManager.INTRO);
         }
 
     }

@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import scene.Animation;
+import uiobject.HintBox;
 
 public class EasterEgg extends GameState {
     private final int BACKGROUND2 = 3;
@@ -30,6 +31,11 @@ public class EasterEgg extends GameState {
     private ActionPlayer player;
     private Npc doppelganger;
     private int keyPressed, npcDowntime;
+    
+    //操作提示
+    private HintBox help;
+    private int helpTimer;
+    
 
     public static EasterEgg EasterEgg;
 
@@ -176,6 +182,9 @@ public class EasterEgg extends GameState {
         //item
         itemList = new ArrayList<>();
         itemList.add(new NostaligaItem(30,0,ObjectID.HEART,ImageResource.getInstance().getImage("/Art/Game Material/heart.png")));
+        
+        //hint
+        help = new HintBox(9,Game.WIDTH /2 , 80, 500, 583);
     }
     @Override
     public void tick() {
@@ -327,6 +336,20 @@ public class EasterEgg extends GameState {
         for( NostaligaItem item : itemList){
             item.render(g);
         }
+        
+        //遊戲說明
+        if(!help.isShowed() && helpTimer < 200){
+                helpTimer++;
+                help.fadeIn(g, 0.01f);
+            }
+        if(helpTimer == 200){
+            help.fadeOut(g, 0.01f);
+        }
+        if(helpTimer == 250){
+            helpTimer = 0;
+            help.setShowed(true);
+        }
+        
         //debug
 //        Graphics2D g2d = (Graphics2D) g;
 //        g2d.setColor(Color.GREEN);

@@ -6,7 +6,6 @@ import game.Updater;
 import gameobject.ObjectID;
 import gameobject.Player;
 import gameobject.items.*;
-import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,7 +15,6 @@ import scene.BackGround;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import resourcemanage.SoundResource;
 import scene.Camera;
 import scene.Texture;
 import uiobject.HintBox;
@@ -60,7 +58,7 @@ public class LevelOne extends GameState {
                     g.setColor(java.awt.Color.red);
                     break;
                 case 4:
-//                    g.setColor(java.awt.Color.white);
+                    g.setColor(java.awt.Color.green);
                     break;
             }
             
@@ -70,12 +68,15 @@ public class LevelOne extends GameState {
     
     }
     
-    //放大鏡 碎片
+    //放大鏡 碎片 遊戲說明提示
     private boolean hasMagnifier;
     private boolean hasJigsaw;
     private BufferedImage jigsaw;
     private BufferedImage magnifier;
+    private HintBox magnifierHint;
+    private HintBox help;
     private int hintTimer;// 提示展示時間
+    private int helpTimer;
     
     //完成小遊戲判斷
     private boolean paint1Done;
@@ -91,7 +92,7 @@ public class LevelOne extends GameState {
     private int keyPressed;
     private Camera cam;
     boolean sceneshowed;
-    private HintBox magnifierHint;
+   
     private Cursor eyes;
     private boolean eyeShow;
     
@@ -114,6 +115,9 @@ public class LevelOne extends GameState {
     @Override
     public void init() {
         
+        
+        //遊玩提示
+        help = new HintBox(8,700, 80, 500, 583);
         
         //放大鏡提示
         magnifierHint = new HintBox(0);
@@ -195,6 +199,10 @@ public class LevelOne extends GameState {
         lightHandler.render(g);
         g.translate(-cam.getX(), -cam.getY());//end of cam
         
+        
+       
+        
+        //顯示眼睛游標
         if(eyeShow){
             eyes.render(g);
         }
@@ -223,6 +231,18 @@ public class LevelOne extends GameState {
             noise.render(g);
         }
         
+        //遊戲說明
+        if(!help.isShowed() && helpTimer < 350){
+                helpTimer++;
+                help.fadeIn(g, 0.01f);
+            }
+        if(helpTimer == 350){
+            help.fadeOut(g, 0.01f);
+        }
+        if(helpTimer == 400){
+            helpTimer = 0;
+            help.setShowed(true);
+        }
         
     }
 

@@ -10,7 +10,6 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import scene.Texture;
 
 /**
@@ -102,6 +101,25 @@ public class HintBox extends UIObject{
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
         g.drawImage(Texture.getInstance().hint[number], 0, 0,Game.WIDTH,Game.HEIGHT, null);
         this.msg.render(g);
+        if( this.alpha == 0f){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1));
+        }
+    }
+    
+    public void fadeOut(Graphics g , float alphaVel) {
+        Graphics2D g2d =(Graphics2D)g;
+            if(this.alpha >= 0.09f && this.alpha <= 1){
+                this.alpha -= alphaVel;
+            }
+            else if(this.alpha <= 0.09f){
+                this.alpha = 0f;
+            }
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
+        g.drawImage(Texture.getInstance().hint[number],  x, y, width, height, null);
+        this.msg.render(g);
+        if( this.alpha == 0.1f){
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1));
+        }
     }
     
 }

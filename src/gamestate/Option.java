@@ -3,12 +3,15 @@ import scene.Texture;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import uiobject.Button;
+import uiobject.HintBox;
 
 public class Option extends GameState {
     private BufferedImage base;
     private Button resume;
     private Button help;
     private Button home;
+    private Button exit;
+    private HintBox hint;
     
 
     protected Option(GameStateManager gsm) {
@@ -26,6 +29,8 @@ public class Option extends GameState {
         resume = new Button(805,225,200,100,Texture.getInstance().button[7],Texture.getInstance().button[6],1);
         help = new Button(805,325,200,100,Texture.getInstance().button[3],Texture.getInstance().button[2],1);
         home = new Button(805,425,200,100,Texture.getInstance().button[5],Texture.getInstance().button[4],1);
+        exit = new Button(955,523,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
+        hint = new HintBox(8,200, 80, 500, 583);
     }
 
     @Override
@@ -38,6 +43,7 @@ public class Option extends GameState {
         setHovered(resume);
         setHovered(help);
         setHovered(home);
+        setHovered(exit);
     }
 
     @Override
@@ -48,6 +54,10 @@ public class Option extends GameState {
         resume.render(g);
         help.render(g);
         home.render(g);
+        if(help.isClicked()){
+            hint.fadeIn(g, 0.02f);
+//            exit.render(g);
+        }
     }
 
     @Override
@@ -67,7 +77,11 @@ public class Option extends GameState {
         }
         //遊戲說明
         if(help.isHovered()){
-            
+            help.setClicked(true);
+        }
+        
+        if(exit.isHovered()){
+            help.setClicked(false);
         }
         
         //返回主選單

@@ -53,7 +53,7 @@ public class Texture {
     public BufferedImage[] paintThumbnail = new BufferedImage[7];
     public BufferedImage[] item = new BufferedImage[4];
     public BufferedImage[] ui = new BufferedImage[10];
-    public BufferedImage[] hint = new BufferedImage[8];
+    public BufferedImage[] hint = new BufferedImage[10];
     public BufferedImage[] cursor = new BufferedImage[2];
     public BufferedImage[] floor = new BufferedImage[2];
     public BufferedImage[] arrowButton = new BufferedImage[4];
@@ -269,6 +269,8 @@ public class Texture {
         hint[5] = ImageResource.getInstance().getImage("/Art/Hint/picture4Hint.png");
         hint[6] = ImageResource.getInstance().getImage("/Art/Game Material/file.png");
         hint[7] = ImageResource.getInstance().getImage("/Art/Hint/picture4Hint2.png");
+        hint[8] = ImageResource.getInstance().getImage("/Art/Hint/help1.png");
+        hint[9] = ImageResource.getInstance().getImage("/Art/Hint/help2.png");
 
         floor[0] = ImageResource.getInstance().getImage("/Art/Game Material/floor.png");
         

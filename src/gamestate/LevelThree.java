@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import resourcemanage.ImageResource;
 
 import resourcemanage.SoundResource;
 import scene.BackGround;
@@ -113,7 +114,7 @@ public class LevelThree extends GameState{
         g.drawImage(Texture.getInstance().background[12], 0 , 0, 1280, 720, null);
             
         handler.getObject().get(PLAYER).renderMsg(g);
-        handler.getObject().get(NPC).renderMsg(g);
+        handler.getObject().get(NPC).renderMsg(g,ImageResource.getInstance().getImage("/Art/UI/npcdialogBubble.png"));
         
         
     }
@@ -127,7 +128,7 @@ public class LevelThree extends GameState{
         if(time == 140 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(NPC).showMsg(npcScript.get(npcC), 580, Color.BLACK,-70,Fonts.getBitFont(18));// npc message
+                handler.getObject().get(NPC).showMsg(npcScript.get(npcC), 580, Color.RED,-70,Fonts.getBitFont(18));// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;

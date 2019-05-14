@@ -12,17 +12,20 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/uiobject/Button.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MenuState.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/scene/Texture.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/Option.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MiniClickGame.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/Intro.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/LevelOne.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/NumberLock.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/Transition2.java</file>
-            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/LevelTwo.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/LevelThree.java</file>
             <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/EasterEgg.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/uiobject/Button.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MiniScratchOffGame.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/ActionPlayer.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/MenuState.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/GameObject.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/NumberLock.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gameobject/Player.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/GameState.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/LevelTwo.java</file>
+            <file>file:/C:/Users/alank/Documents/NetBeansProjects/Hypnosis/src/gamestate/Transition.java</file>
         </group>
     </open-files>
 </project-private>

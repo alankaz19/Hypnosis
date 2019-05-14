@@ -52,8 +52,8 @@ public class Npc extends GameObject {
         //對話相關
         this.chatBubble = Texture.getInstance().ui[3];
         this.msg = new Message();
-        this.msg.setFont(Fonts.getCrazyFont(30));
-        this.msg.showMsg(x, y, "HEYOOO", 300,  Color.red);
+        this.msg.setFont(Fonts.getBitFont(15));
+        this.msg.showMsg(x, y, "妳是來趕我走的嗎?", 800,  Color.red);
         this.lineC = 0;
         //
         heart = new ArrayList<>();
@@ -103,7 +103,12 @@ public class Npc extends GameObject {
             heart.tick();
         }
 //        msg.setPosition(x, y);
-        msg.shake(x, y - 80);
+        if(this.dir == 1){
+            msg.shake(x - 20, y - 80);
+        }
+        if(this.dir == 0){
+            msg.shake(x + 20, y - 80);
+        }
 
     }
     public boolean checkBorder() {
@@ -146,9 +151,9 @@ public class Npc extends GameObject {
                 diving = true;
                 lineC++;
                 if(lineC % 2 == 1){
-                    msg.showMsg(x, y, "ONE", 300, Color.red);
+                    msg.showMsg(x, y, "別再欺騙自己!", 300, Color.red);
                 }else{
-                    msg.showMsg(x, y, "TWO", 300, Color.red);
+                    msg.showMsg(x, y, "妳其實非常脆弱!", 300, Color.red);
                     lineC = 0;
                 }
 
@@ -167,9 +172,9 @@ public class Npc extends GameObject {
                 xVel = -maxSpeed;
                 diving = true;
                 if(lineC % 2 == 1){
-                    msg.showMsg(x, y, "THREE", 300, Color.red);
+                    msg.showMsg(x , y, "妳永遠都別想出去!", 300, Color.red);
                 }else{
-                    msg.showMsg(x, y, "FOUR", 300, Color.red);
+                    msg.showMsg(x , y, "不要搶走我的心!", 300, Color.red);
                     lineC = 0;
                 }
             }
@@ -220,12 +225,15 @@ public class Npc extends GameObject {
             heart.render(g);
         }
 //        renderMsg(g);
-        if(this.dir == 1){
-            g.drawImage(chatBubble, x - 50, y -70,175, 70, null);
+        if(!npcExhausted()){
+            if(this.dir == 1){
+                g.drawImage(chatBubble, x - 50, y -70,175, 70, null);
+            }
+            if(this.dir == 0){
+                g.drawImage(chatBubble, x , y -70,175, 70, null);
+            }
         }
-        if(this.dir == 0){
-            g.drawImage(chatBubble, x , y -70,175, 70, null);
-        }
+
 
         Graphics2D g2d = (Graphics2D)g;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));

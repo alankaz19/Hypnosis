@@ -73,7 +73,7 @@ public class LevelTwo extends GameState {
     public LevelTwo(GameStateManager gsm){
         super(gsm);
         init();
-//        bgm.loop();
+        AudioManager.getInstance().getPlayList()[AudioManager.END_SCENE_BACKGROUND].loop();
     }
 
     @Override
@@ -84,7 +84,6 @@ public class LevelTwo extends GameState {
         lifeCount = 5;
         endScene = Texture.getInstance().background[13];
         snow  = new Snow[150];
-//        bgm = SoundResource.getInstance().getClip("/Art/BackGround/Level2.wav");
         for (int i = 0; i < snow.length; i++) {
             snow[i] = new Snow();
         }

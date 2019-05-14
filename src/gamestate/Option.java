@@ -1,4 +1,5 @@
 package gamestate;
+import scene.AudioManager;
 import scene.Texture;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -72,6 +73,9 @@ public class Option extends GameState {
         
         //返回主選單
         if(home.isHovered()){
+            AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].stop();
+            AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_THREE_BACKGROUND].stop();
+            AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_BACKGROUND].stop();
             gsm.setState(GameStateManager.MENU_STATE);
         }
     }

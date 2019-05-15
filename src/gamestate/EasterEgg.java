@@ -300,6 +300,7 @@ public class EasterEgg extends GameState {
             npcDowntime ++;
             if(npcDowntime == 250){
                 gsm.newState(GameStateManager.LEVEL3_STATE);
+                AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].stop();
             }
         }
     }

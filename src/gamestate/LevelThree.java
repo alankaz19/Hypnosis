@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import resourcemanage.ImageResource;
 
 import resourcemanage.SoundResource;
+import scene.AudioManager;
 import scene.BackGround;
 import scene.Texture;
 import uiobject.Fonts;
@@ -64,6 +65,8 @@ public class LevelThree extends GameState{
     public LevelThree(GameStateManager gsm){
         super(gsm);
         init();
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].stop();
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_THREE_BACKGROUND].loop();
     }
 
     @Override

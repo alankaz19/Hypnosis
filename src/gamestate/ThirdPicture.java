@@ -8,6 +8,7 @@ package gamestate;
 import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
+import static gamestate.MenuState.SECRET;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -21,11 +22,10 @@ import uiobject.HintBox;
  * @author alank
  */
 public class ThirdPicture extends GameState {
-    
+
     public static ThirdPicture THIRD_PICTURE;
-    
+
     //SHOW TRANSITION
-    
     private BufferedImage fakeBackground;
     private Cursor cursor;
     private Frame frame;
@@ -33,33 +33,41 @@ public class ThirdPicture extends GameState {
     private HintBox hint;
     private Button exit;
     private int keyPressed;
-    
+
     private class Mask extends GameObject {
+
         BufferedImage img;
+
         public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
-            img = Texture.getInstance().paint[3];
+            if (!SECRET) {
+                img = Texture.getInstance().paint[3];
+            } else {
+                img = Texture.getInstance().paint[10];
+            }
             this.width = 300;
             this.height = 400;
-        }    
+        }
+
         @Override
         public void tick() {
         }
 
         @Override
         public void render(Graphics g) {
-            g.drawImage(img, x, y,316,450, null);
+            g.drawImage(img, x, y, 316, 450, null);
         }
 
     }
-    
+
     //frame
-    private class Frame extends GameObject{
+    private class Frame extends GameObject {
+
         public Frame(int x, int y, ObjectID id) {
             super(x, y, id);
             this.width = Texture.getInstance().paint[5].getWidth();
             this.height = Texture.getInstance().paint[5].getHeight();
-        }       
+        }
 
         @Override
         public void tick() {
@@ -71,29 +79,28 @@ public class ThirdPicture extends GameState {
         }
 
     }
-    
+
     public ThirdPicture(GameStateManager gsm) {
         super(gsm);
         this.init();
     }
-    
+
     @Override
     public ThirdPicture getInstance() {
-        if(THIRD_PICTURE == null){
+        if (THIRD_PICTURE == null) {
             THIRD_PICTURE = new ThirdPicture(GameStateManager.getInstance());
         }
         return THIRD_PICTURE;
     }
 
-
     @Override
     public void init() {
         fakeBackground = Texture.getInstance().background[7];
         // mask 加上畫框寬度
-        mask = new Mask((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
-        frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
+        mask = new Mask((Game.WIDTH - Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight()) / 2 + 20, ObjectID.FRAME);
+        frame = new Frame((Game.WIDTH - Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight()) / 2 - 38, ObjectID.PICTURE_IN_PUZZLE2);
         hint = new HintBox(4);
-        exit = new Button(955,523,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
+        exit = new Button(955, 523, 200, 100, Texture.getInstance().button[1], Texture.getInstance().button[0], 1);
         cursor = new Cursor();
     }
 
@@ -108,7 +115,7 @@ public class ThirdPicture extends GameState {
         cursor.setPosition(mouseX, mouseY);
         if (mouseX >= exit.getX() && mouseX <= exit.getX() + exit.getWidth() && mouseY >= exit.getY() && mouseY <= exit.getY() + exit.getHeight()) {
             exit.setHovered(true);
-        }else{
+        } else {
             exit.setHovered(false);
         }
     }
@@ -123,18 +130,14 @@ public class ThirdPicture extends GameState {
         hint.render(g);
     }
 
-
     @Override
     public void keyPressed(int k) {
         keyPressed = k;
-        if(keyPressed == KeyEvent.VK_ESCAPE){
-            gsm.setState(GameStateManager.LEVEL1_STATE);
-        }
     }
 
     @Override
     public void keyReleased(int k) {
-        if(k == keyPressed){
+        if (k == keyPressed) {
             keyPressed = -1;
         }
     }
@@ -145,14 +148,14 @@ public class ThirdPicture extends GameState {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
     }
-    
+
     @Override
     public void mouseDragged(int x, int y) {
     }
 
     @Override
     public void mouseReleased(int x, int y) {
-        
+
     }
 
     @Override
@@ -160,5 +163,3 @@ public class ThirdPicture extends GameState {
         this.setMousePos(x, y);
     }
 }
-
-

@@ -8,6 +8,7 @@ package gamestate;
 import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
+import static gamestate.MenuState.SECRET;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -37,7 +38,11 @@ public class ForthPicture extends GameState {
         BufferedImage img;
         public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
-            img = Texture.getInstance().paint[6];
+            if (!SECRET) {
+                img = Texture.getInstance().paint[6];
+            } else {
+                img = Texture.getInstance().paint[6];
+            }
             this.width = 300;
             this.height = 400;
         }    
@@ -127,9 +132,9 @@ public class ForthPicture extends GameState {
     @Override
     public void keyPressed(int k) {
         keyPressed = k;
-        if(keyPressed == KeyEvent.VK_ESCAPE){
-            gsm.setState(GameStateManager.LEVEL1_STATE);
-        }
+//        if(keyPressed == KeyEvent.VK_ESCAPE){
+//            gsm.setState(GameStateManager.LEVEL1_STATE);
+//        }
     }
 
     @Override

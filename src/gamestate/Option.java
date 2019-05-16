@@ -72,6 +72,7 @@ public class Option extends GameState {
 
     @Override
     public void mousePressed(int x, int y) {
+        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_CLICK].play();
         //返回遊戲
         if(resume.isHovered()){
             gsm.setState(gsm.getPrevState());
@@ -87,10 +88,11 @@ public class Option extends GameState {
         
         //返回主選單
         if(home.isHovered()){
+            gsm.setState(GameStateManager.MENU_STATE);
             AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_TWO_BACKGROUND].stop();
             AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_THREE_BACKGROUND].stop();
             AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_BACKGROUND].stop();
-            gsm.setState(GameStateManager.MENU_STATE);
+            AudioManager.getInstance().getPlayList()[AudioManager.END_SCENE_BACKGROUND].stop();
         }
     }
 

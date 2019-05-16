@@ -161,9 +161,9 @@ public class LevelTwo extends GameState {
         if(keyPressed == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
         }
-        if(keyPressed == KeyEvent.VK_ENTER){
-            gsm.newState(GameStateManager.MENU_STATE);
-        }
+//        if(keyPressed == KeyEvent.VK_ENTER){
+//            gsm.newState(GameStateManager.MENU_STATE);
+//        }
     }
 
     @Override

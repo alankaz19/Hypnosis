@@ -7,6 +7,7 @@ import scene.Texture;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import scene.AudioManager;
 
 public class ActionPlayer extends GameObject {
     private Texture tex = Texture.getInstance();
@@ -108,6 +109,7 @@ public class ActionPlayer extends GameObject {
                 if (falling && jumping) {
                     this.dir = 1;
                     playerJump.renderAnimation(g, x + width, y, -this.width, this.height);
+                    
                 } else {
                     this.dir = 1;
                     playerWalk.renderAnimation(g, x + width, y, -width, height);

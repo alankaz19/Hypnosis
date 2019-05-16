@@ -13,7 +13,7 @@ import resourcemanage.ImageResource;
  * @author Kai
  */
 public class Texture {
-    
+
     SpriteSheet playerSheet;
     SpriteSheet npcSheet;
     SpriteSheet arrowButtonSheet;
@@ -24,11 +24,13 @@ public class Texture {
     SpriteSheet pictureFrameSheet;
     SpriteSheet barSheet;
     SpriteSheet paintSheet;
+    SpriteSheet secretPaintSheet;
     SpriteSheet jigsawSheet;
     SpriteSheet buttonSheet;
     SpriteSheet lightSheet;
     SpriteSheet eyeSheet;
     SpriteSheet heartSheet;
+    SpriteSheet ricadoSheet;
     private BufferedImage player_sheet;
     private BufferedImage npc_Sheet;
     private BufferedImage arrow_Button_Sheet;
@@ -39,19 +41,22 @@ public class Texture {
     private BufferedImage picture_Frame_Sheet;
     private BufferedImage bar_Sheet;
     private BufferedImage paint_Sheet;
+    private BufferedImage secret_Paint_Sheet;
     private BufferedImage jigsaw_Sheet;
     private BufferedImage button_Sheet;
     private BufferedImage light_Sheet;
     private BufferedImage eye_Sheet;
     private BufferedImage heart_Sheet;
+    private BufferedImage ricado_Sheet;
 
     public BufferedImage[] background = new BufferedImage[16];
     public BufferedImage[] player = new BufferedImage[50];
     public BufferedImage[] playParkour;
     public BufferedImage[] npc = new BufferedImage[20];
-    public BufferedImage[] paint = new BufferedImage[8];
+    public BufferedImage[] paint = new BufferedImage[13];
     public BufferedImage[] paintThumbnail = new BufferedImage[7];
-    public BufferedImage[] item = new BufferedImage[4];
+    public BufferedImage[] secretThumbnail = new BufferedImage[7];
+    public BufferedImage[] item = new BufferedImage[5];
     public BufferedImage[] ui = new BufferedImage[10];
     public BufferedImage[] hint = new BufferedImage[10];
     public BufferedImage[] cursor = new BufferedImage[2];
@@ -63,17 +68,19 @@ public class Texture {
     public BufferedImage[] pictureFrame = new BufferedImage[7];
     public BufferedImage[] barUp = new BufferedImage[7];
     public BufferedImage[] barDown = new BufferedImage[1];
-    public BufferedImage[] button = new BufferedImage[12];
+    public BufferedImage[] button = new BufferedImage[14];
     public BufferedImage[] jigsaw = new BufferedImage[9];
     public BufferedImage[] light = new BufferedImage[4];
     public BufferedImage[] eyes = new BufferedImage[6];
     public BufferedImage[] hearts = new BufferedImage[6];
+    public BufferedImage[] ricado = new BufferedImage[50];
 
     //texture loader
     private static Texture tex;
+    private int count;
 
-    public static Texture getInstance(){
-        if(tex == null){
+    public static Texture getInstance() {
+        if (tex == null) {
             tex = new Texture();
         }
         return tex;
@@ -100,6 +107,8 @@ public class Texture {
         barSheet = new SpriteSheet(bar_Sheet);
         paint_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/paintSheet.png");
         paintSheet = new SpriteSheet(paint_Sheet);
+        secret_Paint_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/secretPaintSheet.png");
+        secretPaintSheet = new SpriteSheet(secret_Paint_Sheet);
         jigsaw_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/jigsawSheet.png");
         jigsawSheet = new SpriteSheet(jigsaw_Sheet);
         button_Sheet = ImageResource.getInstance().getImage("/Art/UI/buttonSheet.png");
@@ -110,12 +119,14 @@ public class Texture {
         eyeSheet = new SpriteSheet(eye_Sheet);
         heart_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/heartSheet.png");
         heartSheet = new SpriteSheet(heart_Sheet);
-        
+        ricado_Sheet = ImageResource.getInstance().getImage("/Art/Game Material/itemSheets/ricadoSheet.png");
+        ricadoSheet = new SpriteSheet(ricado_Sheet);
+        count = 0;
         getTextures();
     }
-    
-    private void getTextures(){
-        
+
+    private void getTextures() {
+
         player[0] = playerSheet.grabImage(1, 1, 48, 48);//face right
         player[1] = playerSheet.grabImage(17, 1, 48, 48);//walk
         player[2] = playerSheet.grabImage(18, 1, 48, 48);
@@ -157,8 +168,7 @@ public class Texture {
         player[38] = playerSheet.grabImage(19, 6, 48, 48);
         player[39] = playerSheet.grabImage(21, 6, 48, 48);
         player[40] = playerSheet.grabImage(2, 8, 48, 48);// sit
-        
-        
+
         //enemyAnimation
         npc[0] = npcSheet.grabImage(7, 6, 48, 48);
         npc[1] = npcSheet.grabImage(8, 6, 48, 48);
@@ -180,13 +190,13 @@ public class Texture {
         npc[17] = npcSheet.grabImage(14, 1, 48, 48);
         npc[18] = npcSheet.grabImage(15, 1, 48, 48);
         npc[19] = npcSheet.grabImage(16, 1, 48, 48);
-        
+
         //arrowButton
         arrowButton[0] = arrowButtonSheet.grabImage(1, 1, 64, 64);
         arrowButton[1] = arrowButtonSheet.grabImage(2, 1, 64, 64);
         arrowButton[2] = arrowButtonSheet2.grabImage(1, 1, 64, 64);
         arrowButton[3] = arrowButtonSheet2.grabImage(2, 1, 64, 64);
-        
+
         //LockNumber
         lockNumber[0] = lockNumberSheet.grabImage(1, 1, 64, 64);
         lockNumber[1] = lockNumberSheet.grabImage(1, 1, 64, 64);
@@ -200,7 +210,6 @@ public class Texture {
         lockNumber[9] = lockNumberSheet.grabImage(9, 1, 64, 64);
 
         //backgorund
-        
         background[0] = ImageResource.getInstance().getImage("/Art/Background/Menu.png");
         background[1] = ImageResource.getInstance().getImage("/Art/Background/backGround1.png");
         background[2] = ImageResource.getInstance().getImage("/Art/Background/TestOption.png");
@@ -216,7 +225,7 @@ public class Texture {
         background[12] = ImageResource.getInstance().getImage("/Art/Background/vignette2.png");
         background[13] = ImageResource.getInstance().getImage("/Art/Background/endGame.png");
         background[14] = ImageResource.getInstance().getImage("/Art/Background/endGameBG.png");
-        
+
         //大張圖畫與相框
         paint[0] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture1.png");
         paint[1] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture2.png");
@@ -225,8 +234,12 @@ public class Texture {
         paint[4] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture3Base.png");
         paint[5] = ImageResource.getInstance().getImage("/Art/Game Material/frame.png");
         paint[6] = ImageResource.getInstance().getImage("/Art/Game Material/picture/picture4.png");
-        
-        
+        paint[7] = ImageResource.getInstance().getImage("/Art/Game Material/picture/secret1.png");
+        paint[8] = ImageResource.getInstance().getImage("/Art/Game Material/picture/secret2.png");
+        paint[9] = ImageResource.getInstance().getImage("/Art/Game Material/picture/secret2Base.png");
+        paint[10] = ImageResource.getInstance().getImage("/Art/Game Material/picture/secret3.png");
+        paint[11] = ImageResource.getInstance().getImage("/Art/Game Material/picture/secret3Base.png");
+
         //掛畫縮圖
         paintThumbnail[0] = paintSheet.grabImage(1, 1, 200, 200);//第一幅
         paintThumbnail[1] = paintSheet.grabImage(2, 1, 200, 200);//第二幅
@@ -235,7 +248,16 @@ public class Texture {
         paintThumbnail[4] = paintSheet.grabImage(4, 1, 200, 200);//第四幅解
         paintThumbnail[5] = paintSheet.grabImage(5, 1, 200, 200);//第二幅解
         paintThumbnail[6] = paintSheet.grabImage(7, 1, 200, 200);//第三幅解
-        
+
+        //隱藏掛畫縮圖
+        secretThumbnail[0] = secretPaintSheet.grabImage(1, 1, 200, 200);//第一幅
+        secretThumbnail[1] = secretPaintSheet.grabImage(2, 1, 200, 200);//第二幅
+        secretThumbnail[2] = secretPaintSheet.grabImage(3, 1, 200, 200);//第三幅
+        secretThumbnail[3] = secretPaintSheet.grabImage(6, 1, 200, 200);//第四幅底
+        secretThumbnail[4] = secretPaintSheet.grabImage(4, 1, 200, 200);//第四幅解
+        secretThumbnail[5] = secretPaintSheet.grabImage(5, 1, 200, 200);//第二幅解
+        secretThumbnail[6] = secretPaintSheet.grabImage(7, 1, 200, 200);//第三幅解
+
         //jigsaw
         jigsaw[0] = jigsawSheet.grabImage(1, 1, 100, 100);
         jigsaw[1] = jigsawSheet.grabImage(2, 1, 100, 100);
@@ -246,20 +268,19 @@ public class Texture {
         jigsaw[6] = jigsawSheet.grabImage(1, 3, 100, 100);
         jigsaw[7] = jigsawSheet.grabImage(2, 3, 100, 100);
         jigsaw[8] = jigsawSheet.grabImage(3, 3, 100, 100);
-        
+
         //個人檔案、放大鏡跟紙張圖示
         item[0] = ImageResource.getInstance().getImage("/Art/Game Material/paper.png");
         item[1] = ImageResource.getInstance().getImage("/Art/Game Material/magnifier.png");
         item[2] = ImageResource.getInstance().getImage("/Art/Game Material/magnifierForPuzzle.png");
         item[3] = ImageResource.getInstance().getImage("/Art/Game Material/file.png");
-        
-        
+        item[4] = ImageResource.getInstance().getImage("/Art/Game Material/paperHint.png");
+
         ui[0] = ImageResource.getInstance().getImage("/Art/UI/dialogBubble.png");
         ui[1] = ImageResource.getInstance().getImage("/Art/UI/dialogBox.png");
         ui[2] = ImageResource.getInstance().getImage("/Art/UI/option.png");
         ui[3] = ImageResource.getInstance().getImage("/Art/UI/enemyBubble.png");
-        
-        
+
         //提示畫面
         hint[0] = ImageResource.getInstance().getImage("/Art/Hint/hint1.png");
         hint[1] = ImageResource.getInstance().getImage("/Art/Hint/hint2.png");
@@ -273,8 +294,7 @@ public class Texture {
         hint[9] = ImageResource.getInstance().getImage("/Art/Hint/help2.png");
 
         floor[0] = ImageResource.getInstance().getImage("/Art/Game Material/floor.png");
-        
-        
+
         //漸層發光的效果
         door[0] = doorSheet.grabImage(1, 1, 200, 200);
         door[1] = doorSheet.grabImage(2, 1, 200, 200);//light
@@ -283,14 +303,14 @@ public class Texture {
         door[4] = doorSheet.grabImage(5, 1, 200, 200);
         door[5] = doorSheet.grabImage(6, 1, 200, 200);
         door[6] = doorSheet.grabImage(7, 1, 200, 200);
-        
+
         closet[0] = closetSheet.grabImage(1, 1, 101, 101);
         closet[1] = closetSheet.grabImage(2, 1, 101, 101);//light
         closet[2] = closetSheet.grabImage(3, 1, 101, 101);
         closet[3] = closetSheet.grabImage(4, 1, 101, 101);
         closet[4] = closetSheet.grabImage(5, 1, 101, 101);
         closet[5] = closetSheet.grabImage(6, 1, 101, 101);
-        
+
         pictureFrame[0] = pictureFrameSheet.grabImage(1, 1, 200, 200);
         pictureFrame[1] = pictureFrameSheet.grabImage(2, 1, 200, 200);//light
         pictureFrame[2] = pictureFrameSheet.grabImage(3, 1, 200, 200);
@@ -298,36 +318,35 @@ public class Texture {
         pictureFrame[4] = pictureFrameSheet.grabImage(5, 1, 200, 200);
         pictureFrame[5] = pictureFrameSheet.grabImage(6, 1, 200, 200);
         pictureFrame[6] = pictureFrameSheet.grabImage(7, 1, 200, 200);
-        
+
         barUp[0] = barSheet.grabImage(1, 1, 64, 64);
         barUp[1] = barSheet.grabImage(3, 1, 64, 64);//light
         barUp[2] = barSheet.grabImage(5, 1, 64, 64);
         barUp[3] = barSheet.grabImage(7, 1, 64, 64);
         barUp[4] = barSheet.grabImage(9, 1, 64, 64);
         barUp[5] = barSheet.grabImage(11, 1, 64, 64);
-        
+
         barDown[0] = barSheet.grabImage(2, 1, 64, 64);
-        
+
         light[0] = lightSheet.grabImage(1, 1, 200, 200);
         light[1] = lightSheet.grabImage(2, 1, 200, 200);
         light[2] = lightSheet.grabImage(3, 1, 200, 200);
         light[3] = lightSheet.grabImage(4, 1, 200, 200);
-        
+
         eyes[0] = eyeSheet.grabImage(1, 1, 30, 30);
         eyes[1] = eyeSheet.grabImage(2, 1, 30, 30);
         eyes[2] = eyeSheet.grabImage(3, 1, 30, 30);
         eyes[3] = eyeSheet.grabImage(4, 1, 30, 30);
         eyes[4] = eyeSheet.grabImage(5, 1, 30, 30);
         eyes[5] = eyeSheet.grabImage(6, 1, 30, 30);
-        
+
         hearts[0] = heartSheet.grabImage(1, 1, 100, 100);
         hearts[1] = heartSheet.grabImage(2, 1, 100, 100);
         hearts[2] = heartSheet.grabImage(3, 1, 100, 100);
         hearts[3] = heartSheet.grabImage(4, 1, 100, 100);
         hearts[4] = heartSheet.grabImage(5, 1, 100, 100);
         hearts[5] = heartSheet.grabImage(6, 1, 100, 100);
-        
-        
+
         //buttons
         button[0] = buttonSheet.grabImage(1, 1, 200, 100);//exit dark
         button[1] = buttonSheet.grabImage(2, 1, 200, 100);//exit light
@@ -341,7 +360,16 @@ public class Texture {
         button[9] = buttonSheet.grabImage(2, 5, 200, 100);//start light
         button[10] = buttonSheet.grabImage(1, 6, 200, 100);//continue dark
         button[11] = buttonSheet.grabImage(2, 6, 200, 100);//continue light
-    }
-    
-}
+        button[12] = buttonSheet.grabImage(1, 7, 200, 100);//skip dark
+        button[13] = buttonSheet.grabImage(2, 7, 200, 100);//skip light
 
+        //ricado
+        for (int i = 1; i < 11; i++) {
+            for (int j = 1; j < 6; j++) {
+                ricado[count++] = ricadoSheet.grabImage(j, i, 300, 300);//
+            }
+        }
+
+    }
+
+}

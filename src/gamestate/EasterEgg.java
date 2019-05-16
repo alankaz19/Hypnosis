@@ -377,6 +377,10 @@ public class EasterEgg extends GameState {
         if(keyPressed == KeyEvent.VK_ENTER && this.alpha == 0){
             gsm.newState(GameStateManager.EASTER_EGG);
         }
+        
+        if(keyPressed == KeyEvent.VK_W || keyPressed == KeyEvent.VK_SPACE){
+            AudioManager.getInstance().getPlayList()[AudioManager.JUMP].play();
+        }
     }
 
     @Override

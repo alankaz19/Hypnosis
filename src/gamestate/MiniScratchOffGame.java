@@ -8,6 +8,7 @@ package gamestate;
 import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
+import static gamestate.MenuState.SECRET;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,6 +17,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import scene.AudioManager;
 
 import scene.Texture;
 import uiobject.Button;
@@ -25,10 +27,10 @@ import uiobject.HintBox;
  *
  * @author Kai
  */
-public class MiniScratchOffGame extends GameState{
+public class MiniScratchOffGame extends GameState {
 
     public static MiniScratchOffGame MINI_SCRATCH_GAME;
-    
+
     private int keyPressed;
     private HintBox hint;
     private HintBox jigsawHint;
@@ -41,15 +43,17 @@ public class MiniScratchOffGame extends GameState{
     private BufferedImage jigsaw;
     private Button exit;
     private boolean jigsawClicked;
-    
-    private class Frame extends GameObject{
+
+    private class Frame extends GameObject {
+
         private boolean Visible;
+
         public Frame(int x, int y, ObjectID id) {
             super(x, y, id);
             this.Visible = false;
             this.width = Texture.getInstance().paint[5].getWidth();
             this.height = Texture.getInstance().paint[5].getHeight();
-        }       
+        }
 
         @Override
         public void tick() {
@@ -60,19 +64,24 @@ public class MiniScratchOffGame extends GameState{
             g.drawImage(Texture.getInstance().paint[5], x, y, null);
         }
 
-        public void setVisible(boolean Visible){
+        public void setVisible(boolean Visible) {
             this.Visible = Visible;
         }
 
     }
-    
+
     //Mask class
     class Mask extends GameObject {
+
         BufferedImage img;
 
         public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
-            this.img = Texture.getInstance().paint[3];
+            if (!SECRET) {
+                this.img = Texture.getInstance().paint[3];
+            } else {
+                this.img = Texture.getInstance().paint[10];
+            }
         }
 
         @Override
@@ -82,7 +91,7 @@ public class MiniScratchOffGame extends GameState{
 
         @Override
         public void render(Graphics g) {
-            g.drawImage(img, x,y,316,452,null);
+            g.drawImage(img, x, y, 316, 452, null);
         }
 
         @Override
@@ -90,14 +99,20 @@ public class MiniScratchOffGame extends GameState{
             return null;
         }
     }
-    
+
     //Riddle class
-    class Riddle extends GameObject{
+    class Riddle extends GameObject {
+
         BufferedImage img;
-        
+
         public Riddle(int x, int y, ObjectID id) {
             super(x, y, id);
-            this.img =  Texture.getInstance().paint[4];
+            if (!SECRET) {
+                this.img = Texture.getInstance().paint[4];
+            } else {
+                this.img = Texture.getInstance().paint[11];
+            }
+
         }
 
         @Override
@@ -107,8 +122,8 @@ public class MiniScratchOffGame extends GameState{
 
         @Override
         public void render(Graphics g) {
-            g.setClip(new Ellipse2D.Float(mouseX - 62 ,mouseY - 62, 132,132));
-            g.drawImage(img, x,y,316,452,null);
+            g.setClip(new Ellipse2D.Float(mouseX - 62, mouseY - 62, 132, 132));
+            g.drawImage(img, x, y, 316, 452, null);
         }
 
         @Override
@@ -116,14 +131,13 @@ public class MiniScratchOffGame extends GameState{
             return null;
         }
     }
-    
+
     //magnifier
     class Magnifier extends GameObject {
 
         public Magnifier(int x, int y, ObjectID id) {
             super(x, y, id);
         }
-        
 
         @Override
         public void tick() {
@@ -133,37 +147,36 @@ public class MiniScratchOffGame extends GameState{
 
         @Override
         public void render(Graphics g) {
-            g.drawImage(Texture.getInstance().item[2], mouseX - 123, mouseY - 97 ,350,350, null);
+            g.drawImage(Texture.getInstance().item[2], mouseX - 123, mouseY - 97, 350, 350, null);
         }
-        
+
     }
 
     @Override
     public MiniScratchOffGame getInstance() {
-        if(MINI_SCRATCH_GAME == null){
+        if (MINI_SCRATCH_GAME == null) {
             MINI_SCRATCH_GAME = new MiniScratchOffGame(GameStateManager.getInstance());
         }
         return MINI_SCRATCH_GAME;
     }
 
-    
     public MiniScratchOffGame(GameStateManager gsm) {
         super(gsm);
         this.init();
     }
-    
+
     @Override
     public void init() {
         fakeBackground = Texture.getInstance().background[7];
-        frame = new Frame((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 -38, ObjectID.PICTURE_IN_PUZZLE2);
-        mask = new Mask ((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20,ObjectID.PICTURE);
-        riddle = new Riddle((Game.WIDTH -Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight())/2 + 20 , ObjectID.FRAME);
+        frame = new Frame((Game.WIDTH - Texture.getInstance().paint[5].getWidth()) / 2, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight()) / 2 - 38, ObjectID.PICTURE_IN_PUZZLE2);
+        mask = new Mask((Game.WIDTH - Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight()) / 2 + 20, ObjectID.PICTURE);
+        riddle = new Riddle((Game.WIDTH - Texture.getInstance().paint[5].getWidth()) / 2 + 58, (Game.HEIGHT - Texture.getInstance().paint[5].getHeight()) / 2 + 20, ObjectID.FRAME);
         magnifier = new Magnifier(mouseX, mouseX, ObjectID.MAGNIFIER);
         hint = new HintBox(4);
         hintTimer = 0;
         jigsawHint = new HintBox(1);
-        jigsaw = Texture.getInstance().item[0];
-        exit = new Button(955,523,200,100,Texture.getInstance().button[1],Texture.getInstance().button[0],1);
+        jigsaw = Texture.getInstance().item[4];
+        exit = new Button(955, 523, 200, 100, Texture.getInstance().button[1], Texture.getInstance().button[0], 1);
     }
 
     @Override
@@ -174,9 +187,9 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void event() {
-        if (jigsawClicked && this.mouseX >= exit.getX()&& this.mouseX <= exit.getX() + exit.getWidth() && this.mouseY >= exit.getY() && this.mouseY <= exit.getY() + exit.getHeight()) {
+        if (jigsawClicked && this.mouseX >= exit.getX() && this.mouseX <= exit.getX() + exit.getWidth() && this.mouseY >= exit.getY() && this.mouseY <= exit.getY() + exit.getHeight()) {
             exit.setHovered(true);
-        }else{
+        } else {
             exit.setHovered(false);
         }
     }
@@ -190,28 +203,28 @@ public class MiniScratchOffGame extends GameState{
         hint.render(g);
         frame.render(g);
         mask.render(g);
-        if(jigsawHint.isShowed() && hintTimer <= 180){
+        if (jigsawHint.isShowed() && hintTimer <= 180) {
             hintTimer++;
             jigsawHint.render(g);
-            }
-        
-        if(hintTimer >= 180){
+        }
+
+        if (hintTimer >= 180) {
             jigsawHint.fadeOut(g);
         }
-        
+
         //透明值設回1
-        Graphics2D g2d =(Graphics2D)g;
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
-        if(hintTimer >= 180){
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
+        if (hintTimer >= 180) {
             exit.render(g);
         }
-        
-        if(this.mouseX >= 425 && this.mouseX <=870 && this.mouseY >= 30 && this.mouseY <= 615){
+
+        if (this.mouseX >= 425 && this.mouseX <= 870 && this.mouseY >= 30 && this.mouseY <= 615) {
             magnifier.render(g);
         }
         riddle.render(g);
-        if(!jigsawClicked){
-            g.drawImage(jigsaw, 740, 495,60,60, null);
+        if (!jigsawClicked) {
+            g.drawImage(jigsaw, 740, 495, 60, 60, null);
         }
     }
 
@@ -223,19 +236,20 @@ public class MiniScratchOffGame extends GameState{
 
     @Override
     public void keyReleased(int k) {
-        if(k == keyPressed){
+        if (k == keyPressed) {
             keyPressed = -1;
         }
     }
-    
+
     @Override
     public void mousePressed(int x, int y) {
-        if (x >= exit.getX() && x <= exit.getX() + exit.getWidth() && y >= exit.getY() && y <= exit.getY() + exit.getHeight()) {
+        if (exit.isHovered()) {
             gsm.setState(GameStateManager.LEVEL1_STATE);
         }
-        if(x >= 740 && x <= 800 && y >= 495 && y <= 555){
+        if (x >= 740 && x <= 800 && y >= 495 && y <= 555) {
             this.jigsawClicked = true;
             jigsawHint.setShowed(true);
+            AudioManager.getInstance().getPlayList()[AudioManager.FOUND].play();
         }
     }
 

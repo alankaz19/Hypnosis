@@ -198,9 +198,9 @@ public class LevelThree extends GameState{
         if(k == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
         }
-        if(k == KeyEvent.VK_ENTER){
-            gsm.setState(GameStateManager.MENU_STATE);
-        }
+//        if(k == KeyEvent.VK_ENTER){
+//            gsm.setState(GameStateManager.MENU_STATE);
+//        }
 
     }
 

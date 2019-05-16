@@ -11,6 +11,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import scene.AudioManager;
 import uiobject.Fonts;
 import uiobject.Message;
 
@@ -19,7 +20,9 @@ import uiobject.Message;
  * @author alank
  */
 public class HypnosisTransition extends GameState {
-    private class Noise implements Updater{
+
+    private class Noise implements Updater {
+
         float alpha = 0.2f;
         double x = (Math.random() * Game.WIDTH);
         double y = (Math.random() * Game.HEIGHT);
@@ -30,22 +33,22 @@ public class HypnosisTransition extends GameState {
         public void setLength(double length) {
             this.length = length;
         }
-        
+
         @Override
-        public void tick(){
+        public void tick() {
             length = 700;
             y += yVel;
-            if(y + length > Game.HEIGHT){
+            if (y + length > Game.HEIGHT) {
                 y = -100;
                 x = (Math.random() * Game.WIDTH);
             }
         }
-    
+
         @Override
-        public void render(Graphics g){
-            Graphics2D g2d = (Graphics2D)g;
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,this.alpha));
-            switch((int)(Math.random() * 4)){
+        public void render(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
+            switch ((int) (Math.random() * 4)) {
                 case 1:
                     g.setColor(java.awt.Color.blue);
                     break;
@@ -59,43 +62,41 @@ public class HypnosisTransition extends GameState {
                     g.setColor(java.awt.Color.white);
                     break;
             }
-            
-            g.drawLine((int)x, (int)y, (int)x, (int)(y+ length) );
-            
+            g.drawLine((int) x, (int) y, (int) x, (int) (y + length));
         }
-    
+
     }
-    
+
     public static HypnosisTransition HYPNOSIS_TRANSITION;
     private Message msg;
     private int timer;
     private final int TIME = 190;
     private Noise[] noise;
-    
-    public  HypnosisTransition getInstance(){
-        if(HYPNOSIS_TRANSITION == null){
+
+    public HypnosisTransition getInstance() {
+        if (HYPNOSIS_TRANSITION == null) {
             HYPNOSIS_TRANSITION = new HypnosisTransition(GameStateManager.getInstance());
         }
         return HYPNOSIS_TRANSITION;
     }
-    
-    public HypnosisTransition(GameStateManager gsm){
+
+    public HypnosisTransition(GameStateManager gsm) {
         super(gsm);
         init();
     }
-    
+
     @Override
     public void init() {
         timer = 0;
         msg = new Message();
         msg.setFont(Fonts.getHorrorFont(40));
         msg.setLongWord();
-        noise  = new Noise[5];
+        noise = new Noise[5];
         for (int i = 0; i < noise.length; i++) {
             noise[i] = new Noise();
         }
     }
-    
+
     @Override
     public void tick() {
         event();
@@ -108,11 +109,14 @@ public class HypnosisTransition extends GameState {
 
     @Override
     public void event() {
-        if(!msg.isShow()){
-            msg.showMsg(Game.WIDTH / 2 - 160 , Game.HEIGHT /2 - 45,"3  ·  ·  2  ·  ·  1  ·  ·", 2000, Color.white);
+        if (!msg.isShow()) {
+            msg.showMsg(Game.WIDTH / 2 - 160, Game.HEIGHT / 2 - 45, "3  ·  ·  2  ·  ·  1  ·  ·", 2000, Color.white);
+            AudioManager.getInstance().getPlayList()[AudioManager.COUNT].play();
+
         }
-        if(timer >= TIME){
+        if (timer >= TIME) {
             gsm.newState(GameStateManager.LEVEL1_STATE);
+            AudioManager.getInstance().getPlayList()[AudioManager.COUNT].stop();
         }
     }
 
@@ -121,7 +125,7 @@ public class HypnosisTransition extends GameState {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1280, 720);
         this.fadeIn(g);
-        
+
         msg.render(g);
         for (Noise noise : noise) {
             noise.render(g);
@@ -145,7 +149,7 @@ public class HypnosisTransition extends GameState {
     }
 
     @Override
-    public void mouseReleased(int x,int y) {
+    public void mouseReleased(int x, int y) {
     }
 
     @Override

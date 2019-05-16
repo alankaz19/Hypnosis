@@ -46,6 +46,7 @@ public class Intro extends GameState{
     private AudioClip bgm;
     private HintBox file;
     private Button next;
+    private Button skip;
 
 
     public static Intro INTRO;
@@ -71,6 +72,7 @@ public class Intro extends GameState{
         sceneFinished = false;
         file = new HintBox(6,100,20,450,680);
         next = new Button(985,600,200,100,Texture.getInstance().button[11],Texture.getInstance().button[10],1);
+        skip = new Button(985,600,200,100,Texture.getInstance().button[13],Texture.getInstance().button[12],1);
         //read script
         try {
             playerScriptReader = new BufferedReader(new InputStreamReader( new FileInputStream("PlayerScene1.txt"), StandardCharsets.UTF_16));
@@ -115,12 +117,14 @@ public class Intro extends GameState{
         handler.render(g);
         file.fadeIn(g ,0.007f);
 
+        if(this.sceneFinished){
+            next.render(g);
+        }else{
+            skip.render(g);
+        }
         handler.getObject().get(PLAYER).renderMsg(g);
         handler.getObject().get(HYPNOTIST).renderMsg(g);
         
-        if(this.sceneFinished){
-            next.render(g);
-        }
         
     }
 
@@ -128,10 +132,10 @@ public class Intro extends GameState{
     public void event(){
         time++;
         //System.out.println(npcScript.size());
-        if(time == 140 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
+        if(time == 110 &&  npcC < npcScript.size() && !sceneFinished){ //PLAYER message timer
             if(!npcScript.get(npcC).equals("")){
                 System.out.println("npc Line " + npcC);
-                handler.getObject().get(HYPNOTIST).showMsg(npcScript.get(npcC), 1200, Color.BLACK, 0, Fonts.getBitFont(18));// npc message
+                handler.getObject().get(HYPNOTIST).showMsg(npcScript.get(npcC), 1000, Color.BLACK, 0, Fonts.getBitFont(18));// npc message
             }
             if(npcC < npcScript.size()){
                 npcC ++;
@@ -139,10 +143,10 @@ public class Intro extends GameState{
             }
         }
         //System.out.println(playerScript.size());
-        if(time == 140 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
+        if(time == 110 && msgC < playerScript.size() && !sceneFinished){ //NPC message timer
             System.out.println("player Line " + msgC);
             if(!playerScript.get(msgC).equals(""))
-            handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 1200, Color.BLACK, -20, Fonts.getBitFont(18)); //player message
+            handler.getObject().get(PLAYER).showMsg(playerScript.get(msgC), 1000, Color.BLACK, -20, Fonts.getBitFont(18)); //player message
             if(msgC < playerScript.size()){
                 msgC ++;
                 System.out.println(msgC);
@@ -165,6 +169,12 @@ public class Intro extends GameState{
         }else{
             next.setHovered(false);
         }
+        
+        if (!sceneFinished && mouseX >= skip.getX() && mouseX <= skip.getX() + skip.getWidth() && mouseY >= skip.getY() && mouseY <= skip.getY() + skip.getHeight()) {
+            skip.setHovered(true);
+        }else{
+            skip.setHovered(false);
+        }
     }
 
     @Override
@@ -173,9 +183,9 @@ public class Intro extends GameState{
         if(k == KeyEvent.VK_ESCAPE){
             gsm.newState(GameStateManager.OPTION_STATE);
         }
-        if(k == KeyEvent.VK_ENTER){
-            gsm.setState(GameStateManager.MENU_STATE);
-        }
+//        if(k == KeyEvent.VK_ENTER){
+//            gsm.setState(GameStateManager.MENU_STATE);
+//        }
 
     }
 
@@ -188,9 +198,14 @@ public class Intro extends GameState{
 
     @Override
     public void mousePressed(int x, int y) {
-        AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_CLICK].play();
         if(next.isHovered()){
             gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+            AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_CLICK].play();
+        }
+        
+        if(skip.isHovered()){
+            gsm.newState(GameStateManager.HYPNOSIS_TRANSITION);
+            AudioManager.getInstance().getPlayList()[AudioManager.LEVEL_ONE_CLICK].play();
         }
     }
 

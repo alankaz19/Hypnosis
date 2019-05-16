@@ -87,6 +87,7 @@ public class Transition2 extends GameState{
         msg = new Message();
         msg.setFont(Fonts.getHorrorFont(40));
         msg.setLongWord();
+         AudioManager.getInstance().getPlayList()[AudioManager.NOISE].play();
     }
     
     @Override
@@ -106,6 +107,7 @@ public class Transition2 extends GameState{
             msg.showMsg(Game.WIDTH / 2 - 210 , Game.HEIGHT /2 - 45, "終  於  見  到  面  了  。", 2500, Color.red);
         }
         if(timer >= 170){
+            AudioManager.getInstance().getPlayList()[AudioManager.NOISE].stop();
             gsm.newState(GameStateManager.EASTER_EGG);
         }
     }

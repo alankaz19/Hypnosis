@@ -8,12 +8,14 @@ package gamestate;
 import game.Game;
 import gameobject.GameObject;
 import gameobject.ObjectID;
+import static gamestate.MenuState.SECRET;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import scene.AudioManager;
 import scene.Texture;
 import uiobject.Button;
 import uiobject.HintBox;
@@ -39,7 +41,6 @@ public class MiniClickGame extends GameState {
         private float alpha;
         public Mask(int x, int y, ObjectID id) {
             super(x, y, id);
-            img = Texture.getInstance().paint[3];
             cleared = false;
             this.width = 300;
             this.height = 400;
@@ -58,7 +59,12 @@ public class MiniClickGame extends GameState {
         public void render(Graphics g) {
             this.renderMask((Graphics2D)g);
             //x y 必須加上畫框的邊框寬度
-            g.drawImage(Texture.getInstance().paint[1], x, y,316,450, null);
+            if(!SECRET){
+                g.drawImage(Texture.getInstance().paint[1], x, y,316,450, null);
+            }else{
+                g.drawImage(Texture.getInstance().paint[8], x, y,316,450, null);
+            }
+            
         }
 
         public void setCleared(boolean cleared) {
@@ -81,7 +87,11 @@ public class MiniClickGame extends GameState {
         @Override
         public void render(Graphics g) {
             g.drawImage(Texture.getInstance().paint[5], x, y, null);
-            g.drawImage(Texture.getInstance().paint[2], x + 58, y + 56 ,316,450, null);
+            if(!SECRET){
+                g.drawImage(Texture.getInstance().paint[2], x + 58, y + 56 ,316,450, null);
+            }else{
+                g.drawImage(Texture.getInstance().paint[9], x + 58, y + 56 ,316,450, null);
+            }
         }
 
     }
@@ -143,9 +153,9 @@ public class MiniClickGame extends GameState {
     @Override
     public void keyPressed(int k) {
         keyPressed = k;
-        if(keyPressed == KeyEvent.VK_ESCAPE){
-            gsm.setState(GameStateManager.LEVEL1_STATE);
-        }
+//        if(keyPressed == KeyEvent.VK_ESCAPE){
+//            gsm.setState(GameStateManager.LEVEL1_STATE);
+//        }
     }
 
     @Override
@@ -165,6 +175,7 @@ public class MiniClickGame extends GameState {
                 return;
             }
             mask.alpha -= 0.11f;
+            AudioManager.getInstance().getPlayList()[AudioManager.PAPER].play();
         }
         
         if (exit.isHovered()) {

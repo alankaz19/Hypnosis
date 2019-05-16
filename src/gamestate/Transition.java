@@ -83,14 +83,13 @@ public class Transition extends GameState{
     public void init() {
         timer = 0;
         lines  = new Line[500];
-        AudioManager.getInstance().getPlayList()[AudioManager.NOISE].play();
         for (int i = 0; i < lines.length; i++) {
             lines[i] = new Line();
         }
         msg = new Message();
         msg.setFont(Fonts.getHorrorFont(40));
         msg.setLongWord();
-//        AudioManager.getInstance().getPlayList()[AudioManager.NOISE].play();
+        
     }
     
     @Override
@@ -106,10 +105,12 @@ public class Transition extends GameState{
     @Override
     public void event() {
         if(!msg.isShow()){
+            AudioManager.getInstance().getPlayList()[AudioManager.NOISE].play();
             msg.showMsg(Game.WIDTH / 2 - 270 , Game.HEIGHT /2 - 45,"你   知   道   你   是   誰   嗎  ‧ ‧ ‧ ", 2000, Color.red);
         }
         if(timer >= 150){
-            gsm.setState(GameStateManager.LEVEL1_STATE);
+            AudioManager.getInstance().getPlayList()[AudioManager.NOISE].stop();
+            gsm.setState(GameStateManager.FIRST_PICTURE);
         }
     }
 

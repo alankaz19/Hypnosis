@@ -14,6 +14,7 @@ import uiobject.Fonts;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import scene.AudioManager;
 import uiobject.Message;
 
 /**
@@ -52,7 +53,7 @@ public class Npc extends GameObject {
         //對話相關
         this.chatBubble = Texture.getInstance().ui[3];
         this.msg = new Message();
-        this.msg.setFont(Fonts.getBitFont(15));
+        this.msg.setFont(Fonts.getBitFont(17));
         this.msg.showMsg(x, y, "妳是來趕我走的嗎?", 800,  Color.red);
         this.lineC = 0;
         //
@@ -152,8 +153,10 @@ public class Npc extends GameObject {
                 lineC++;
                 if(lineC % 2 == 1){
                     msg.showMsg(x, y, "別再欺騙自己!", 300, Color.red);
+                    AudioManager.getInstance().getPlayList()[AudioManager.ATTACK].play();
                 }else{
                     msg.showMsg(x, y, "妳其實非常脆弱!", 300, Color.red);
+                    AudioManager.getInstance().getPlayList()[AudioManager.ATTACK].play();
                     lineC = 0;
                 }
 
@@ -173,8 +176,10 @@ public class Npc extends GameObject {
                 diving = true;
                 if(lineC % 2 == 1){
                     msg.showMsg(x , y, "妳永遠都別想出去!", 300, Color.red);
+                    AudioManager.getInstance().getPlayList()[AudioManager.ATTACK].play();
                 }else{
-                    msg.showMsg(x , y, "不要搶走我的心!", 300, Color.red);
+                    msg.showMsg(x , y, "不要搶走我的東西!", 300, Color.red);
+                    AudioManager.getInstance().getPlayList()[AudioManager.ATTACK].play();
                     lineC = 0;
                 }
             }
